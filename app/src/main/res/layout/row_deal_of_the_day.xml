@@ -1,0 +1,269 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools"
+    android:id="@+id/card_view_deals"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/space_2"
+    android:elevation="@dimen/space_4"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardPreventCornerOverlap="false"
+    card_view:cardUseCompatPadding="true">
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/space_20"
+        android:src="@mipmap/ic_launcher"
+        android:scaleType="fitXY"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:id="@+id/showproduct"
+        android:layout_marginLeft="100dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/space_20"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:fontFamily="@font/cabin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/start_time"
+                    android:textColor="#837e7e"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:fontFamily="@font/cabin"
+                    android:id="@+id/start_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_size_small" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone">
+
+                <TextView
+                    android:fontFamily="@font/cabin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/end_time"
+                    android:textColor="#837e7e"
+                    android:textSize="8sp" />
+
+                <TextView
+                    android:fontFamily="@font/cabin"
+                    android:id="@+id/end_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_size_small" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+
+            android:orientation="vertical">
+
+
+
+
+            <TextView
+                android:fontFamily="@font/cabin"
+                android:id="@+id/product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:text="Product Name"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_20"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+            <TextView
+                android:fontFamily="@font/cabin"
+                android:id="@+id/product_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/space_20"
+                android:gravity="left"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="Product Desc"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_size_normal"
+                android:maxLines="2"
+                android:ellipsize="end"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_20"
+                >
+
+
+
+
+
+                <TextView
+                    android:id="@+id/product_offer_prize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:paddingLeft="@dimen/space_8"
+                    android:paddingRight="@dimen/space_8"
+                    android:text="@string/tv_toolbar_price"
+                    android:fontFamily="@font/cabin"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_normal" />
+                <TextView
+                    android:id="@+id/product_prize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textAlignment="viewStart"
+                    android:fontFamily="@font/cabin"
+                    android:text="@string/tv_toolbar_price"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/text_size_normal" />
+
+                <TextView
+                    android:id="@+id/product_discount"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text=" discount"
+                    android:fontFamily="@font/cabin"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="4dp"
+
+                    android:layout_marginStart="30dp"
+                    android:padding="2dp"
+                    android:textColor="@color/pink"
+                    />
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:visibility="gone"
+                >
+
+            <TextView
+                android:id="@+id/txtId"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
+                android:textSize="10dp"
+                android:fontFamily="@font/cabin"
+                android:text="Weight :"
+                android:visibility="gone"
+
+                />
+
+            <TextView
+                android:id="@+id/txtVar"
+                android:fontFamily="@font/cabin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
+                android:textSize="10dp"
+
+                android:text="Weight :"
+                android:visibility="gone"
+                />
+            <TextView
+                android:id="@+id/single_varient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10"
+                android:text="1kg"
+                android:fontFamily="@font/cabin"
+                android:textAlignment="gravity"
+                android:paddingLeft="@dimen/space_2"
+                android:layout_marginTop="@dimen/space_5"
+                android:visibility="gone"
+
+
+                />
+            <RelativeLayout
+                android:id="@+id/rel_variant"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/space_5"
+                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginRight="@dimen/space_10"
+                android:visibility="gone"
+                android:background="@drawable/relative_unit_layout">
+
+                <TextView
+                    android:id="@+id/unit_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginRight="35dp"
+                    android:text=""
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/cabin"/>
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/ic_arrow_drop_down_black_24dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp">
+
+                </ImageView>
+
+            </RelativeLayout>
+            </RelativeLayout>
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>
+
+
