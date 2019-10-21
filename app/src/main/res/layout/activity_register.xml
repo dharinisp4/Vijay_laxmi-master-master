@@ -44,31 +44,32 @@
                 android:textAlignment="center"
                 android:textColor="#050505"
                 android:textSize="30sp" />
-<LinearLayout
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:layout_height="wrap_content">
-    <Fonts.LatoBLack
-        android:id="@+id/tv_reg_name"
-        android:textColor="#000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_reg_name_hint"
-        android:textSize="14sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <Fonts.LatoBLack
+                    android:id="@+id/tv_reg_name"
+                    android:textColor="#000"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tv_reg_name_hint"
+                    android:textSize="14sp" />
 
-    <ImageView
-        android:id="@+id/iconname"
-        android:src="@drawable/iconn"
-        android:layout_width="10dp"
-        android:layout_height="10dp" />
+                <ImageView
+                    android:id="@+id/iconname"
+                    android:src="@drawable/iconn"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp" />
 
-</LinearLayout>
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/et_reg_name"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
+                android:hint="Name"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/space_5"
                 android:background="@drawable/xml_textbox_bg"
@@ -104,6 +105,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
+                android:hint="Email"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/xml_textbox_bg"
                 android:ems="10"
@@ -139,6 +141,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/space_10"
+                android:hint="Mobile Number"
                 android:background="@drawable/xml_textbox_bg"
                 android:ems="10"
                 android:inputType="phone"
@@ -200,8 +203,320 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/xml_textbox_bg"
                 android:inputType="textPassword"
+                android:hint="Password"
                 android:maxLength="10"
                 android:ems="10"/>
+
+            <CheckBox
+                android:id="@+id/chk_user"
+                android:layout_width="wrap_content"
+                android:checked="true"
+                android:text="user"
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chk_owner"
+
+                android:layout_width="wrap_content"
+                android:text="Owner"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/linear_saloon"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Fonts.LatoBLack
+                        android:id="@+id/tv_saloon_name"
+                        android:textColor="#000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name of Saloon"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/iconsaloon"
+                        android:src="@drawable/iconn"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_saloon_name"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textSize="14sp"
+                    android:hint="Saloon Name"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_5"
+                    android:background="@drawable/xml_textbox_bg"
+                    android:ems="10"
+                    android:inputType="text" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <Fonts.LatoBLack
+                        android:id="@+id/tv_pin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:layout_marginTop="@dimen/space_10"
+                        android:text="PIN Code"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/iconpin"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="@dimen/space_10"
+                        android:src="@drawable/iconn" />
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/et_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textSize="14sp"
+                    android:hint="PIN Code"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/xml_textbox_bg"
+                    android:ems="10"
+                    android:inputType="textEmailAddress" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <Fonts.LatoBLack
+                        android:textColor="#000"
+                        android:id="@+id/tv_city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="City"
+                        android:textSize="14sp"
+                        android:layout_marginTop="@dimen/space_10"/>
+
+                    <ImageView
+                        android:id="@+id/iconcity"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="@dimen/space_10"
+                        android:src="@drawable/iconn" />
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textSize="14sp"
+                    android:id="@+id/et_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_10"
+                    android:hint="City"
+                    android:background="@drawable/xml_textbox_bg"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:maxLength="15" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Fonts.LatoBLack
+                        android:id="@+id/tv_address"
+                        android:textColor="#000"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/iconaddress"
+                        android:src="@drawable/iconn"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textSize="14sp"
+                    android:hint="Address"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_5"
+                    android:background="@drawable/xml_textbox_bg"
+                    android:ems="10"
+                    android:inputType="text" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <Fonts.LatoBLack
+                        android:id="@+id/tv_proprietor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:layout_marginTop="@dimen/space_10"
+                        android:text="Proprietor"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/iconproprietor"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="@dimen/space_10"
+                        android:src="@drawable/iconn" />
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/et_proprietor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textSize="14sp"
+                    android:hint="Proprietor"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/xml_textbox_bg"
+                    android:ems="10"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <Fonts.LatoBLack
+                        android:textColor="#000"
+                        android:id="@+id/tv_staff"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No of Staff (optional)"
+                        android:textSize="14sp"
+                        android:layout_marginTop="@dimen/space_10"/>
+
+
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textSize="14sp"
+                    android:id="@+id/et_staff"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_10"
+                    android:hint="No. of staff"
+                    android:background="@drawable/xml_textbox_bg"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:maxLength="15" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <Fonts.LatoBLack
+                        android:id="@+id/tv_year"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#000"
+                        android:layout_marginTop="@dimen/space_10"
+                        android:text="Establishment Year (optional)"
+                        android:textSize="14sp" />
+
+
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/et_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textSize="14sp"
+                    android:hint="Establishment Year "
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/xml_textbox_bg"
+                    android:ems="10"
+                    android:inputType="textEmailAddress" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_height="wrap_content">
+                    <Fonts.LatoBLack
+                        android:textColor="#000"
+                        android:id="@+id/tv_turnover"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Turnover (optional)"
+                        android:textSize="14sp"
+                        android:layout_marginTop="@dimen/space_10"/>
+
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:layout_marginTop="@dimen/space_4"
+                    android:textSize="14sp"
+                    android:id="@+id/et_turnover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_10"
+                    android:hint="Turnover "
+                    android:background="@drawable/xml_textbox_bg"
+                    android:ems="10"
+                    android:inputType="phone"
+                    android:maxLength="15" />
+
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/tv_reg_note"
+                    android:textSize="14sp" />-->
+
+                <!--<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Society/Flat(Optional)"
+                    android:textSize="14dp"
+                    android:id="@+id/textView4" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Choose Society..."
+                    android:background="@drawable/xml_textbox_bg"
+                    android:id="@+id/txtSocity"
+                    android:layout_marginBottom="5dp"
+                    android:drawableRight="@mipmap/ic_next"
+                    android:gravity="left|center_vertical"
+                    android:padding="10dp"/>-->
+
+            </LinearLayout>
+
 
             <RelativeLayout
                 android:id="@+id/btnRegister"
