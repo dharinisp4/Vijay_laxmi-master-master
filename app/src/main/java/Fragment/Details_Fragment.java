@@ -56,6 +56,7 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Attr;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -87,10 +88,6 @@ import util.WishlistHandler;
  * A simple {@link Fragment} subclass.
  */
 public class Details_Fragment extends Fragment implements  RecyclerView.OnClickListener {
-
-
-
-
     String flag="";
     String atr_id="";
     String atr_product_id="";
@@ -99,8 +96,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     String attribute_mrp="";
     String attribute_color="";
     String attribute_img="";
-
-
     Context context;
 
     List<ProductVariantModel> vlist;
@@ -147,14 +142,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     public static ImageView btn,img2;
     private TextView txtrate,txtTotal,txtBack;
     ListView listView,listView1;
-//    ArrayList<String> list;
-//    ArrayList<String> list_id;
-//    ArrayList<String> list_atr_value;
-//    ArrayList<String> list_atr_name;
-//    ArrayList<String> list_atr_mrp;
-
-
-    // ListView listView;
     List<String> image_list;
     private TextView txtName,txtPrice,txtMrp;
     TextView txtDesc;
@@ -294,7 +281,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
             rv_color.setLayoutManager(layoutManager);
 
-            colorAdapter=new AttrColorAdapter(list_color,getActivity());
+            colorAdapter=new AttrColorAdapter(list_color,list_images,getActivity());
             rv_color.setAdapter(colorAdapter);
 
             RecyclerView.LayoutManager layoutManager1=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
@@ -529,34 +516,26 @@ catch (Exception ex)
             }
         });
 
-        rv_color.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_color, new RecyclerTouchListener.OnItemClickListener() {
-            @SuppressLint("ResourceType")
-            @Override
-            public void onItemClick(View view, int position) {
-
-
-
-                Glide.with(getActivity())
-                        .load(BaseURL.IMG_PRODUCT_URL +list_images.get(position).toString())
-                        .fitCenter()
-                        .placeholder(R.drawable.icon)
-                        .crossFade()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .dontAnimate()
-                        .into(btn);
-
-                attribute_color=list_color.get(position).toString();
-                attribute_img=list_images.get(position).toString();
-//                btn.setColorFilter(Color.parseColor(list_color.get(position).toString()), android.graphics.PorterDuff.Mode.SRC_IN);
-//                btn.setColorFilter(ContextCompat.getColor(getActivity(), Color.parseColor(list_color.get(position).toString())), android.graphics.PorterDuff.Mode.SRC_IN);
-//                btn.setColorFilter(Color.parseColor(list_color.get(position).toString()));
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
+//        rv_color.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_color, new RecyclerTouchListener.OnItemClickListener() {
+//            @SuppressLint("ResourceType")
+//            @Override
+//            public void onItemClick(View view, int position) {
+//
+//
+//
+//
+//                attribute_color=list_color.get(position).toString();
+//                attribute_img=list_images.get(position).toString();
+////                btn.setColorFilter(Color.parseColor(list_color.get(position).toString()), android.graphics.PorterDuff.Mode.SRC_IN);
+////                btn.setColorFilter(ContextCompat.getColor(getActivity(), Color.parseColor(list_color.get(position).toString())), android.graphics.PorterDuff.Mode.SRC_IN);
+////                btn.setColorFilter(Color.parseColor(list_color.get(position).toString()));
+//            }
+//
+//            @Override
+//            public void onLongItemClick(View view, int position) {
+//
+//            }
+//        }));
 
 
         //  txtTotal.setText("\u20B9"+String.valueOf(details_product_price));

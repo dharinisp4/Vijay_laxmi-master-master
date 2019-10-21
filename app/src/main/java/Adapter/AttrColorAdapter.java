@@ -9,15 +9,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.List;
 
+import Config.BaseURL;
 import Interface.RecyclerViewClickListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 import binplus.vijaylaxmi.R;
 
+import static Fragment.Details_Fragment.btn;
+
 public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.ViewHolder> {
     List<String> list;
+    List<String> list_img;
     Activity activity;
+    int pos=-1;
     private RecyclerViewClickListener mListener;
 
 //    public AttrColorAdapter(List<String> list, Activity activity, RecyclerViewClickListener mListener) {
@@ -25,8 +33,11 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
 //        this.activity = activity;
 //        this.mListener = mListener;
 //    }
-        public AttrColorAdapter(List<String> list, Activity activity) {
+
+
+    public AttrColorAdapter(List<String> list, List<String> list_img, Activity activity) {
         this.list = list;
+        this.list_img = list_img;
         this.activity = activity;
     }
 
@@ -43,6 +54,37 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
        // holder.txt.setBackgroundColor(Color.parseColor(list.get(position).toString()));
     //  holder.txt.setVisibility(View.GONE);
         holder.img_color.setColorFilter(Color.parseColor(list.get(position).toString()));
+        if(pos==position)
+         holder.img_selected.setVisibility(View.VISIBLE);
+        else
+            holder.img_selected.setVisibility(View.GONE);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Glide.with(activity)
+                        .load(BaseURL.IMG_PRODUCT_URL +list_img.get(position).toString())
+                        .fitCenter()
+                        .placeholder(R.drawable.icon)
+                        .crossFade()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .dontAnimate()
+                        .into(btn);
+
+                pos=position;
+                notifyDataSetChanged();
+
+            }
+        });
+//        holder.img_color.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//
+//
+//            }
+//        });
+
 //        holder.img_color.setOnClickListener( new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -61,7 +103,7 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CircleImageView img_color ;
-        ImageView img_selected;
+       ImageView img_selected;
      TextView txt;
         private RecyclerViewClickListener mListener;
 
@@ -74,7 +116,8 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
             txt=(TextView) itemView.findViewById(R.id.txt);
             img_selected=(ImageView)itemView.findViewById( R.id.color_selected );
             mListener = listener;
-           itemView.setOnClickListener( this );
+
+           //itemView.setOnClickListener( this );
         }
 
         @Override
