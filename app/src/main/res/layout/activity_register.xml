@@ -30,7 +30,7 @@
                 android:src="@drawable/ic_launcher"
                 android:textAlignment="center" />
 
-            <Fonts.LatoBLack
+            <TextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,6 +41,7 @@
                 android:shadowRadius="1"
                 android:textStyle="bold"
                 android:text="@string/tv_reg"
+                android:fontFamily="@font/cabin"
                 android:textAlignment="center"
                 android:textColor="#050505"
                 android:textSize="30sp" />
@@ -48,7 +49,8 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
-                <Fonts.LatoBLack
+                <TextView
+                    android:fontFamily="@font/cabin"
                     android:id="@+id/tv_reg_name"
                     android:textColor="#000"
                     android:layout_width="wrap_content"
@@ -74,22 +76,25 @@
                 android:layout_marginBottom="@dimen/space_5"
                 android:background="@drawable/xml_textbox_bg"
                 android:ems="10"
+                android:fontFamily="@font/cabin"
                 android:inputType="text" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
-                <Fonts.LatoBLack
+                <TextView
                     android:id="@+id/tv_reg_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#000"
+                    android:fontFamily="@font/cabin"
                     android:layout_marginTop="@dimen/space_10"
                     android:text="@string/tv_login_email"
                     android:textSize="14sp" />
 
                 <ImageView
+                    android:fontFamily="@font/cabin"
                     android:id="@+id/iconnemail"
                     android:layout_width="10dp"
                     android:layout_height="10dp"
@@ -106,6 +111,7 @@
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
                 android:hint="Email"
+                android:fontFamily="@font/cabin"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/xml_textbox_bg"
                 android:ems="10"
@@ -115,7 +121,8 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
-                <Fonts.LatoBLack
+                <TextView
+                    android:fontFamily="@font/cabin"
                     android:textColor="#000"
                     android:id="@+id/tv_reg_phone"
                     android:layout_width="wrap_content"
@@ -135,6 +142,7 @@
 
 
             <EditText
+                android:fontFamily="@font/cabin"
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
                 android:id="@+id/et_reg_phone"
@@ -175,7 +183,8 @@
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
-                <Fonts.LatoBLack
+                <TextView
+                    android:fontFamily="@font/cabin"
                     android:textColor="#000"
                     android:id="@+id/tv_reg_password"
                     android:layout_width="wrap_content"
@@ -195,6 +204,7 @@
 
 
             <EditText
+                android:fontFamily="@font/cabin"
                 android:textSize="14sp"
                 android:layout_marginTop="@dimen/space_4"
                 android:id="@+id/et_reg_password"
@@ -212,10 +222,11 @@
                 android:layout_width="wrap_content"
                 android:checked="true"
                 android:text="user"
+                android:fontFamily="@font/cabin"
                 android:layout_height="wrap_content"/>
             <CheckBox
                 android:id="@+id/chk_owner"
-
+                android:fontFamily="@font/cabin"
                 android:layout_width="wrap_content"
                 android:text="Owner"
                 android:layout_height="wrap_content"/>
@@ -232,7 +243,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <Fonts.LatoBLack
+                    <TextView
+                        android:fontFamily="@font/cabin"
                         android:id="@+id/tv_saloon_name"
                         android:textColor="#000"
                         android:layout_width="wrap_content"
@@ -249,6 +261,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:fontFamily="@font/cabin"
                     android:id="@+id/et_saloon_name"
                     android:layout_width="match_parent"
                     android:layout_marginTop="@dimen/space_4"
@@ -264,7 +277,8 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <Fonts.LatoBLack
+                    <TextView
+                        android:fontFamily="@font/cabin"
                         android:id="@+id/tv_pin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -284,6 +298,7 @@
 
 
                 <EditText
+                    android:fontFamily="@font/cabin"
                     android:id="@+id/et_pin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -299,7 +314,7 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <Fonts.LatoBLack
+                    <TextView
                         android:textColor="#000"
                         android:id="@+id/tv_city"
                         android:layout_width="wrap_content"
@@ -319,6 +334,7 @@
 
 
                 <EditText
+                    android:fontFamily="@font/cabin"
                     android:layout_marginTop="@dimen/space_4"
                     android:textSize="14sp"
                     android:id="@+id/et_city"
@@ -336,7 +352,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <Fonts.LatoBLack
+                    <TextView
+                        android:fontFamily="@font/cabin"
                         android:id="@+id/tv_address"
                         android:textColor="#000"
                         android:layout_width="wrap_content"
@@ -353,6 +370,7 @@
                 </LinearLayout>
 
                 <EditText
+                    android:fontFamily="@font/cabin"
                     android:id="@+id/et_address"
                     android:layout_width="match_parent"
                     android:layout_marginTop="@dimen/space_4"
@@ -368,7 +386,8 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <Fonts.LatoBLack
+                    <TextView
+                        android:fontFamily="@font/cabin"
                         android:id="@+id/tv_proprietor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -388,6 +407,7 @@
 
 
                 <EditText
+                    android:fontFamily="@font/cabin"
                     android:id="@+id/et_proprietor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -403,7 +423,8 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <Fonts.LatoBLack
+                    <TextView
+                        android:fontFamily="@font/cabin"
                         android:textColor="#000"
                         android:id="@+id/tv_staff"
                         android:layout_width="wrap_content"
@@ -418,6 +439,7 @@
 
 
                 <EditText
+                    android:fontFamily="@font/cabin"
                     android:layout_marginTop="@dimen/space_4"
                     android:textSize="14sp"
                     android:id="@+id/et_staff"
@@ -434,7 +456,8 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <Fonts.LatoBLack
+                    <TextView
+                        android:fontFamily="@font/cabin"
                         android:id="@+id/tv_year"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -449,6 +472,7 @@
 
 
                 <EditText
+                    android:fontFamily="@font/cabin"
                     android:id="@+id/et_year"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -464,7 +488,8 @@
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
-                    <Fonts.LatoBLack
+                    <TextView
+                        android:fontFamily="@font/cabin"
                         android:textColor="#000"
                         android:id="@+id/tv_turnover"
                         android:layout_width="wrap_content"
@@ -478,6 +503,7 @@
 
 
                 <EditText
+                    android:fontFamily="@font/cabin"
                     android:layout_marginTop="@dimen/space_4"
                     android:textSize="14sp"
                     android:id="@+id/et_turnover"
@@ -526,13 +552,14 @@
                 android:background="@drawable/bg_rounded_button"
                 android:padding="12dp">
 
-                <Fonts.LatoBLack
+                <TextView
+                    android:fontFamily="@font/cabin"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="@string/btn_Register"
                     android:textColor="#fff"
-                    android:textSize="@dimen/text_size_small"/>
+                    android:textSize="15dp"/>
 
 
             </RelativeLayout>

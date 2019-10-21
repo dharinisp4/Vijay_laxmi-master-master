@@ -134,7 +134,7 @@
                 android:text="@string/btn_continue"
                 android:textColor="#fff"
                 android:fontFamily="@font/cabin"
-                android:textSize="16dp" />
+                android:textSize="15dp" />
 
 
         </RelativeLayout>
@@ -152,10 +152,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
+
                 android:text="@string/btn_Register"
                 android:fontFamily="@font/cabin"
                 android:textColor="#fff"
-                android:textSize="16dp" />
+                android:textSize="15dp" />
 
 
         </RelativeLayout>

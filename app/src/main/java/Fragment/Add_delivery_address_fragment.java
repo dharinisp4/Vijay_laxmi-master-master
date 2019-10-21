@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,7 +43,8 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
     private static String TAG = Add_delivery_address_fragment.class.getSimpleName();
 
-    private EditText et_phone, et_name, et_pin, et_address;
+    private EditText et_phone, et_name,  et_address;
+    private AutoCompleteTextView et_pin;
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_pin, tv_address, tv_socity, btn_socity;
     private String getsocity = "";
@@ -51,6 +54,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private boolean isEdit = false;
 
     private String getlocation_id;
+    private String [] pincodes ={"202002","2222222" , "284001","248001"};
 
     public Add_delivery_address_fragment() {
         // Required empty public constructor
@@ -76,7 +80,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         tv_phone = (TextView) view.findViewById(R.id.tv_add_adres_phone);
         tv_name = (TextView) view.findViewById(R.id.tv_add_adres_name);
         tv_pin = (TextView) view.findViewById(R.id.tv_add_adres_pin);
-        et_pin = (EditText) view.findViewById(R.id.et_add_adres_pin);
+        et_pin = (AutoCompleteTextView) view.findViewById(R.id.et_add_adres_pin);
         et_address = (EditText) view.findViewById(R.id.et_add_adres_home);
         tv_address =(TextView)view.findViewById( R.id.tv_add );
         //tv_socity = (TextView) view.findViewById(R.id.tv_add_adres_socity);
@@ -86,6 +90,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         String getsocity_name = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_NAME);
         //String getsocity_id = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_ID);
         String getsocity_id = "1";
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.select_dialog_item,pincodes);
+        et_pin.setThreshold( 1 );
+        et_pin.setAdapter( arrayAdapter );
 
         Bundle args = getArguments();
 
