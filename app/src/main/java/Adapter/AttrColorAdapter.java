@@ -36,10 +36,16 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
        // holder.txt.setBackgroundColor(Color.parseColor(list.get(position).toString()));
     //  holder.txt.setVisibility(View.GONE);
         holder.img_color.setColorFilter(Color.parseColor(list.get(position).toString()));
+//        holder.img_color.setOnClickListener( new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                holder.img_selected.setVisibility( View.VISIBLE );
+//            }
+//        } );
        holder.txt.setText("a");
 
 
@@ -50,15 +56,28 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView img_color;
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        CircleImageView img_color ;
+        ImageView img_selected;
      TextView txt;
         public ViewHolder(View itemView) {
 
             super(itemView);
+
             img_color=(CircleImageView) itemView.findViewById(R.id.img_color);
             txt=(TextView) itemView.findViewById(R.id.txt);
+            img_selected=(ImageView)itemView.findViewById( R.id.color_selected );
+            img_color.setOnClickListener( this );
+        }
 
+        @Override
+        public void onClick(View view) {
+            int id = view.getId();
+            int position = getAdapterPosition();
+           if(id == R.id.img_color)
+           {
+               img_selected.setVisibility( View.VISIBLE );
+           }
         }
     }
 }

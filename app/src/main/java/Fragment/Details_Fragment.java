@@ -88,7 +88,7 @@ import util.WishlistHandler;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Details_Fragment extends Fragment {
+public class Details_Fragment extends Fragment implements  RecyclerView.OnClickListener {
 
 
 
@@ -295,6 +295,7 @@ public class Details_Fragment extends Fragment {
 
             layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
             rv_color.setLayoutManager(layoutManager);
+
             colorAdapter=new AttrColorAdapter(list_color,getActivity());
             rv_color.setAdapter(colorAdapter);
 
@@ -534,6 +535,8 @@ catch (Exception ex)
             @SuppressLint("ResourceType")
             @Override
             public void onItemClick(View view, int position) {
+
+
 
                 Glide.with(getActivity())
                         .load(BaseURL.IMG_PRODUCT_URL +list_images.get(position).toString())
@@ -1512,4 +1515,8 @@ public boolean checkAttributeStatus(String atr)
 
     }
 
+    @Override
+    public void onClick(View view) {
+
+    }
 }
