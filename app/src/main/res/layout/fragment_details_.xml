@@ -353,7 +353,8 @@
                                     android:layout_marginStart="0dp"
                                     android:layout_marginLeft="@dimen/space_5"
                                     android:layout_marginRight="@dimen/space_5"
-                                    android:background="@color/dark_gray" />
+                                    android:background="@color/dark_gray"
+                                    android:visibility="gone"/>
 
 
                             </RelativeLayout>

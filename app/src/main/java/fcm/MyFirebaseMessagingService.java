@@ -27,8 +27,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 

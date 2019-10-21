@@ -6,8 +6,8 @@ import android.content.SharedPreferences;
 
 import java.util.HashMap;
 
-import trolley.tcc.LoginActivity;
-import trolley.tcc.MainActivity;
+import binplus.vijaylaxmi.LoginActivity;
+import binplus.vijaylaxmi.MainActivity;
 
 import static Config.BaseURL.IS_LOGIN;
 import static Config.BaseURL.KEY_DATE;

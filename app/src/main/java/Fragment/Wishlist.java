@@ -15,14 +15,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import Adapter.Cart_adapter;
 import Adapter.Wishlist_Adapter;
-import Model.Product_model;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
-import util.ConnectivityReceiver;
-import util.DatabaseCartHandler;
-import util.DatabaseHandlerWishList;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.WishlistHandler;
 
 

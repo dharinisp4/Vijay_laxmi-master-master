@@ -13,7 +13,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Fragment.Details_Fragment;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 public class Produccts_images_adapter extends RecyclerView.Adapter<Produccts_images_adapter.MyViewHolder>{
 

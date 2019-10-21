@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="trolley.tcc">
+    package="binplus.vijaylaxmi">
 
     <application
-        android:name=".AppController"
+        android:name="binplus.vijaylaxmi.AppController"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/ic_launcher"
@@ -15,10 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-        <activity android:name="com.trolley.tcc.Help"></activity>
+
 
         <activity
-            android:name=".SplashActivity"
+            android:name="binplus.vijaylaxmi.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,38 +27,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="binplus.vijaylaxmi.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".networkconnectivity.NetworkError" />
+<!--        <activity android:name="binplus.vijaylaxmi.NetworkError" />-->
         <activity
-            android:name=".LoginActivity"
+            android:name="binplus.vijaylaxmi.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="binplus.vijaylaxmi.RegisterActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SelectStore" /> <!-- Firebase Notifications -->
-        <activity android:name=".SelectCity" />
+        <activity android:name="binplus.vijaylaxmi.SelectStore" /> <!-- Firebase Notifications -->
+        <activity android:name="binplus.vijaylaxmi.SelectCity" />
         <activity
-            android:name=".ForgotActivity"
+            android:name="binplus.vijaylaxmi.ForgotActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".PaymentGatWay"
+            android:name="binplus.vijaylaxmi.PaymentGatWay"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- ./Firebase Notifications -->
-        <activity android:name=".My_Order_activity" />
+        <activity android:name="binplus.vijaylaxmi.My_Order_activity" />
 
-        <activity android:name=".MyOrderDetail" />
-        <activity android:name=".RechargeWallet" />
-        <activity android:name=".ThanksOrder" />
-        <activity android:name=".OrderFail" />
+        <activity android:name="binplus.vijaylaxmi.MyOrderDetail" />
+        <activity android:name="binplus.vijaylaxmi.RechargeWallet" />
+        <activity android:name="binplus.vijaylaxmi.ThanksOrder" />
+        <activity android:name="binplus.vijaylaxmi.OrderFail" />
         <activity
             android:name="com.paytm.pgsdk.PaytmPGActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".Paytm" />
-        <activity android:name=".networkconnectivity.NoInternetConnection" />
+        <activity android:name="binplus.vijaylaxmi.Paytm" />
+        <activity android:name="binplus.vijaylaxmi.networkconnectivity.NoInternetConnection" />
 
         <meta-data
             android:name="com.google.android.gms.version"

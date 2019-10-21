@@ -28,9 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Support_info_model;
-import trolley.tcc.AppController;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 
 /**

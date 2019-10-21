@@ -1,63 +1,42 @@
 {
   "project_info": {
-    "project_number": "592788118300",
-    "firebase_url": "https://sli-india-soch.firebaseio.com",
-    "project_id": "sli-india-soch",
-    "storage_bucket": "sli-india-soch.appspot.com"
+    "project_number": "433846196787",
+    "firebase_url": "https://vijaylaxmi-750ef.firebaseio.com",
+    "project_id": "vijaylaxmi-750ef",
+    "storage_bucket": "vijaylaxmi-750ef.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:592788118300:android:e81a7f27b0a1ba9e",
+        "mobilesdk_app_id": "1:433846196787:android:d1969df5660c7dd443e146",
         "android_client_info": {
-          "package_name": "com.trolley.tcc"
+          "package_name": "binplus.vijaylaxmi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "592788118300-t1sj4rihg0ke55ctm4p6ql0ik1lpv9ie.apps.googleusercontent.com",
+          "client_id": "433846196787-jmbmsgk8h8opm2v0s0n2jfh6kmmoo522.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "binplus.vijaylaxmi",
+            "certificate_hash": "d9b7f8d108291e703c11a795f4ee0c09034a59ac"
+          }
+        },
+        {
+          "client_id": "433846196787-2d9t336at4lsb18vqj5uq02hhb77onc2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBUpH-lKQ6GkQ-drTboutWSUhNrwsXiTFw"
+          "current_key": "AIzaSyDI26PiQ8bot_dW73X0Q2y-e_hqKPsJgEw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "592788118300-t1sj4rihg0ke55ctm4p6ql0ik1lpv9ie.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:592788118300:android:3dcb709f9c231b79",
-        "android_client_info": {
-          "package_name": "gogrocer.tcc"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "592788118300-t1sj4rihg0ke55ctm4p6ql0ik1lpv9ie.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBUpH-lKQ6GkQ-drTboutWSUhNrwsXiTFw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "592788118300-t1sj4rihg0ke55ctm4p6ql0ik1lpv9ie.apps.googleusercontent.com",
+              "client_id": "433846196787-2d9t336at4lsb18vqj5uq02hhb77onc2.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

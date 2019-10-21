@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 
 /**
  * A simple {@link Fragment} subclass.

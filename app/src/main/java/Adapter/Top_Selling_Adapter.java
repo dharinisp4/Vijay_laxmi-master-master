@@ -36,7 +36,7 @@ import java.util.List;
 import Config.BaseURL;
 import Model.ProductVariantModel;
 import Model.Top_Selling_model;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 import util.DatabaseCartHandler;
 import util.WishlistHandler;
 

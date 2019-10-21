@@ -7,15 +7,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import Model.ProductVariantModel;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHolder> {
     Context context;

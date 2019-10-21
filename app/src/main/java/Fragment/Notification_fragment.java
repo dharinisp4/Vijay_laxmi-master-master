@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 
 public class Notification_fragment extends Fragment {
 

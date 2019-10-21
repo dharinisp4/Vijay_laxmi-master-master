@@ -21,10 +21,8 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,9 +38,9 @@ import Model.Category_model;
 import Model.ProductVariantModel;
 import Model.Product_model;
 import Model.Slider_subcat_model;
-import trolley.tcc.AppController;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 

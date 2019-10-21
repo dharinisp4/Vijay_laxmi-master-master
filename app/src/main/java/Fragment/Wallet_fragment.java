@@ -21,9 +21,9 @@ import org.json.JSONObject;
 
 import Config.BaseURL;
 import Config.SharedPref;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
-import trolley.tcc.RechargeWallet;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
+import binplus.vijaylaxmi.RechargeWallet;
 import util.ConnectivityReceiver;
 import util.Session_management;
 

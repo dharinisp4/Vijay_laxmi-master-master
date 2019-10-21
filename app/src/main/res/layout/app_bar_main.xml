@@ -5,7 +5,7 @@
     android:id="@+id/coordinatorlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="trolley.tcc.MainActivity">
+    tools:context="binplus.vijaylaxmi.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"

@@ -23,7 +23,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 
 public class ExpandableTextView extends LinearLayout implements View.OnClickListener {

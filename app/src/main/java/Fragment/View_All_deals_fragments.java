@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.View_All_Deal_Of_Day_model;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 
 public class View_All_deals_fragments extends Fragment {

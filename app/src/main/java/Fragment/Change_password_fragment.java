@@ -29,9 +29,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Config.BaseURL;
-import trolley.tcc.AppController;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;

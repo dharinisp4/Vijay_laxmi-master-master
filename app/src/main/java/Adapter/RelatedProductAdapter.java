@@ -35,7 +35,7 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.ProductVariantModel;
 import Model.RelatedProductModel;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 import util.DatabaseCartHandler;
 import util.WishlistHandler;
 

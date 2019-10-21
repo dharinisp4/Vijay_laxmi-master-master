@@ -18,7 +18,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.My_order_detail_model;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 /**
  * Created by Rajesh Dabhi on 30/6/2017.

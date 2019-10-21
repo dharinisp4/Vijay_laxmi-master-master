@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 
 public class Empty_cart_fragment extends Fragment {
 

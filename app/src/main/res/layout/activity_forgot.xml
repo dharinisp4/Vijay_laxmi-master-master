@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="trolley.tcc.ForgotActivity">
+    tools:context="binplus.vijaylaxmi.ForgotActivity">
 
     <ImageView
         android:id="@+id/icon"

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

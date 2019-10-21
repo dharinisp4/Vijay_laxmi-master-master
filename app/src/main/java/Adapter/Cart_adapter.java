@@ -28,8 +28,7 @@ import Config.BaseURL;
 import Fragment.Cart_fragment;
 import Fragment.Details_Fragment;
 import Module.Module;
-import trolley.tcc.R;
-import util.CartHandler;
+import binplus.vijaylaxmi.R;
 import util.DatabaseCartHandler;
 
 import static android.content.Context.MODE_PRIVATE;

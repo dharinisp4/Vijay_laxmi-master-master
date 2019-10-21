@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 public class SelectStoreListViewAdapter extends BaseAdapter {
     Context context;

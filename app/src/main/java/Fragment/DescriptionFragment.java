@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 
 
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 /**
  * A simple {@link Fragment} subclass.

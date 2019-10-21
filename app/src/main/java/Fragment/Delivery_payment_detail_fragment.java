@@ -9,16 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import Config.BaseURL;
 import Config.SharedPref;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
-import util.CartHandler;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.DatabaseCartHandler;
 import util.Session_management;
@@ -102,8 +100,8 @@ SharedPreferences preferences;
         }
         getlocation_id = getArguments().getString("location_id");
         getstore_id = getArguments().getString("store_id");
-       // deli_charges = Integer.parseInt(getArguments().getString("deli_charges"));
-        deli_charges = 0;
+//        deli_charges = Integer.parseInt(getArguments().getString("deli_charges"));
+        deli_charges = 50;
         String name = getArguments().getString("name");
         String phone = getArguments().getString( "phone" );
         String house = getArguments().getString( "house" );
@@ -113,7 +111,8 @@ SharedPreferences preferences;
         tv_timeslot.setText(getdate + " " + gettime);
         //tv_address.setText(getaddress);
 
-        total = Double.parseDouble(db_cart.getTotalAmount()) + deli_charges;
+       total = Double.parseDouble(db_cart.getTotalAmount()) + deli_charges;
+      //  total = Double.parseDouble(db_cart.getTotalAmount()) + 50;
 
 //        tv_total.setText("" + db_cart.getTotalAmount());
       //  tv_item.setText("" + db_cart.getWishlistCount());
@@ -132,6 +131,7 @@ SharedPreferences preferences;
         tvDiscount.setText("-"+getResources().getString(R.string.currency)+String.valueOf(d));
         double db = (m-d)+deli_charges ;
     tvDelivary.setText(getResources().getString(R.string.currency)+deli_charges);
+   //     tvDelivary.setText(getResources().getString(R.string.currency)+"50");
        tvSubTotal.setText(getResources().getString(R.string.currency)+db);
      //   tv_total.setText(getResources().getString(R.string.tv_cart_item) + db_cart.getCartCount() + "\n" +
        //         getResources().getString(R.string.amount) + db_cart.getTotalAmount() + "\n" +

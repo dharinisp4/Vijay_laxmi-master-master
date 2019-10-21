@@ -8,7 +8,7 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="@dimen/space_10"
-    tools:context="trolley.tcc.SplashActivity">
+    tools:context="binplus.vijaylaxmi.SplashActivity">
 
     <ImageView
         android:id="@+id/imageView2"

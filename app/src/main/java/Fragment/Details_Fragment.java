@@ -29,7 +29,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,14 +72,13 @@ import Config.BaseURL;
 import Model.ProductVariantModel;
 import Model.RelatedProductModel;
 import Module.Module;
-import trolley.tcc.AppController;
-import trolley.tcc.LoginActivity;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.LoginActivity;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
-import util.ExpandableTextView;
 import util.RecyclerTouchListener;
 import util.Session_management;
 import util.WishlistHandler;
@@ -1520,3 +1518,4 @@ public boolean checkAttributeStatus(String atr)
 
     }
 }
+

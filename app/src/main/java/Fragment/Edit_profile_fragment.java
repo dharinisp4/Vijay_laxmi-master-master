@@ -41,8 +41,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import Config.BaseURL;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.JSONParser;
 import util.NameValuePair;

@@ -15,9 +15,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import trolley.tcc.MainActivity;
-import trolley.tcc.My_Order_activity;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.My_Order_activity;
+import binplus.vijaylaxmi.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

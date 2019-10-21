@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import Model.ProductVariantModel;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 public class ProductVariantAdapter extends BaseAdapter {
 

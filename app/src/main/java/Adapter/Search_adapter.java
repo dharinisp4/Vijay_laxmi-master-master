@@ -26,9 +26,8 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.Product_model;
-import trolley.tcc.MainActivity;
-import trolley.tcc.R;
-import util.CartHandler;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.R;
 import util.DatabaseCartHandler;
 
 /**

@@ -57,7 +57,7 @@
         android:orientation="vertical">
 
 
-        <trolley.tcc.GifImageView
+        <binplus.vijaylaxmi.GifImageView
             android:id="@+id/gif_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

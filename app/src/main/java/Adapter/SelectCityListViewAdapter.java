@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 public class SelectCityListViewAdapter extends BaseAdapter {
     Context context;

@@ -27,11 +27,11 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Config.SharedPref;
-import trolley.tcc.GifImageView;
-import trolley.tcc.MainActivity;
-import trolley.tcc.networkconnectivity.NetworkConnection;
-import trolley.tcc.networkconnectivity.NetworkError;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.GifImageView;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.networkconnectivity.NetworkConnection;
+import binplus.vijaylaxmi.networkconnectivity.NetworkError;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.Session_management;
 

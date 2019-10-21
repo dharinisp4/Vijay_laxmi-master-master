@@ -16,7 +16,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.ShopNow_model;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

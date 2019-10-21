@@ -22,8 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.daimajia.swipe.SimpleSwipeListener;
-import com.daimajia.swipe.SwipeLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,8 +32,8 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Model.Delivery_address_model;
-import trolley.tcc.AppController;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;

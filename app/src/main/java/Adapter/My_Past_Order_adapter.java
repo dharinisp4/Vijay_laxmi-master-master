@@ -15,7 +15,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import Model.My_Past_order_model;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

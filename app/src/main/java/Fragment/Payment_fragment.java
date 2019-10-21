@@ -44,13 +44,12 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Config.SharedPref;
-import trolley.tcc.AppController;
-import trolley.tcc.MainActivity;
-import trolley.tcc.networkconnectivity.NetworkConnection;
-import trolley.tcc.networkconnectivity.NetworkError;
+import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.MainActivity;
+import binplus.vijaylaxmi.networkconnectivity.NetworkConnection;
+import binplus.vijaylaxmi.networkconnectivity.NetworkError;
 
-import trolley.tcc.R;
-import util.CartHandler;
+import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;

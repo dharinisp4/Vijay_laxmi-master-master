@@ -1,7 +1,6 @@
 package Module;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -13,9 +12,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import Adapter.ProductVariantAdapter;
 import Model.ProductVariantModel;
-import trolley.tcc.MainActivity;
+import binplus.vijaylaxmi.MainActivity;
 import util.DatabaseCartHandler;
 
 public class Module {

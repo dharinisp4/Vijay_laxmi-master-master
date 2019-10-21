@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import java.util.List;
 
 import Config.BaseURL;
-import trolley.tcc.R;
+import binplus.vijaylaxmi.R;
 
 public class Product_images_Adapter extends BaseAdapter {
     Context context;
