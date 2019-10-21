@@ -216,24 +216,10 @@
                 android:hint="Password"
                 android:maxLength="10"
                 android:ems="10"/>
-
-            <CheckBox
-                android:id="@+id/chk_user"
-                android:layout_width="wrap_content"
-                android:checked="true"
-                android:text="user"
-                android:fontFamily="@font/cabin"
-                android:layout_height="wrap_content"/>
-            <CheckBox
-                android:id="@+id/chk_owner"
-                android:fontFamily="@font/cabin"
-                android:layout_width="wrap_content"
-                android:text="Owner"
-                android:layout_height="wrap_content"/>
-
             <LinearLayout
                 android:id="@+id/linear_saloon"
                 android:orientation="vertical"
+                android:layout_marginTop="@dimen/space_10"
                 android:layout_width="match_parent"
                 android:visibility="gone"
                 android:layout_height="wrap_content">
@@ -297,7 +283,7 @@
                 </LinearLayout>
 
 
-                <EditText
+                <AutoCompleteTextView
                     android:fontFamily="@font/cabin"
                     android:id="@+id/et_pin"
                     android:layout_width="match_parent"
@@ -446,7 +432,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/space_10"
-                    android:hint="No. of staff"
+                    android:hint="Staff Strength"
                     android:background="@drawable/xml_textbox_bg"
                     android:ems="10"
                     android:inputType="phone"
@@ -542,6 +528,27 @@
                     android:padding="10dp"/>-->
 
             </LinearLayout>
+            <RadioGroup
+                android:id="@+id/radio_checked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/chk_user"
+                android:layout_width="wrap_content"
+                android:checked="true"
+                android:text="App User"
+                android:fontFamily="@font/cabin"
+
+                android:layout_height="wrap_content"/>
+            <CheckBox
+                android:id="@+id/chk_owner"
+                android:fontFamily="@font/cabin"
+                android:layout_width="wrap_content"
+                android:text=" Saloon Owner"
+                android:layout_height="wrap_content"/>
+            </RadioGroup>
+
 
 
             <RelativeLayout

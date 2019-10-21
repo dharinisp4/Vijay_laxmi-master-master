@@ -261,6 +261,14 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
        // txtrate=(TextView)view.findViewById(R.id.product_rate);
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
+        if(db_cart.isInCart( product_id ))
+        {
+            btn_add.setVisibility( View.GONE );
+            numberButton.setVisibility( View.VISIBLE );
+          String qty =  db_cart.getCartItemQty( product_id ) ;
+           numberButton.setNumber( qty );
+
+        }
 
        txtDesc.setText(details_product_desc);
         makeTextViewResizable(txtDesc, 3, "See More", true);

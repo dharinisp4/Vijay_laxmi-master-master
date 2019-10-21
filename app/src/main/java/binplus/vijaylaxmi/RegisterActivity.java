@@ -7,7 +7,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,17 +35,21 @@ import Config.BaseURL;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 
-public class RegisterActivity extends AppCompatActivity {
+public class
+RegisterActivity extends AppCompatActivity {
 
     private static String TAG = RegisterActivity.class.getSimpleName();
 
-    private EditText et_phone, et_name, et_password, et_email;
+    private EditText et_phone, et_name, et_password, et_email ,et_saloon_name,et_city,et_address,et_propretier,et_staff,et_years ,et_turnover;
     private RelativeLayout btn_register;
+    private AutoCompleteTextView et_pin;
     private TextView tv_phone, tv_name, tv_password, tv_email;
+    private LinearLayout linear_saloon ;
+    private CheckBox check_user , check_owner;
+    private RadioGroup radioGroup_checked ;
+    private String [] pincodes ={"202002","2222222" , "284001","248001"};
     @Override
     protected void attachBaseContext(Context newBase) {
-
-
 
         newBase = LocaleHelper.onAttach(newBase);
         super.attachBaseContext(newBase);
@@ -60,7 +70,57 @@ public class RegisterActivity extends AppCompatActivity {
         tv_phone = (TextView) findViewById(R.id.tv_reg_phone);
         tv_name = (TextView) findViewById(R.id.tv_reg_name);
         tv_email = (TextView) findViewById(R.id.tv_reg_email);
-        btn_register = (RelativeLayout) findViewById(R.id.btnRegister);
+        linear_saloon=(LinearLayout)findViewById( R.id.linear_saloon );
+        et_saloon_name=(EditText)findViewById( R.id.et_saloon_name );
+        et_pin =(AutoCompleteTextView) findViewById( R.id.et_pin );
+        et_city=(EditText)findViewById( R.id.et_city );
+        et_address=(EditText)findViewById( R.id.et_address );
+        et_propretier=(EditText)findViewById( R.id.et_proprietor );
+        et_staff =(EditText)findViewById( R.id.et_staff);
+        et_years =(EditText)findViewById( R.id.et_year );
+        et_turnover=(EditText)findViewById( R.id.et_turnover );
+        radioGroup_checked=(RadioGroup)findViewById( R.id.radio_checked );
+        check_owner=(CheckBox)findViewById( R.id.chk_owner );
+        check_user=(CheckBox)findViewById( R.id.chk_user );
+
+        check_user.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b == true) {
+                    check_owner.setChecked( false );
+                    linear_saloon.setVisibility( View.GONE );
+                }
+                else
+                {
+                    check_owner.setChecked( true );
+                    linear_saloon.setVisibility( View.VISIBLE );
+                }
+            }
+        } );
+
+
+        check_owner.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                if (b == true) {
+                    check_user.setChecked( false );
+                    linear_saloon.setVisibility( View.VISIBLE );
+                }
+                else
+                {
+                    check_user.setChecked( true );
+                    linear_saloon.setVisibility( View.GONE );
+                }
+
+            }
+        } );
+
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,pincodes);
+        et_pin.setThreshold( 1 );
+        et_pin.setAdapter( arrayAdapter );
+    btn_register = (RelativeLayout) findViewById(R.id.btnRegister);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
