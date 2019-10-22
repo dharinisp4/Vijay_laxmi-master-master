@@ -137,7 +137,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     Produccts_images_adapter imagesAdapter;
     String cat_id,product_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
     String details_product_price,details_product_mrp,details_product_unit_value,details_product_unit,details_product_rewards,details_product_increament,details_product_title;
-    //String details_product_size,details_product_color;
+    String details_product_qty;
 
     public static ImageView btn,img2;
     private TextView txtrate,txtTotal,txtBack;
@@ -205,7 +205,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
    //     details_product_color=bundle.getString("product_color");
         details_product_inStock=bundle.getString("stock");
         details_product_attribute=bundle.getString("product_attribute");
-
+            details_product_qty=bundle.getString("qty");
      //   details_product_size=bundle.getString("product_size");
         details_product_unit_price =bundle.getString("unit_price");
         details_product_price=bundle.getString("price");
@@ -248,14 +248,14 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
        // txtrate=(TextView)view.findViewById(R.id.product_rate);
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
-        if(db_cart.isInCart( product_id ))
-        {
-            btn_add.setVisibility( View.GONE );
-            numberButton.setVisibility( View.VISIBLE );
-          String qty =  db_cart.getCartItemQty( product_id ) ;
-           numberButton.setNumber( qty );
 
+        if (db_cart.isInCart(product_id))
+        {
+            btn_add.setVisibility(View.GONE);
+            numberButton.setVisibility(View.VISIBLE);
+            numberButton.setNumber(details_product_qty);
         }
+
 
        txtDesc.setText(details_product_desc);
         makeTextViewResizable(txtDesc, 3, "See More", true);

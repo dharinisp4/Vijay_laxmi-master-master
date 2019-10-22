@@ -347,6 +347,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 args.putString("unit",map.get("unit"));
                 args.putString("rewards",map.get("rewards"));
                 args.putString("increment",map.get("increment"));
+                args.putString("qty",map.get("qty"));
                 args.putString("title",map.get( "title" ));
                 // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
                 Details_Fragment fm = new Details_Fragment();
