@@ -91,6 +91,9 @@ SharedPreferences preferences;
         private TextView dialog_unit_type,dialog_txtId,dialog_txtVar;
         Button add ;
         public Double reward;
+
+        String qty ;
+
        WishlistHandler db_wish;
 
         RelativeLayout rel_click;
@@ -173,6 +176,7 @@ SharedPreferences preferences;
                 args.putString("rewards",modelList.get(position).getRewards());
                 args.putString("increment",modelList.get(position).getIncreament());
                 args.putString("title",modelList.get(position).getTitle());
+
                 details_fragment.setArguments(args);
 
 

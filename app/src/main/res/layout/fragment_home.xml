@@ -349,21 +349,40 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary">
+
             <TextView
                 android:id="@+id/bottombutton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_10"
-                android:layout_alignParentBottom="true"
+
+
                 android:padding="@dimen/space_5"
                 android:textSize="15dp"
                 android:fontFamily="@font/cabin"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:background="@color/colorPrimary"
-                android:text="@string/bottomtext"/>
 
+                android:text="If you didnt find what you were looking for "/>
+                <Button
+                    android:id="@+id/click_here"
+                    android:layout_below="@+id/bottombutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                   android:background="@drawable/clickhere"
+                    android:text="Click here"
+                    android:fontFamily="@font/cabin"
+                    android:textColor="@color/white"
+                   android:layout_marginBottom="@dimen/space_5"
 
+                    android:layout_centerHorizontal="true"
+                    />
+
+            </RelativeLayout>
 
 
 

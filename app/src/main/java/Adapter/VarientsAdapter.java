@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHo
             }
         });
         if(row_index==position){
-            holder.rel_click.setCardBackgroundColor(Color.parseColor("#fc6b03"));
+            holder.rel_click.setCardBackgroundColor(Color.parseColor("000000"));
             holder.txt_weight.setTextColor(Color.parseColor("#ffffff"));
         }
         else
@@ -63,11 +64,13 @@ public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHo
 
         CardView rel_click;
         TextView txt_weight ;
+        ImageView img_selected ;
 
         public ViewHolder(View itemView) {
             super( itemView );
             rel_click=(CardView) itemView.findViewById(R.id.rel_click);
             txt_weight=(TextView) itemView.findViewById( R.id.txt_weight);
+            img_selected=(ImageView)itemView.findViewById( R.id.img_selected );
         }
     }
 }

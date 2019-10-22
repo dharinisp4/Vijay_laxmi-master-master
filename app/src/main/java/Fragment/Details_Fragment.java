@@ -248,12 +248,21 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
        // txtrate=(TextView)view.findViewById(R.id.product_rate);
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
+        //String qty = db_cart.getCartItemQty( product_id );
+
+        txtName.setText( details_product_name );
 
         if (db_cart.isInCart(product_id))
         {
             btn_add.setVisibility(View.GONE);
             numberButton.setVisibility(View.VISIBLE);
-            numberButton.setNumber(details_product_qty);
+
+          // numberButton.setNumber(details_product_qty);
+        }
+        else
+        {
+            numberButton.setVisibility( View.GONE );
+            btn_add.setVisibility( View.VISIBLE );
         }
 
 

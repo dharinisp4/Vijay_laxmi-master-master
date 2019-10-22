@@ -59,9 +59,7 @@ import util.Session_management;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 27/6/2017.
- */
+
 
 public class Delivery_fragment extends Fragment implements View.OnClickListener {
 
@@ -347,6 +345,8 @@ String language;
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", user_id);
+
+        Toast.makeText( getActivity(),"id" + user_id,Toast.LENGTH_LONG ).show();
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.GET_ADDRESS_URL, params, new Response.Listener<JSONObject>() {

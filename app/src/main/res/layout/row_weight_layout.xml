@@ -20,6 +20,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="500ml"/>
+        <ImageView
+            android:id="@+id/img_selected"
+            android:layout_width="@dimen/space_15"
+            android:layout_height="@dimen/space_15"
+            android:src="@drawable/icons8_approval_52px"
+            android:tint="@color/colorPrimary"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/space_12"
+            />
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

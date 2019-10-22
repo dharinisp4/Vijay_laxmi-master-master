@@ -75,23 +75,8 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
 
             }
         });
-//        holder.img_color.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//
-//
-//            }
-//        });
 
-//        holder.img_color.setOnClickListener( new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                holder.img_selected.setVisibility( View.VISIBLE );
-//            }
-//        } );
-       holder.txt.setText("a");
+    //   holder.txt.setText("a");
 
 
     }
