@@ -9,14 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.List;
 
+import Config.BaseURL;
+import Fragment.Details_Fragment;
 import Model.ProductVariantModel;
 import binplus.vijaylaxmi.R;
+
+import static Fragment.Details_Fragment.btn;
 
 public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHolder> {
     Context context;
     List<ProductVariantModel> varientList ;
+
+    ProductVariantModel list;
+    int pos=-1;
 
     int row_index=-1;
     public VarientsAdapter(Context context, List<ProductVariantModel> varientList) {
@@ -32,26 +42,26 @@ public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        ProductVariantModel model=varientList.get(position);
+        final ProductVariantModel model=varientList.get(position);
         holder.txt_weight.setText(model.getAttribute_name());
+
+        if(pos==position)
+            holder.rel_click.setCardBackgroundColor(context.getResources().getColor(R.color.orange));
+        else
+            holder.rel_click.setCardBackgroundColor(Color.parseColor("#ffffff"));
         holder.rel_click.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                row_index=position;
+            public void onClick(View v) {
+              pos=position;
                 notifyDataSetChanged();
+                Details_Fragment.position=position;
+                Details_Fragment.btn_adapter.performClick();
+
+
             }
         });
-        if(row_index==position){
-            holder.rel_click.setCardBackgroundColor(Color.parseColor("#fc6b03"));
-            holder.txt_weight.setTextColor(Color.parseColor("#ffffff"));
-        }
-        else
-        {
-            holder.rel_click.setCardBackgroundColor(Color.parseColor("#ffffff"));
-            holder.txt_weight.setTextColor(Color.parseColor("#fc6b03"));
-        }
     }
 
     @Override
@@ -61,7 +71,7 @@ public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        CardView rel_click;
+      public CardView rel_click;
         TextView txt_weight ;
 
         public ViewHolder(View itemView) {
@@ -70,4 +80,10 @@ public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHo
             txt_weight=(TextView) itemView.findViewById( R.id.txt_weight);
         }
     }
+
+    public ProductVariantModel getData()
+    {
+       return list;
+    }
+
 }

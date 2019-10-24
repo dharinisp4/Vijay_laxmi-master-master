@@ -2,6 +2,7 @@ package Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,7 @@ public class Home_Icon_Adapter extends RecyclerView.Adapter<Home_Icon_Adapter.My
             super(view);
             title = (TextView) view.findViewById(R.id.service_text);
             image = (ImageView) view.findViewById(R.id.service_image);
+           // card = (CardView) view.findViewById(R.id.card);
 
 
         }

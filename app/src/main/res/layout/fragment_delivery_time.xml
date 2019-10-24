@@ -99,6 +99,15 @@
                     </RelativeLayout>
 
                 </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:background="@color/light_gray"
+                    android:layout_height="match_parent">
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/rv_deli_address" />
+                </RelativeLayout>
 <!--                <TextView-->
 <!--                    android:fontFamily="@font/cabin"-->
 <!--                    android:id="@+id/txtdelivery"-->
@@ -115,10 +124,7 @@
 <!--                    />-->
 
 
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/rv_deli_address" />
+
 
             </LinearLayout>
         </LinearLayout>

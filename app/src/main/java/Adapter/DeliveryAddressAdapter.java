@@ -153,11 +153,11 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
         public RadioButton rb_select;
 
 
-        Button buttonDelete, btn_edit;
+        TextView buttonDelete, btn_edit;
         public ViewHolder(View itemView) {
             super( itemView );
-            buttonDelete = (Button) itemView.findViewById( R.id.delete);
-            btn_edit = (Button) itemView.findViewById(R.id.edit);
+            buttonDelete = (TextView) itemView.findViewById( R.id.delete);
+            btn_edit = (TextView) itemView.findViewById(R.id.edit);
 
             tv_address = (TextView) itemView.findViewById(R.id.tv_adres_address);
             tv_name = (TextView) itemView.findViewById(R.id.tv_adres_username);

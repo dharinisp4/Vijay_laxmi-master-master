@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import Config.BaseURL;
+import Fragment.Details_Fragment;
 import Interface.RecyclerViewClickListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 import binplus.vijaylaxmi.R;
@@ -57,7 +58,10 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
         if(pos==position)
          holder.img_selected.setVisibility(View.VISIBLE);
         else
-            holder.img_selected.setVisibility(View.GONE);
+        {
+                 holder.img_selected.setVisibility(View.GONE);
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,6 +73,8 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .dontAnimate()
                         .into(btn);
+
+                Details_Fragment.col_position=position;
 
                 pos=position;
                 notifyDataSetChanged();
@@ -116,6 +122,7 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
             txt=(TextView) itemView.findViewById(R.id.txt);
             img_selected=(ImageView)itemView.findViewById( R.id.color_selected );
             mListener = listener;
+           // img_selected.setVisibility(View.VISIBLE);
 
            //itemView.setOnClickListener( this );
         }

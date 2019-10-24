@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 
@@ -77,6 +78,7 @@ import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.LoginActivity;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
+import binplus.vijaylaxmi.ThanksOrder;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
@@ -89,7 +91,12 @@ import util.WishlistHandler;
  */
 public class Details_Fragment extends Fragment implements  RecyclerView.OnClickListener {
     String flag="";
+    int pos=-1;
+    public static  int col_position=-1;
+    public static int position=-1;
     String atr_id="";
+    int row_index=0;
+    public static Button btn_adapter;
     String atr_product_id="";
     String attribute_name="";
     String attribute_value="";
@@ -183,7 +190,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         rel_weight=(RelativeLayout) view.findViewById(R.id.rel_weight);
         rel_color=(RelativeLayout) view.findViewById(R.id.rel);
         details_product_weight=(TextView)view.findViewById(R.id.details_product_weight);
-        // gifImageView=(ImageView) view.findViewById(R.id.gifImageView);
+        btn_adapter=(Button) view.findViewById(R.id.btn_adapter);
         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
 
         rv_cat.setLayoutManager(linearLayoutManager1);
@@ -202,11 +209,8 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         product_images=bundle.getString("product_image");
         details_product_name=bundle.getString("product_name");
         details_product_desc=bundle.getString("product_description");
-   //     details_product_color=bundle.getString("product_color");
         details_product_inStock=bundle.getString("stock");
         details_product_attribute=bundle.getString("product_attribute");
-            details_product_qty=bundle.getString("qty");
-     //   details_product_size=bundle.getString("product_size");
         details_product_unit_price =bundle.getString("unit_price");
         details_product_price=bundle.getString("price");
         details_product_mrp=bundle.getString("mrp");
@@ -224,7 +228,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         btn_add_to_cart=(Button)view.findViewById(R.id.btn_f_Add_to_cart);
        // cardView=(CardView)view.findViewById(R.id.card_view2);
         txtPer=(TextView)view.findViewById(R.id.details_product_per);
-
         rel_variant=(RelativeLayout)view.findViewById(R.id.rel_variant);
         btn=(ImageView)view.findViewById(R.id.img_product);
         recyclerView=view.findViewById(R.id.recylerView);
@@ -249,15 +252,16 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
 
-        if (db_cart.isInCart(product_id))
-        {
-            btn_add.setVisibility(View.GONE);
-            numberButton.setVisibility(View.VISIBLE);
-            numberButton.setNumber(details_product_qty);
-        }
+//        if (db_cart.isInCart(product_id))
+//        {
+//            btn_add.setVisibility(View.GONE);
+//            numberButton.setVisibility(View.VISIBLE);
+//            numberButton.setNumber(details_product_qty);
+//        }
 
 
        txtDesc.setText(details_product_desc);
+       txtName.setText(details_product_name);
         makeTextViewResizable(txtDesc, 3, "See More", true);
 
 
@@ -282,6 +286,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         }
         else
         {
+            details_product_weight.setVisibility(View.GONE);
             rel_color.setVisibility(View.VISIBLE);
             rel_weight.setVisibility(View.VISIBLE);
             makeGetAttributeRequest(product_id);
@@ -295,9 +300,12 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             RecyclerView.LayoutManager layoutManager1=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
             rv_weight.setLayoutManager(layoutManager1);
             varientsAdapter=new VarientsAdapter(getActivity(),vlist);
+          // ProductVariantModel model= varientsAdapter.getListData();
             rv_weight.setAdapter(varientsAdapter);
 
-          //  Toast.makeText(getActivity(),""+var_respons.toString(),Toast.LENGTH_LONG).show();
+
+        //    Toast.makeText(getActivity(),""+model.getAttribute_image()
+            //        .toString(),Toast.LENGTH_LONG).show();
             //       List<ProductVariantModel> p_list=  getAttr();
 
 //            details_product_mrp=v_list.get(0).getAttribute_mrp();
@@ -306,9 +314,12 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
         }
 
-        rv_weight.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_weight, new RecyclerTouchListener.OnItemClickListener() {
+
+        btn_adapter.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onClick(View view) {
+
+             //   Toast.makeText(getActivity(),""+position, Toast.LENGTH_LONG).show();
 
                 ProductVariantModel model=vlist.get(position);
 
@@ -317,8 +328,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 attribute_mrp=model.getAttribute_mrp();
                 attribute_value=model.getAttribute_value();
                 attribute_name=model.getAttribute_name();
-              //  view.setCard(Color.parseColor("#36a93c"));
-            //   view.setCardBackgroundColor(Color.parseColor("#36a93c"));
+
                 txtPrice.setText(getResources().getString(R.string.currency)+model.getAttribute_value());
                 txtMrp.setText(getResources().getString(R.string.currency)+model.getAttribute_mrp());
                 Double mrp=Double.parseDouble(model.getAttribute_mrp());
@@ -331,63 +341,61 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 }
                 else  txtPer.setVisibility(View.GONE);
 
+
                 try
                 {
 
 
-                String str_col=vlist.get(position).getAttribute_color();
-                if(str_col.isEmpty() || str_col.equals(null))
-                {
-                    Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
-                    rv_color.setVisibility(View.GONE);
-                    colorAdapter.notifyDataSetChanged();
-                }
-                else
-                {
-                    list_color.clear();
-                   rv_color.setVisibility(View.VISIBLE);
-                    JSONArray col_array=new JSONArray(str_col);
-                    for(int j=0; j<col_array.length();j++)
+                    String str_col=vlist.get(position).getAttribute_color();
+                    if(str_col.isEmpty() || str_col.equals(null))
                     {
-                        list_color.add(col_array.getString(j).toString());
+                        Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                        rv_color.setVisibility(View.GONE);
+                        colorAdapter.notifyDataSetChanged();
                     }
-                    colorAdapter.notifyDataSetChanged();
-                    //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
+                    else
+                    {
+                        list_color.clear();
+                        rv_color.setVisibility(View.VISIBLE);
+                        JSONArray col_array=new JSONArray(str_col);
+                        for(int j=0; j<col_array.length();j++)
+                        {
+                            list_color.add(col_array.getString(j).toString());
+                        }
+                        colorAdapter.notifyDataSetChanged();
+                        //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
+                    }
+
+                    list_images.clear();
+                    String str_img=vlist.get(position).getAttribute_image();
+                    if(str_img.isEmpty() || str_img.equals(null))
+                    {
+                        Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+
+                        JSONArray col_array=new JSONArray(str_img);
+                        for(int j=0; j<col_array.length();j++)
+                        {
+                            list_images.add(col_array.getString(j).toString());
+                        }
+                        //attribute_img=list_images.get(position).toString();
+                        varientsAdapter.notifyDataSetChanged();
+                        //colorAdapter.notifyDataSetChanged();
+                        //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
 
-                list_images.clear();
-                String str_img=vlist.get(position).getAttribute_image();
-                if(str_img.isEmpty() || str_img.equals(null))
-                {
-                    Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
-                }
-                else
-                {
-
-                    JSONArray col_array=new JSONArray(str_img);
-                    for(int j=0; j<col_array.length();j++)
-                    {
-                        list_images.add(col_array.getString(j).toString());
-                    }
-                    //attribute_img=list_images.get(position).toString();
-                    varientsAdapter.notifyDataSetChanged();
-                    //colorAdapter.notifyDataSetChanged();
-                    //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
-                }
-                }
-catch (Exception ex)
-{
-    ex.printStackTrace();
-    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
-}
 
             }
+        });
 
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
 
 
 
@@ -655,14 +663,42 @@ catch (Exception ex)
         btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ConnectivityReceiver.isConnected()) {
-                   // db_cart.clearCart();
+
+                if(details_product_attribute.equals("[]"))
+                {
+                    if (ConnectivityReceiver.isConnected()) {
+                        // db_cart.clearCart();
 //                    Toast.makeText(getActivity(),""+vlist.size()+"\n a_id "+atr_id+"\n a_p_id "+atr_product_id+
 //                            "\n a_name"+attribute_name+"\n a_value "+attribute_value+"\n a_mrp "+attribute_mrp+
 //                            "\n a_img "+attribute_img+"a_color "+attribute_color,Toast.LENGTH_LONG).show();
-                    makeGetLimiteRequest();
-                } else {
-                    ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+                        makeGetLimiteRequest();
+                    } else {
+                        ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+                    }
+                }
+                else
+                {
+                    if(position<0)
+                    {
+                        Toast.makeText(getActivity(),"Please select any weight",Toast.LENGTH_LONG).show();
+                    }
+                    else if(col_position<0)
+                    {
+                        Toast.makeText(getActivity(),"Please select any color",Toast.LENGTH_LONG).show();
+                    }
+                    else {
+
+
+                        if (ConnectivityReceiver.isConnected()) {
+                            // db_cart.clearCart();
+//                    Toast.makeText(getActivity(),""+vlist.size()+"\n a_id "+atr_id+"\n a_p_id "+atr_product_id+
+//                            "\n a_name"+attribute_name+"\n a_value "+attribute_value+"\n a_mrp "+attribute_mrp+
+//                            "\n a_img "+attribute_img+"a_color "+attribute_color,Toast.LENGTH_LONG).show();
+                            makeGetLimiteRequest();
+                        } else {
+                            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+                        }
+                    }
                 }
 
             }
