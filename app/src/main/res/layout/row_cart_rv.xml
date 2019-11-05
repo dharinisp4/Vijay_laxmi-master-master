@@ -87,6 +87,7 @@ android:elevation="@dimen/space_5"
                         android:fontFamily="@font/cabin"
                         android:layout_marginLeft="@dimen/space_10"
                         android:paddingTop="@dimen/space_5"
+                        android:paddingBottom="@dimen/space_2"
                         android:textSize="12dp"
                         android:textColor="@color/colorPrimary"
                         android:text="discount"/></RelativeLayout>

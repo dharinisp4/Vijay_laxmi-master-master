@@ -20,6 +20,12 @@
             android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/btn_color"
+            android:text="adapter"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <RelativeLayout
             android:id="@+id/relative_layout_img"
             android:layout_width="match_parent"
@@ -36,8 +42,8 @@
                 />
             <ImageView
                 android:id="@+id/wish_before"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_margin="@dimen/space_10"
@@ -45,8 +51,8 @@
                 />
             <ImageView
                 android:id="@+id/wish_after"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
 
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
@@ -114,7 +120,7 @@
                             android:visibility="gone"
                             android:id="@+id/rel_weight"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp">
+                            android:layout_height="50dp">
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rv_weight"
@@ -131,7 +137,7 @@
                             android:visibility="gone"
                             android:layout_below="@id/rel_weight"
                             android:layout_width="match_parent"
-                            android:layout_height="100dp">
+                            android:layout_height="70dp">
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rv_color"

@@ -34,6 +34,7 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 
 import org.json.JSONArray;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -155,7 +156,7 @@ SharedPreferences preferences;
                 Details_Fragment details_fragment=new Details_Fragment();
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Bundle args = new Bundle();
-
+                 List<Product_model> lst=modelList;
                 args.putString("cat_id", modelList.get(position).getCategory_id());
                 args.putString("product_id",modelList.get(position).getProduct_id());
                 args.putString("product_image",modelList.get(position).getProduct_image());
@@ -163,7 +164,7 @@ SharedPreferences preferences;
                 args.putString("product_description",modelList.get(position).getProduct_description());
                 args.putString("stock",modelList.get(position).getIn_stock());
 //                args.putString("product_size",modelList.get(position).getSize());
-                args.putString("product_color",modelList.get( position).getColor());
+               // args.putString("product_color",modelList.get( position).getColor());
                 args.putString("price",modelList.get(position).getPrice());
                 args.putString("mrp",modelList.get(position).getMrp());
                 args.putString( "unit_price",modelList.get( position ).getPrice());
@@ -173,6 +174,8 @@ SharedPreferences preferences;
                 args.putString("rewards",modelList.get(position).getRewards());
                 args.putString("increment",modelList.get(position).getIncreament());
                 args.putString("title",modelList.get(position).getTitle());
+
+                args.putSerializable("product_model", (Serializable) lst);
                 details_fragment.setArguments(args);
 
 
@@ -220,7 +223,7 @@ SharedPreferences preferences;
                             //   context.setCartCounter("" + holder.db_cart.getCartCount());
                             Toast.makeText(context, "Added to Wishlist", Toast.LENGTH_LONG).show();
 
-
+                            updateintent();
 
                         }
                         else
@@ -243,7 +246,7 @@ SharedPreferences preferences;
                 wish_after.setVisibility( View.INVISIBLE );
                 wish_before.setVisibility( View.VISIBLE );
                db_wish.removeItemFromWishtable(mList.getProduct_id());
-
+                    updateintent();
                Toast.makeText(context, "removed from Wishlist", Toast.LENGTH_LONG).show();
                // list.remove(position);
               notifyDataSetChanged();
@@ -352,23 +355,8 @@ SharedPreferences preferences;
             image_list.clear();
             JSONArray array=new JSONArray(mList.getProduct_image());
             //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
-            if(mList.getProduct_image().equals(null))
-            {
-                Glide.with(context)
-                        .load(BaseURL.IMG_PRODUCT_URL +mList.getProduct_image() )
-                        .centerCrop()
-                        .placeholder(R.drawable.icon)
-                        .crossFade()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .dontAnimate()
-                        .into(holder.iv_logo);
-            }
-            else
-            {
-                String st_atr=mList.getProduct_attribute().toString();
-                if(st_atr.equals("[]"))
-                {
-                    for(int i=0; i<=array.length()-1;i++)
+
+            for(int i=0; i<=array.length()-1;i++)
                     {
                         image_list.add(array.get(i).toString());
 
@@ -383,27 +371,48 @@ SharedPreferences preferences;
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .dontAnimate()
                             .into(holder.iv_logo);
-                }
-                else
-                {
-                    List<ProductVariantModel> variantModels=module.getAttribute(atr);
-
-                    String img=variantModels.get(0).getAttribute_image();
-
-                    String img_f=getAttrFstImage(img);
-
-
-                    Glide.with(context)
-                            .load(BaseURL.IMG_PRODUCT_URL +img_f.toString() )
-                             .fitCenter()
-                            .placeholder(R.drawable.icon)
-                            .crossFade()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .dontAnimate()
-                            .into(holder.iv_logo);
-                }
-
-            }
+//            }
+//            else
+//            {
+//                String st_atr=mList.getProduct_attribute().toString();
+//                if(st_atr.equals("[]"))
+//                {
+//                    for(int i=0; i<=array.length()-1;i++)
+//                    {
+//                        image_list.add(array.get(i).toString());
+//
+//                    }
+//
+//
+//                    Glide.with(context)
+//                            .load(BaseURL.IMG_PRODUCT_URL +image_list.get(0) )
+//                            // .centerCrop()
+//                            .placeholder(R.drawable.icon)
+//                            .crossFade()
+//                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                            .dontAnimate()
+//                            .into(holder.iv_logo);
+//                }
+//                else
+//                {
+//                    List<ProductVariantModel> variantModels=module.getAttribute(atr);
+//
+//                    String img=variantModels.get(0).getAttribute_image();
+//
+//                    String img_f=getAttrFstImage(img);
+//
+//
+//                    Glide.with(context)
+//                            .load(BaseURL.IMG_PRODUCT_URL +img_f.toString() )
+//                             .fitCenter()
+//                            .placeholder(R.drawable.icon)
+//                            .crossFade()
+//                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                            .dontAnimate()
+//                            .into(holder.iv_logo);
+//                }
+//
+//            }
 
 
             // Toast.makeText(Product_Frag_details.this,""+image_list.toString(),Toast.LENGTH_LONG).show();
@@ -704,7 +713,7 @@ SharedPreferences preferences;
                             //   context.setCartCounter("" + holder.db_cart.getCartCount());
                             Toast.makeText(context, "Added to Cart", Toast.LENGTH_LONG).show();
                             int n= db_cart.getCartCount();
-                            updateintent();
+                           // updateintent();
 
 
                         }
@@ -765,7 +774,7 @@ SharedPreferences preferences;
                             //   context.setCartCounter("" + holder.db_cart.getCartCount());
                             Toast.makeText(context, "Added to Cart", Toast.LENGTH_LONG).show();
                             int n= db_cart.getCartCount();
-                            updateintent();
+                           // updateintent();
 
 
                         }
@@ -1040,7 +1049,7 @@ SharedPreferences preferences;
     }
 
     private void updateintent() {
-        Intent updates = new Intent("Grocery_cart");
+        Intent updates = new Intent("Grocery_wish");
         updates.putExtra("type", "update");
         context.sendBroadcast(updates);
     }

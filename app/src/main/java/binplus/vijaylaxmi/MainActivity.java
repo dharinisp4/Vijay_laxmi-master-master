@@ -462,7 +462,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setCartCounter(String totalitem) {
         try {
+            totalBudgetCount.setVisibility(View.VISIBLE);
             totalBudgetCount.setText(totalitem);
+        } catch (Exception e) {
+
+        }
+    }
+    public void setWishCounter(String totalitem) {
+        try {
+           totalBudgetCount2.setVisibility(View.VISIBLE);
+            totalBudgetCount2.setText(totalitem);
         } catch (Exception e) {
 
         }

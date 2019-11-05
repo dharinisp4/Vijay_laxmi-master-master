@@ -37,8 +37,8 @@ public class Shop_Now_adapter extends RecyclerView.Adapter<Shop_Now_adapter.MyVi
 
         public MyViewHolder(View view) {
             super(view);
-            title = (TextView) view.findViewById(R.id.tv_home_title);
-            image = (ImageView) view.findViewById(R.id.iv_home_img);
+            title = (TextView) view.findViewById(R.id.service_text);
+            image = (ImageView) view.findViewById(R.id.service_image);
         }
     }
 
@@ -49,7 +49,7 @@ public class Shop_Now_adapter extends RecyclerView.Adapter<Shop_Now_adapter.MyVi
     @Override
     public Shop_Now_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_shop_now, parent, false);
+                .inflate(R.layout.row_headre_catogaries, parent, false);
 
         context = parent.getContext();
 

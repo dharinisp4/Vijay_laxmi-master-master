@@ -2,7 +2,11 @@ package Fragment;
 
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +22,7 @@ import java.util.HashMap;
 import Adapter.Wishlist_Adapter;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
+import util.DatabaseCartHandler;
 import util.WishlistHandler;
 
 
@@ -28,6 +33,7 @@ public class Wishlist extends Fragment {
     private static String TAG = Shop_Now_fragment.class.getSimpleName();
     private Bundle savedInstanceState;
     private WishlistHandler db_wish;
+    private DatabaseCartHandler db_cart;
     RecyclerView rv_wishlist;
     ProgressDialog loadingBar;
 
@@ -54,7 +60,7 @@ public class Wishlist extends Fragment {
 
         //db = new DatabaseHandler(getActivity());
         db_wish = new WishlistHandler( getActivity() );
-
+        db_cart=new DatabaseCartHandler(getActivity());
         loadingBar=new ProgressDialog(getActivity());
         loadingBar.setMessage("Loading...");
         loadingBar.setCanceledOnTouchOutside(false);
@@ -65,7 +71,7 @@ public class Wishlist extends Fragment {
         Wishlist_Adapter adapter = new Wishlist_Adapter( map,getActivity() );
         rv_wishlist.setAdapter( adapter );
         adapter.notifyDataSetChanged();
-
+    updateData();
 
 
         return view;
@@ -102,5 +108,52 @@ public class Wishlist extends Fragment {
 
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // unregister reciver
+        getActivity().unregisterReceiver(mCart);
+        getActivity().unregisterReceiver(mWish);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // register reciver
+        getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+        getActivity().registerReceiver(mWish, new IntentFilter("Grocery_wish"));
+    }
+
+    // broadcast reciver for receive data
+    private BroadcastReceiver mWish = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("update")) {
+                updateData();
+            }
+        }
+    };
+
+    private void updateData() {
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount());
+    }
+    private void updateCartData() {
+        ((MainActivity) getActivity()).setCartCounter("" + db_cart.getCartCount());
+    }
+    private BroadcastReceiver mCart = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("update")) {
+                updateData();
+            }
+        }
+    };
 }
 

@@ -1,10 +1,13 @@
 package Adapter;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -22,12 +26,15 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import Config.BaseURL;
+import Fragment.Details_Fragment;
 import Model.ProductVariantModel;
+import Model.Product_model;
 import Model.Wish_model;
 import Module.Module;
 import binplus.vijaylaxmi.R;
@@ -59,6 +66,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
     Activity activity;
     String Reward;
     int status=0;
+    String id="";
 
     Double price ,reward ;
     SharedPreferences preferences;
@@ -67,6 +75,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
    WishlistHandler db_wish ;
     DatabaseCartHandler db_cart;
     String product_id ;
+    boolean isInCart=false;
   String cat_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
     String details_product_price,details_product_mrp,details_product_unit_value,details_product_unit_price,details_product_unit,details_product_rewards,details_product_increament,details_product_title;
 
@@ -111,6 +120,15 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
         holder.product_name.setText( map.get( "product_name" ));
         holder.txtdesc.setText( map.get( "product_description" ) );
 
+
+
+
+//        boolean flag=db_cart.isCartIDInCart(id);
+//        if(flag)
+//        {
+//            holder.icon_cart.setColorFilter( ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+//        }
+
         product_id=map.get("product_id");
         product_images=map.get("product_image");
         cat_id=map.get("cat_id");
@@ -125,18 +143,41 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
         details_product_attribute=map.get("product_attribute");
          details_product_increament=map.get("increment");
         details_product_title=map.get("title");
+        details_product_rewards=map.get("rewards");
         String st_atr=map.get("product_attribute");
 
+
+
+//        id=db_cart.getCartId(map.get("product_id"),"","");
+//
+//        if(id.equals("") || id.isEmpty())
+//        {
+//            holder.icon_cart.setVisibility(View.VISIBLE);
+//            holder.cart_after.setVisibility(View.GONE);
+//        }
+//        else
+//        {
+//            isInCart=db_cart.isCartIDInCart(id);
+//            if(isInCart)
+//            {
+//                holder.icon_cart.setVisibility(View.GONE);
+//                holder.cart_after.setVisibility(View.VISIBLE);
+//            }
+//        }
+
+
+
+        //  Toast.makeText(activity,""+map.get("product_id")+"\n cart "+id,Toast.LENGTH_LONG).show();
         if(st_atr.equals("[]"))
         {
-            holder.product_price.setText(map.get("price"));
-            holder.product_mrp.setText(map.get("mrp"));
+            holder.product_price.setText(activity.getResources().getString(R.string.currency)+map.get("price"));
+            holder.product_mrp.setText(activity.getResources().getString(R.string.currency)+map.get("mrp"));
 
             String p=String.valueOf(map.get("price"));
             String m=String.valueOf(map.get("mrp"));
             int discount=getDiscount(p,m);
             //Toast.makeText(getActivity(),""+atr,Toast.LENGTH_LONG).show();
-            holder.discount.setText(""+discount+"% OFF");
+            holder.discount.setText(""+discount+"% OFF"+id);
 
             holder.txtrate.setText(map.get("unit_value")+" "+map.get("unit"));
 
@@ -149,8 +190,8 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
         getAttrImage(vlst.get(0).getAttribute_image());
 
 
-            holder.product_price.setText(vlst.get(0).getAttribute_value());
-            holder.product_mrp.setText(vlst.get(0).getAttribute_mrp());
+            holder.product_price.setText(activity.getResources().getString(R.string.currency)+vlst.get(0).getAttribute_value());
+            holder.product_mrp.setText(activity.getResources().getString(R.string.currency)+vlst.get(0).getAttribute_mrp());
             String p=String.valueOf(vlst.get(0).getAttribute_value());
             String m=String.valueOf(vlst.get(0).getAttribute_mrp());
             int discount=getDiscount(p,m);
@@ -164,9 +205,37 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
             @Override
             public void onClick(View view) {
 
-//                db_cart.clearCart();
-//                Toast.makeText(activity,""+map.get("product_attribute").toString()
-//                        ,Toast.LENGTH_LONG).show();
+                Details_Fragment details_fragment=new Details_Fragment();
+                AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                Bundle args = new Bundle();
+
+                args.putString("cat_id",map.get("cat_id"));
+                args.putString("product_id",map.get("product_id"));
+                args.putString("product_image",map.get("product_image"));
+                args.putString("product_name",map.get("product_name"));
+                args.putString("product_description",map.get("product_description"));
+                args.putString("stock",map.get("stock"));
+//                args.putString("product_size",modelList.get(position).getSize());
+          //      args.putString("product_color",map.get("cat_id"));
+                args.putString("price",map.get("price"));
+                args.putString("mrp",map.get("mrp"));
+                args.putString("unit_price",map.get("unit_price"));
+                args.putString("unit_value",map.get("unit_value"));
+                args.putString("unit",map.get("unit"));
+                args.putString("product_attribute",map.get("product_attribute"));
+                args.putString("rewards",map.get("rewards"));
+                args.putString("increment",map.get("increment"));
+                args.putString("title",map.get("title"));
+
+
+                details_fragment.setArguments(args);
+
+
+                FragmentManager fragmentManager=activity.getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel,details_fragment)
+
+                        .addToBackStack(null).commit();
+
 
             }
         });
@@ -175,7 +244,9 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
             @Override
             public void onClick(View view) {
 
-                holder.icon_cart.setColorFilter( ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+                holder.icon_cart.setVisibility(View.GONE);
+                holder.cart_after.setVisibility(View.VISIBLE);
+            //    holder.icon_cart.setColorFilter( ContextCompat.getColor(activity, R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
                 float qty = 1;
                 String atr = String.valueOf(map.get("product_attribute"));
                 if (atr.equals("[]")) {
@@ -209,7 +280,29 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
 
                 }
 
+                updateCartintent();
 
+
+
+            }
+        });
+
+        holder.cart_after.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //String cart_id=db_cart.getCartIDForWishlist(map.get("product_id"),"w");
+                Toast.makeText(activity,""+map.get("increment"),Toast.LENGTH_LONG).show();
+//                if(cart_id.equals("") || cart_id.isEmpty())
+//                {
+//
+//                }
+//                else
+//                {
+//
+//                    db_cart.removeItemFromCart(cart_id);
+//                    updateCartintent();
+//                }
 
             }
         });
@@ -217,6 +310,9 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 holder.db_wish.removeItemFromWishtable(map.get("product_id"));
                 list.remove(position);
                 notifyDataSetChanged();
@@ -280,7 +376,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
         public WishlistHandler db_wish;
         TextView product_name ,product_price ,product_mrp ,unit_type ,discount;
         RelativeLayout varient , rel_wishlist ;
-        ImageView iv_icon , delete ,icon_cart ;
+        ImageView iv_icon , delete ,icon_cart ,cart_after;
         CardView card_wishlist ;
         Button add ;
         private TextView dialog_unit_type,dialog_txtId,dialog_txtVar;
@@ -299,6 +395,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
             add=itemView.findViewById( R.id.btn_add );
             iv_icon=(ImageView)itemView.findViewById( R.id.iv_icon );
             delete=(ImageView)itemView.findViewById( R.id.delete );
+            cart_after=(ImageView)itemView.findViewById( R.id.cart_after );
             varient= itemView.findViewById( R.id.varient );
             txtrate=(TextView)itemView.findViewById(R.id.single_varient);
             db_cart=new DatabaseCartHandler(activity);
@@ -316,11 +413,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
             variantList=new ArrayList<>();
         }
     }
-    private void updateintent() {
-        Intent updates = new Intent("Grocery_cart");
-        updates.putExtra("type", "update");
-        activity.sendBroadcast(updates);
-    }
+
 
     public int getDiscount(String price, String mrp)
     {
@@ -346,8 +439,18 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
         return sts;
     }
 
-    public void setAttr(String atr)
-    {
 
+    private void updateintent() {
+        Intent updates = new Intent("Grocery_wish");
+        updates.putExtra("type", "update");
+        activity.sendBroadcast(updates);
     }
+
+    private void updateCartintent() {
+        Intent updates = new Intent("Grocery_cart");
+        updates.putExtra("type", "update");
+        activity.sendBroadcast(updates);
+    }
+
+
 }

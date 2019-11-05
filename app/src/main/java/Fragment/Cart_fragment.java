@@ -254,6 +254,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+
         // register reciver
         getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
     }

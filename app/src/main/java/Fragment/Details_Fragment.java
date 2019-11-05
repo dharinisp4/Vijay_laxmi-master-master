@@ -72,6 +72,7 @@ import Adapter.RelatedProductAdapter;
 import Adapter.VarientsAdapter;
 import Config.BaseURL;
 import Model.ProductVariantModel;
+import Model.Product_model;
 import Model.RelatedProductModel;
 import Module.Module;
 import binplus.vijaylaxmi.AppController;
@@ -90,81 +91,39 @@ import util.WishlistHandler;
  * A simple {@link Fragment} subclass.
  */
 public class Details_Fragment extends Fragment implements  RecyclerView.OnClickListener {
-    String flag="";
-    int pos=-1;
     public static  int col_position=-1;
     public static int position=-1;
     String atr_id="";
-    int row_index=0;
-    public static Button btn_adapter;
-    String atr_product_id="";
-    String attribute_name="";
-    String attribute_value="";
-    String attribute_mrp="";
-    String attribute_color="";
-    String attribute_img="";
+    public static Button btn_adapter,btn_color;
+    String atr_product_id,attribute_name,attribute_value,attribute_mrp,attribute_color,attribute_img;
+  int flag=0;
+  RelativeLayout rel;
     Context context;
-
-    List<ProductVariantModel> vlist;
-
-    Button btn_add;
-    //ArrayList<ProductVariantModel> variantList;
-    ProductVariantAdapter productVariantAdapter;
+    List<Product_model> models;
     VarientsAdapter varientsAdapter;
-    List<ProductVariantModel> v_list;
+    List<ProductVariantModel> v_list,vlist;
     AttrColorAdapter colorAdapter;
     private static String TAG = Details_Fragment.class.getSimpleName();
-    private RecyclerView rv_cat,rv_color,rv_weight;
-    int index;
-    double tot_amt=0;
+    private RecyclerView rv_cat,rv_color,rv_weight,recyclerView ,varient_recycler;
     ProgressDialog loadingBar;
-    double tot=0;
     RelativeLayout rel_variant,rel_weight,rel_color;
-
     private List<RelatedProductModel> product_modelList = new ArrayList<>();
     private RelatedProductAdapter adapter_product;
-   // VarientsAdapter varientsAdapter ;
-    Activity activity;
-    Button btn_add_to_cart;
+    Button btn_add_to_cart,btn_add;
     DatabaseCartHandler db_cart;
-   WishlistHandler db_wish ;
-    //TextView txtColor,txtSize;
-    TextView txtPer;
-    Button btn_buy_now;
-
-    ImageView wish_before ,wish_after ;
+    WishlistHandler db_wish ;
+    TextView txtPer,txtTotal,txtName,txtPrice,txtMrp,txtDesc,details_product_weight;
+    public static ImageView wish_before ,wish_after,btn ;
     int status=0;
-
-    private TextView dialog_unit_type,dialog_txtId,dialog_txtVar,details_product_weight;
-    String color ,size ;
-    Dialog dialog;
-
-    public static ProgressBar progressBar,pgb,pbg1;
-    RelativeLayout relativeLayout_spinner,relativeLayout_size,relativeLayout_color;
-    Produccts_images_adapter imagesAdapter;
     String cat_id,product_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
     String details_product_price,details_product_mrp,details_product_unit_value,details_product_unit,details_product_rewards,details_product_increament,details_product_title;
-    String details_product_qty;
-
-    public static ImageView btn,img2;
-    private TextView txtrate,txtTotal,txtBack;
-    ListView listView,listView1;
     List<String> image_list;
-    private TextView txtName,txtPrice,txtMrp;
-    TextView txtDesc;
-    //Spinner spinner_size,spinner_color;
-    RecyclerView recyclerView ,varient_recycler;
-    CardView cardView;
-
-    private ElegantNumberButton numberButton;
+    public static ElegantNumberButton numberButton;
     Module module=new Module();
     private Session_management sessionManagement;
     private String details_product_unit_price;
     List<String> list_color=new ArrayList<>();
     List<String> list_images=new ArrayList<>();
-
-    Button btn_desc,btn_info;
-    RelativeLayout rel_desc,rel_info;
     RecyclerView.LayoutManager layoutManager;
     JSONObject var_respons=null;
 
@@ -183,6 +142,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         loadingBar.setMessage("Loading...");
         loadingBar.setCanceledOnTouchOutside(false);
 
+        models= (List<Product_model>) getArguments().getSerializable("product_model");
         rv_cat = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
         varient_recycler=(RecyclerView)view.findViewById( R.id.varient_recycler );
         rv_color=(RecyclerView)view.findViewById( R.id.rv_color);
@@ -191,6 +151,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         rel_color=(RelativeLayout) view.findViewById(R.id.rel);
         details_product_weight=(TextView)view.findViewById(R.id.details_product_weight);
         btn_adapter=(Button) view.findViewById(R.id.btn_adapter);
+        btn_color=(Button) view.findViewById(R.id.btn_color);
         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
 
         rv_cat.setLayoutManager(linearLayoutManager1);
@@ -222,47 +183,33 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
 
     btn_add=(Button)view.findViewById(R.id.btn_add);
-        dialog_unit_type=(TextView)view.findViewById(R.id.unit_type);
-        dialog_txtId=(TextView)view.findViewById(R.id.txtId);
-        dialog_txtVar=(TextView)view.findViewById(R.id.txtVar);
         btn_add_to_cart=(Button)view.findViewById(R.id.btn_f_Add_to_cart);
        // cardView=(CardView)view.findViewById(R.id.card_view2);
         txtPer=(TextView)view.findViewById(R.id.details_product_per);
         rel_variant=(RelativeLayout)view.findViewById(R.id.rel_variant);
         btn=(ImageView)view.findViewById(R.id.img_product);
         recyclerView=view.findViewById(R.id.recylerView);
-        //   listView=findViewById(R.id.lstView);
-
-      //  txtBack=(TextView)view.findViewById(R.id.txtBack);
             wish_after=(ImageView)view.findViewById(R.id.wish_after );
             wish_before = (ImageView)view.findViewById( R.id.wish_before );
 
         image_list=new ArrayList<>();
-     //   progressBar=(ProgressBar)view.findViewById(R.id.progress_bar);
-        //   Glide.with(this).load(R.raw.basicloader).into(btn);
+
         txtName=(TextView)view.findViewById(R.id.details_product_name);
        txtDesc=(TextView) view.findViewById(R.id.details_product_description);
         txtPrice=(TextView)view.findViewById(R.id.details_product_price);
         txtMrp=(TextView)view.findViewById(R.id.details_product_mrp);
         txtMrp.setPaintFlags(txtMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-      //  btn_add_to_cart=(Button)view.findViewById(R.id.btnAdd_to_cart);
 
         ((MainActivity) getActivity()).getSupportActionBar().setTitle(details_product_name);
-       // txtrate=(TextView)view.findViewById(R.id.product_rate);
+
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
-
-//        if (db_cart.isInCart(product_id))
-//        {
-//            btn_add.setVisibility(View.GONE);
-//            numberButton.setVisibility(View.VISIBLE);
-//            numberButton.setNumber(details_product_qty);
-//        }
+        rel=(RelativeLayout) view.findViewById(R.id.rel);
 
 
        txtDesc.setText(details_product_desc);
        txtName.setText(details_product_name);
-        makeTextViewResizable(txtDesc, 3, "See More", true);
+        makeTextViewResizable(txtDesc, 3, "Show More", true);
 
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
@@ -283,6 +230,20 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 txtPer.setText(String.valueOf(Math.round(discount)+"%"+"off"));
             }
             else  txtPer.setVisibility(View.GONE);
+
+            String id=db_cart.getCartId(product_id,"","");
+            if(id.isEmpty()|| id.equals(""))
+            {
+
+            }
+            else
+            {
+                String qt=db_cart.getCartIdItemQty(id);
+                btn_add.setVisibility(View.GONE);
+                numberButton.setVisibility(View.VISIBLE);
+                numberButton.setNumber(qt);
+            }
+
         }
         else
         {
@@ -291,25 +252,28 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             rel_weight.setVisibility(View.VISIBLE);
             makeGetAttributeRequest(product_id);
 
-            layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-            rv_color.setLayoutManager(layoutManager);
-
-            colorAdapter=new AttrColorAdapter(list_color,list_images,getActivity());
-            rv_color.setAdapter(colorAdapter);
 
             RecyclerView.LayoutManager layoutManager1=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
             rv_weight.setLayoutManager(layoutManager1);
             varientsAdapter=new VarientsAdapter(getActivity(),vlist);
-          // ProductVariantModel model= varientsAdapter.getListData();
             rv_weight.setAdapter(varientsAdapter);
 
+   if(flag==1)
+   {
+       rel.setVisibility(View.GONE);
 
-        //    Toast.makeText(getActivity(),""+model.getAttribute_image()
-            //        .toString(),Toast.LENGTH_LONG).show();
-            //       List<ProductVariantModel> p_list=  getAttr();
+   }
+   else
+   {
+       layoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+       rv_color.setLayoutManager(layoutManager);
 
-//            details_product_mrp=v_list.get(0).getAttribute_mrp();
-//            details_product_price=v_list.get(0).getAttribute_value();
+       colorAdapter=new AttrColorAdapter(list_color,list_images,getActivity(),product_id,atr_id);
+       rv_color.setAdapter(colorAdapter);
+   }
+
+
+
 
 
         }
@@ -319,11 +283,12 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             @Override
             public void onClick(View view) {
 
-             //   Toast.makeText(getActivity(),""+position, Toast.LENGTH_LONG).show();
 
                 ProductVariantModel model=vlist.get(position);
 
                 atr_id=model.getId();
+             //   Toast.makeText(getActivity(),""+atr_id, Toast.LENGTH_LONG).show();
+
                 atr_product_id=model.getProduct_id();
                 attribute_mrp=model.getAttribute_mrp();
                 attribute_value=model.getAttribute_value();
@@ -345,46 +310,70 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 try
                 {
 
-
-                    String str_col=vlist.get(position).getAttribute_color();
-                    if(str_col.isEmpty() || str_col.equals(null))
+                    if(flag==1)
                     {
-                        Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
-                        rv_color.setVisibility(View.GONE);
-                        colorAdapter.notifyDataSetChanged();
+                        String qty="";
+                        if(db_cart.isAttrInCart(product_id,atr_id))
+                        {
+                            String id=db_cart.getCartId(product_id,atr_id,"");
+                            qty=db_cart.getCartIdItemQty(id);
+                            //String id=db_cart.getCartId();
+                          //  Toast.makeText(getActivity(),"id - "+id+"\n qty"+qty,Toast.LENGTH_LONG).show();
+                            numberButton.setVisibility(View.VISIBLE);
+                            btn_add.setVisibility(View.GONE);
+                            numberButton.setNumber(qty);
+
+                        }
+                        else
+                        {
+
+                            numberButton.setVisibility(View.GONE);
+                            btn_add.setVisibility(View.VISIBLE);
+
+                        }
+
                     }
                     else
                     {
-                        list_color.clear();
-                        rv_color.setVisibility(View.VISIBLE);
-                        JSONArray col_array=new JSONArray(str_col);
-                        for(int j=0; j<col_array.length();j++)
+                        String str_col=vlist.get(position).getAttribute_color();
+                        if(str_col.isEmpty() || str_col.equals(null))
                         {
-                            list_color.add(col_array.getString(j).toString());
+                            // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                            rv_color.setVisibility(View.GONE);
+                            colorAdapter.notifyDataSetChanged();
                         }
-                        colorAdapter.notifyDataSetChanged();
-                        //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
+                        else
+                        {
+                            list_color.clear();
+                            rv_color.setVisibility(View.VISIBLE);
+                            JSONArray col_array=new JSONArray(str_col);
+                            for(int j=0; j<col_array.length();j++)
+                            {
+                                list_color.add(col_array.getString(j).toString());
+                            }
+                            colorAdapter.notifyDataSetChanged();
+                            //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
+                        }
+
+                        list_images.clear();
+                        String str_img=vlist.get(position).getAttribute_image();
+                        if(str_img.isEmpty() || str_img.equals(null))
+                        {
+                            // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+
+                            JSONArray col_array=new JSONArray(str_img);
+                            for(int j=0; j<col_array.length();j++)
+                            {
+                                list_images.add(col_array.getString(j).toString());
+                            }
+                            varientsAdapter.notifyDataSetChanged();
+                        }
+
                     }
 
-                    list_images.clear();
-                    String str_img=vlist.get(position).getAttribute_image();
-                    if(str_img.isEmpty() || str_img.equals(null))
-                    {
-                        Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-
-                        JSONArray col_array=new JSONArray(str_img);
-                        for(int j=0; j<col_array.length();j++)
-                        {
-                            list_images.add(col_array.getString(j).toString());
-                        }
-                        //attribute_img=list_images.get(position).toString();
-                        varientsAdapter.notifyDataSetChanged();
-                        //colorAdapter.notifyDataSetChanged();
-                        //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
-                    }
                 }
                 catch (Exception ex)
                 {
@@ -396,14 +385,32 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             }
         });
 
+btn_color.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
 
+        String qty="";
+                if(db_cart.isAttrColInCart(product_id,atr_id,list_color.get(col_position)))
+                {
+                    String id=db_cart.getCartId(product_id,atr_id,list_color.get(col_position));
+                    qty=db_cart.getCartIdItemQty(id);
+                    //String id=db_cart.getCartId();
+                    Toast.makeText(getActivity(),"id - "+id+"\n qty"+qty,Toast.LENGTH_LONG).show();
+                    numberButton.setVisibility(View.VISIBLE);
+                    btn_add.setVisibility(View.GONE);
+                    numberButton.setNumber(qty);
 
+                }
+                else
+                {
 
+                    numberButton.setVisibility(View.GONE);
+                    btn_add.setVisibility(View.VISIBLE);
 
-//        Toast.makeText(getActivity(),"Flag :-- "+details_product_attribute,Toast.LENGTH_LONG).show();
+                }
 
-
-
+    }
+});
         if(db_wish.isInWishtable( product_id ))
         {
             wish_after.setVisibility( View.VISIBLE );
@@ -416,7 +423,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             @Override
             public void onClick(View view) {
 
-                // holder.wish_after.setVisibility( View.VISIBLE );
                 wish_after.setVisibility( View.VISIBLE );
                wish_before.setVisibility( View.INVISIBLE );
 
@@ -450,18 +456,12 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 mapProduct.put("mrp",details_product_mrp);
                 mapProduct.put("product_attribute",details_product_attribute);
 
-                // Toast.makeText(context,""+mapProduct,Toast.LENGTH_LONG).show();
-
-
                 try {
 
                     boolean tr =db_wish.setwishTable(mapProduct);
                     if (tr == true) {
-
-                        //   context.setCartCounter("" + holder.db_cart.getCartCount());
+                        updateWishData();
                         Toast.makeText(context, "Added to Wishlist"  , Toast.LENGTH_LONG).show();
-
-
 
                     }
                     else
@@ -471,7 +471,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    //  Toast.makeText(context, "" + ex.getMessage(), Toast.LENGTH_LONG).show();
                 }
 
 
@@ -484,10 +483,8 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 wish_after.setVisibility( View.INVISIBLE );
                 wish_before.setVisibility( View.VISIBLE );
                 db_wish.removeItemFromWishtable(product_id);
+                updateWishData();
                 Toast.makeText(getActivity(), "removed from Wishlist" , Toast.LENGTH_LONG).show();
-                // list.remove(position);
-             //   notifyDataSetChanged();
-
             }
         } );
 
@@ -502,80 +499,106 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
               String atr = String.valueOf(details_product_attribute);
                 if (atr.equals("[]")) {
 
-                    String details_unt=details_product_unit_value+details_product_unit;
+
+                           String details_unt=details_product_unit_value+details_product_unit;
                     Module.setWithoutAttrIntoCart(getActivity(),"0",product_id,product_images,cat_id,details_product_name,details_product_price,
                             details_product_desc,details_product_rewards,details_product_price,details_unt,details_product_increament,
                             details_product_inStock,"","",details_product_title,details_product_mrp,details_product_attribute,"p",qty);
                     txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
+                    updateData();
+                    btn_add.setVisibility(View.GONE);
+                    numberButton.setVisibility(View.VISIBLE);
+                    numberButton.setNumber("1");
+
 //                    Toast.makeText(getActivity(),""+db_cart.getCartCount(),Toast.LENGTH_LONG).show();
 
                 }
                 else {
-//                    Toast.makeText(getActivity(),""+vlist.size()+"\n a_id "+atr_id+"\n a_p_id "+atr_product_id+
-//                            "\n a_name"+attribute_name+"\n a_value "+attribute_value+"\n a_mrp "+attribute_mrp+
-//                            "\n a_img "+attribute_img+"a_color "+attribute_color,Toast.LENGTH_LONG).show();
-//                    //ProductVariantModel model=variantList.get(position);
 
-                    Module.setIntoCart(getActivity(),atr_id,product_id,product_images,cat_id,details_product_name,attribute_value,
-                            details_product_desc,details_product_rewards,attribute_value,attribute_name,details_product_increament,
-                            details_product_inStock,attribute_color,attribute_img,details_product_title,attribute_mrp,details_product_attribute,"a",qty);
-                    txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
-  //                  Toast.makeText(getActivity(),""+db_cart.getCartCount(),Toast.LENGTH_LONG).show();
+                    if(flag>0)
+                    {
+                        if (position < 0) {
+                            Toast.makeText(getActivity(), "Please select any weight", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            Module.setIntoCart(getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, attribute_value,
+                                    details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
+                                    details_product_inStock, "", "", details_product_title, attribute_mrp, details_product_attribute, "a", qty);
+                            txtTotal.setText("\u20B9" + String.valueOf(db_cart.getTotalAmount()));
+                            updateData();
+                            btn_add.setVisibility(View.GONE);
+                            numberButton.setVisibility(View.VISIBLE);
+                            numberButton.setNumber("1");
+
+
+                        }
+                    }
+                    else if(flag<=0)
+                    {
+                        if (position < 0) {
+                            Toast.makeText(getActivity(), "Please select any weight", Toast.LENGTH_LONG).show();
+                        }
+                        if (col_position < 0) {
+                            Toast.makeText(getActivity(), "Please select any color", Toast.LENGTH_LONG).show();
+                        } else {
+                            String as=  list_color.get(col_position);
+                            String img=list_images.get(col_position);
+//
+
+
+                            Module.setIntoCart(getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, attribute_value,
+                                    details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
+                                    details_product_inStock, as, img, details_product_title, attribute_mrp, details_product_attribute, "c", qty);
+                            txtTotal.setText("\u20B9" + String.valueOf(db_cart.getTotalAmount()));
+
+                            updateData();
+                            btn_add.setVisibility(View.GONE);
+                            numberButton.setVisibility(View.VISIBLE);
+                            numberButton.setNumber("1");
+
+                        }
+                    }
 
                 }
 
-                updateData();
-                btn_add.setVisibility(View.GONE);
-                numberButton.setNumber("1");
-                numberButton.setVisibility(View.VISIBLE);
+
 
             }
         });
 
-//        rv_color.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_color, new RecyclerTouchListener.OnItemClickListener() {
-//            @SuppressLint("ResourceType")
-//            @Override
-//            public void onItemClick(View view, int position) {
-//
-//
-//
-//
-//                attribute_color=list_color.get(position).toString();
-//                attribute_img=list_images.get(position).toString();
-////                btn.setColorFilter(Color.parseColor(list_color.get(position).toString()), android.graphics.PorterDuff.Mode.SRC_IN);
-////                btn.setColorFilter(ContextCompat.getColor(getActivity(), Color.parseColor(list_color.get(position).toString())), android.graphics.PorterDuff.Mode.SRC_IN);
-////                btn.setColorFilter(Color.parseColor(list_color.get(position).toString()));
-//            }
-//
-//            @Override
-//            public void onLongItemClick(View view, int position) {
-//
-//            }
-//        }));
-
-
-        //  txtTotal.setText("\u20B9"+String.valueOf(details_product_price));
 
         numberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
-               // final Product_model mList = modelList.get(position);
 
                 if(newValue<=0)
                 {
                    boolean st=checkAttributeStatus(details_product_attribute);
                    if(st==false)
                    {
-                       db_cart.removeItemFromCart(product_id);
+                       String id=db_cart.getCartId(product_id,"","");
+                       db_cart.removeItemFromCart(id);
                    }
                    else if(st==true)
                    {
+                       if(flag==1)
+                       {
 
-                       String str_id = dialog_txtId.getText().toString();
-                       String[] str = str_id.split("@");
-                       String at_id = String.valueOf(str[0]);
-                       db_cart.removeItemFromCart(at_id);
+                           String id=db_cart.getCartId(product_id,atr_id,"");
+                           db_cart.removeItemFromCart(id);
+                       }
+                       else
+                       {
+                           String col=list_color.get(col_position);
+                           String id=db_cart.getCartId(product_id,atr_id,col);
+                           db_cart.removeItemFromCart(id);
+                       }
+
+                       //Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
+
+                       //db_cart.removeItemFromCart(at_id);
                    }
 
                    numberButton.setVisibility(View.GONE);
@@ -597,64 +620,37 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                                 details_product_desc,details_product_rewards,details_product_price,unt,details_product_increament,
                                 details_product_inStock,"","",details_product_title,details_product_mrp,details_product_attribute,"p",qty);
                         txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
-//                        Module.setIntoCart(getActivity(),product_id,product_id,product_images,cat_id,details_product_name,String.valueOf(amt),
-//                                details_product_desc,details_product_rewards,details_product_price,details_product_unit_value,unt,details_product_increament,
-//                                details_product_inStock,details_product_title,details_product_mrp,details_product_attribute,"p",qty);
 
 
 
 
-                        //Toast.makeText(context,"1\n"+status+"\n"+modelList.get(position).getProduct_attribute(),Toast.LENGTH_LONG).show();
                     } else {
-                        //ProductVariantModel model=variantList.get(position);
-
-
-
                         double pr=Double.parseDouble( attribute_value);
                         double amt = pr * qty;
+                        if(flag==1)
+                        {
+                            Module.setIntoCart(getActivity(),atr_id,product_id,product_images,cat_id,details_product_name,String.valueOf(amt),
+                                    details_product_desc,details_product_rewards,attribute_value,attribute_name,details_product_increament,
+                                    details_product_inStock,"","",details_product_title,attribute_mrp,details_product_attribute,"a",qty);
+                        }
+                        else
+                        {
+                            String col=list_color.get(col_position);
+                            String img=list_images.get(col_position);
+                            Module.setIntoCart(getActivity(),atr_id,product_id,product_images,cat_id,details_product_name,String.valueOf(amt),
+                                    details_product_desc,details_product_rewards,attribute_value,attribute_name,details_product_increament,
+                                    details_product_inStock,col,img,details_product_title,attribute_mrp,details_product_attribute,"c",qty);
+                        }
                         //       Toast.makeText(context,""+str[0].toString()+"\n"+str[1].toString(),Toast.LENGTH_LONG).show();
 
-                        Module.setIntoCart(getActivity(),atr_id,product_id,product_images,cat_id,details_product_name,String.valueOf(amt),
-                                details_product_desc,details_product_rewards,attribute_value,attribute_name,details_product_increament,
-                                details_product_inStock,attribute_color,attribute_img,details_product_title,attribute_mrp,details_product_attribute,"a",qty);
-                        txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
-//                        Module.setIntoCart(getActivity(),at_id,product_id,product_images,cat_id,details_product_name,String.valueOf(amt),
-//                                details_product_desc,details_product_rewards,st0,details_product_unit_value,st1,details_product_increament,
-//                                details_product_inStock,details_product_title,st2,details_product_attribute,"a",qty);
-                        //txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
 
-                        //  Toast.makeText(context,""+attributeList.get(j).getId()+"\n"+mapProduct,Toast.LENGTH_LONG).show();
+                        txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
 
                     }
                 }
                 txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
             }
         });
-
-//        numberButton.setOnClickListener(new ElegantNumberButton.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                double number=Double.parseDouble(numberButton.getNumber());
-//
-//
-//
-//                double price=0;
-//                if(status==1)
-//                {
-//                    price=Double.parseDouble(details_product_price);
-//                }
-//                else if(status==2)
-//                {
-//                     price=Double.parseDouble(attribute_value);
-//
-//                }
-//
-//                tot=price*number;
-//
-//                txtTotal.setText("\u20B9"+String.valueOf(tot));
-//
-//            }
-//        });
 
 
 
@@ -667,10 +663,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 if(details_product_attribute.equals("[]"))
                 {
                     if (ConnectivityReceiver.isConnected()) {
-                        // db_cart.clearCart();
-//                    Toast.makeText(getActivity(),""+vlist.size()+"\n a_id "+atr_id+"\n a_p_id "+atr_product_id+
-//                            "\n a_name"+attribute_name+"\n a_value "+attribute_value+"\n a_mrp "+attribute_mrp+
-//                            "\n a_img "+attribute_img+"a_color "+attribute_color,Toast.LENGTH_LONG).show();
                         makeGetLimiteRequest();
                     } else {
                         ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
@@ -686,18 +678,11 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                     {
                         Toast.makeText(getActivity(),"Please select any color",Toast.LENGTH_LONG).show();
                     }
+
                     else {
-
-
-                        if (ConnectivityReceiver.isConnected()) {
-                            // db_cart.clearCart();
-//                    Toast.makeText(getActivity(),""+vlist.size()+"\n a_id "+atr_id+"\n a_p_id "+atr_product_id+
-//                            "\n a_name"+attribute_name+"\n a_value "+attribute_value+"\n a_mrp "+attribute_mrp+
-//                            "\n a_img "+attribute_img+"a_color "+attribute_color,Toast.LENGTH_LONG).show();
-                            makeGetLimiteRequest();
-                        } else {
-                            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-                        }
+                        String col=list_color.get(col_position);
+                        String id=db_cart.getCartId(product_id,atr_id,col);
+                        Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
                     }
                 }
 
@@ -715,6 +700,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         super.onPause();
         // unregister reciver
         getActivity().unregisterReceiver(mCart);
+        getActivity().unregisterReceiver(mWish);
     }
 
     @Override
@@ -722,6 +708,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         super.onResume();
         // register reciver
         getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+        getActivity().registerReceiver(mWish, new IntentFilter("Grocery_wish"));
     }
 
     @Override
@@ -730,44 +717,15 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
 
 
-//Toast.makeText(getActivity(),""+v_list.size(),Toast.LENGTH_LONG).show();
         txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
-
-//        String atr=String.valueOf(details_product_attribute);
-//        if(atr.equals("[]"))
+//
+//
+//        if(details_product_attribute.equals("[]"))
 //        {
-//            boolean st=db_cart.isInCart(product_id);
-//            if(st==true)
-//            {
-//             btn_add.setVisibility(View.GONE);
-//             numberButton.setNumber(db_cart.getCartItemQty(product_id));
-//             numberButton.setVisibility(View.VISIBLE);
-//            }
-//        }
-//        else
-//        {
-//            String str_id=dialog_txtId.getText().toString();
-//            String[] str=str_id.split("@");
-//            String at_id=String.valueOf(str[0]);
-//            boolean st=db_cart.isInCart(at_id);
-//            if(st==true)
-//            {
-//                btn_add.setVisibility(View.GONE);
-//                numberButton.setNumber(db_cart.getCartItemQty(at_id));
-//                numberButton.setVisibility(View.VISIBLE);
-//            }
-//        }
-
-        //Toast.makeText(getActivity(),""+cat_id, Toast.LENGTH_LONG).show();
-      //  makeRelatedProductRequest(cat_id);
-
-
-        if(details_product_attribute.equals("[]"))
-        {
             try
             {
                 image_list.clear();
-                JSONArray array=new JSONArray(product_images );
+                JSONArray array=new JSONArray(product_images);
                 //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
                 if(product_images.equals(null))
                 {
@@ -793,50 +751,30 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                         .dontAnimate()
                         .into(btn);
 
-            /*if(details_product_color.equals(null) || details_product_color.equals("null"))
-            {
-                Toast.makeText(getActivity(),"color :"+ details_product_color,Toast.LENGTH_LONG).show();
-            }
-            else
-            {
-                cardView.setVisibility(View.VISIBLE);
-            }*/
-
-                //  makeGetProductColorSizeRequest(cat_id,product_id);
-
-                // Toast.makeText(Product_Frag_details.this,""+image_list.toString(),Toast.LENGTH_LONG).show();
 
             }
             catch (Exception ex)
             {
-
                 // Toast.makeText(Product_Frag_details.this,""+ex.getMessage(),Toast.LENGTH_LONG).show();
             }
-
-        }
-        else
-        {
-            List<ProductVariantModel> pv=module.getAttribute(details_product_attribute);
-
-           String v=pv.get(0).getAttribute_image();
-           String s=getAttrImage(v);
-
-            Glide.with(getActivity())
-                    .load(BaseURL.IMG_PRODUCT_URL +s)
-                    .fitCenter()
-                    .placeholder(R.drawable.icon)
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .dontAnimate()
-                    .into(btn);
-        }
-      // imagesAdapter.notifyDataSetChanged();
-        // makeGetProductRequest(cat_id,product_id);
-       // product_images_adapter=new Product_images_Adapter(Product_Frag_details.this,image_list);
-        //imagesAdapter=new Produccts_images_adapter(getActivity(),image_list);
-       // progressBar.setVisibility(View.INVISIBLE);
-        //recyclerView.setAdapter(imagesAdapter);
-
+//
+//        }
+//        else
+//        {
+//            List<ProductVariantModel> pv=module.getAttribute(details_product_attribute);
+//
+//           String v=pv.get(0).getAttribute_image();
+//           String s=getAttrImage(v);
+//
+//            Glide.with(getActivity())
+//                    .load(BaseURL.IMG_PRODUCT_URL +s)
+//                    .fitCenter()
+//                    .placeholder(R.drawable.icon)
+//                    .crossFade()
+//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                    .dontAnimate()
+//                    .into(btn);
+//        }
 
     }
 
@@ -861,95 +799,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     }
 
 
-   /* private void makeGetProductColorSizeRequest(String cat_id, String product_id) {
-
-        String tag_json_obj = "json_product_req";
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("cat_id", cat_id);
-        params.put("product_id", product_id);
-
-        final Object[] arrayObjects=new Object[2];
-        final List list1=new ArrayList();
-        final List list=new ArrayList();
-
-
-        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
-                BaseURL.PRODUCT_DETAILS, params, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                //  Log.d(TAG, response.toString());
-
-
-
-              /*  try {
-                    String status = response.getString("responce");
-                    //    Toast.makeText(Product_Frag_details.this,"asssssssssj"+response,Toast.LENGTH_LONG).show();
-
-                    //    Toast.makeText(Product_Frag_details.this,""+status.toString()+"\n ",Toast.LENGTH_LONG).show();
-
-                    if(status.equals("true")) {
-
-
-                        JSONArray jsonArray = response.getJSONArray("data");
-
-                        JSONObject jsonObject = jsonArray.getJSONObject(0);
-
-
-
-                        // String sdf = jsonObject.getString("size");
-                        String sdf = jsonObject.getString("color");
-                        String size=jsonObject.getString("size");
-
-                        if(!(sdf.equals("")) )
-                        {
-
-                            txtColor.setVisibility(View.GONE);
-
-
-
-                        }
-                        else if( !(sdf.equals("null")))
-                        {
-                            txtColor.setVisibility(View.GONE);
-                        }
-
-                        if(size.equals("") )
-                        {
-
-                            txtSize.setVisibility(View.GONE);
-
-
-                        }
-                        else if(!( size.equals("null")))
-                        {
-                            txtSize.setVisibility(View.GONE);
-                        }
-
-
-
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"Error"+error.getMessage(),Toast.LENGTH_LONG).show();
-                // VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
-        // return list;
-
-
-    }*/
 
     private List<String> makeGetProductRequest(String cat_id, String product_id, final ListView listView, final ProgressBar pg,final Dialog dialog) {
         final List list=new ArrayList();
@@ -1221,7 +1070,8 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                         String str_col=vlist.get(0).getAttribute_color();
                         if(str_col.isEmpty() || str_col.equals(null))
                         {
-                            Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                            flag=1;
+                           // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
                         }
                         else
                         {
@@ -1241,7 +1091,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                         String str_img=vlist.get(0).getAttribute_image();
                         if(str_img.isEmpty() || str_img.equals(null))
                         {
-                            Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
                         }
                         else
                         {
@@ -1474,6 +1324,12 @@ public boolean checkAttributeStatus(String atr)
     private void updateData() {
 
         ((MainActivity) getActivity()).setCartCounter("" + db_cart.getCartCount());
+
+    }
+    private void updateWishData() {
+
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount());
+
     }
 
     public static void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
@@ -1540,5 +1396,41 @@ public boolean checkAttributeStatus(String atr)
     public void onClick(View view) {
 
     }
+
+
+    public String getImages(String im)
+    {
+        String img="";
+        try {
+            image_list.clear();
+            JSONArray array = new JSONArray(im);
+            //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
+
+            for (int i = 0; i <= array.length() - 1; i++) {
+                image_list.add(array.get(i).toString());
+
+            }
+
+     img=image_list.get(0).toString();
+
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+        }
+        return img;
+    }
+
+    private BroadcastReceiver mWish = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("update")) {
+                updateWishData();
+            }
+        }
+    };
 }
 

@@ -185,7 +185,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
      if(isInCart(map.get(COLUMN_ID)))
      {
 
-         db.execSQL("update " + CART_TABLE + " set " + COLUMN_QTY + " = '" + Qty + "'," + COLUMN_PRICE + " = '" + map.get(COLUMN_PRICE) + "' where " + COLUMN_CID + "=" + map.get(COLUMN_ID));
+         db.execSQL("update " + CART_TABLE + " set " + COLUMN_QTY + " = '" + Qty + "'," + COLUMN_PRICE + " = '" + map.get(COLUMN_PRICE) + "' where " + COLUMN_ID + "=" + map.get(COLUMN_ID));
          return false;
 
      } else {
@@ -199,6 +199,7 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
         values.put(COLUMN_PRICE, map.get(COLUMN_PRICE));
         values.put(COLUMN_MRP, map.get(COLUMN_MRP));
         values.put(COLUMN_UNIT_PRICE, map.get(COLUMN_UNIT_PRICE));
+
         values.put(COLUMN_UNIT, map.get(COLUMN_UNIT));
         values.put(COLUMN_TYPE, map.get(COLUMN_TYPE));
         values.put(COLUMN_DESC, map.get(COLUMN_DESC));
@@ -475,5 +476,106 @@ public class DatabaseCartHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    public String getCartIdWithProductId(String product_id)
+    {
+        String id="";
+        db=getReadableDatabase();
+        String qry = "Select *  from " + CART_TABLE+ " where " + COLUMN_ID + " = " + product_id;
+        Cursor cursor = db.rawQuery(qry, null);
+        cursor.moveToFirst();
+        for (int i = 0; i < cursor.getCount(); i++) {
+           id= cursor.getString(cursor.getColumnIndex(COLUMN_CID));
+        }
+
+        return id;
+    }
+
+    public String getCartIdWithColor(String product_id,String atr_id,String color)
+    {
+        String id="";
+        db=getReadableDatabase();
+        String qry = "Select *  from " + CART_TABLE+ " where " + COLUMN_ID + " = " + product_id + " AND "+ COLUMN_AID + " = " + atr_id + " AND " + COLUMN_ATRCOLOR + " ='" + color + "' ";
+        Cursor cursor = db.rawQuery(qry, null);
+        cursor.moveToFirst();
+        for (int i = 0; i < cursor.getCount(); i++) {
+            id= cursor.getString(cursor.getColumnIndex(COLUMN_CID));
+        }
+
+        return id;
+    }
+    public String getCartIdWithAttrId(String product_id,String atr_id)
+    {
+        String id="";
+        db=getReadableDatabase();
+        String qry = "Select *  from " + CART_TABLE+ " where " + COLUMN_ID + " = " + product_id+" AND "+ COLUMN_AID+ " = " + atr_id;
+        Cursor cursor = db.rawQuery(qry, null);
+        cursor.moveToFirst();
+        for (int i = 0; i < cursor.getCount(); i++) {
+            id= cursor.getString(cursor.getColumnIndex(COLUMN_CID));
+        }
+
+        return id;
+    }
+
+    public String getCartId(String product_id,String atr_id,String color)
+    {
+        String id="";
+        if(color.equals("") || color.isEmpty())
+        {
+            if(atr_id.equals("")||atr_id.isEmpty())
+            {
+               id=getCartIdWithProductId(product_id);
+            }
+            else
+            {
+              id=getCartIdWithAttrId(product_id,atr_id);
+            }
+        }
+        else
+        {
+           id=getCartIdWithColor(product_id,atr_id,color);
+        }
+
+        return id;
+    }
+
+
+    public String getCartIdItemQty(String id) {
+        if (isCartIDInCart(id)) {
+            db = getReadableDatabase();
+            String qry = "Select *  from " + CART_TABLE + " where " + COLUMN_CID + " = " + id;
+            Cursor cursor = db.rawQuery(qry, null);
+            cursor.moveToFirst();
+            return cursor.getString(cursor.getColumnIndex(COLUMN_QTY));
+        } else {
+            return "0.0";
+        }
+    }
+
+    public boolean isCartIDInCart(String id) {
+        db = getReadableDatabase();
+        String qry = "Select *  from " + CART_TABLE + " where " + COLUMN_CID + " = " + id;
+        Cursor cursor = db.rawQuery(qry, null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) return true;
+
+        return false;
+    }
+
+
+    public String getCartIDForWishlist(String product_id,String inc)
+    {
+        String id="";
+        db=getReadableDatabase();
+        String qry="Select * from " + CART_TABLE +" where " + COLUMN_ID +" = " + product_id + " AND " + COLUMN_INCREMENT + " = "+inc;
+        Cursor cursor = db.rawQuery(qry, null);
+        cursor.moveToFirst();
+        for (int i = 0; i < cursor.getCount(); i++) {
+            id= cursor.getString(cursor.getColumnIndex(COLUMN_CID));
+        }
+
+        return id;
     }
 }

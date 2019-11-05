@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -19,6 +20,7 @@ import Fragment.Details_Fragment;
 import Interface.RecyclerViewClickListener;
 import de.hdodenhof.circleimageview.CircleImageView;
 import binplus.vijaylaxmi.R;
+import util.DatabaseCartHandler;
 
 import static Fragment.Details_Fragment.btn;
 
@@ -26,7 +28,10 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
     List<String> list;
     List<String> list_img;
     Activity activity;
+    String product_id;
+    String atr_id="";
     int pos=-1;
+  DatabaseCartHandler db_crt;
     private RecyclerViewClickListener mListener;
 
 //    public AttrColorAdapter(List<String> list, Activity activity, RecyclerViewClickListener mListener) {
@@ -36,15 +41,18 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
 //    }
 
 
-    public AttrColorAdapter(List<String> list, List<String> list_img, Activity activity) {
+    public AttrColorAdapter(List<String> list, List<String> list_img, Activity activity, String product_id, String atr_id) {
         this.list = list;
         this.list_img = list_img;
         this.activity = activity;
+        this.product_id = product_id;
+        this.atr_id = atr_id;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
+        db_crt=new DatabaseCartHandler(activity);
         View view= LayoutInflater.from(activity).inflate(R.layout.row_atr_col_layout,null);
         ViewHolder viewHolder=new ViewHolder(view , mListener);
         return viewHolder;
@@ -64,7 +72,11 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
+
             public void onClick(View v) {
+
+                //Toast.makeText(activity,"atr "+atr_id,Toast.LENGTH_LONG).show();
+//
                 Glide.with(activity)
                         .load(BaseURL.IMG_PRODUCT_URL +list_img.get(position).toString())
                         .fitCenter()
@@ -77,6 +89,7 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
                 Details_Fragment.col_position=position;
 
                 pos=position;
+                Details_Fragment.btn_color.performClick();
                 notifyDataSetChanged();
 
             }

@@ -67,10 +67,11 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
         final HashMap<String, String> map = list.get(position);
         String img_name = null;
 
-        String st_atr=map.get("product_attribute");
+        String st_atr=map.get("type");
 
-        if(st_atr.equals("[]"))
+        if(st_atr.equals("a") || st_atr.equals("p"))
         {
+
             String img_array=map.get("product_image");
             try {
                 JSONArray array=new JSONArray(img_array);
@@ -80,10 +81,13 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             }
 
         }
-        else
+        else if(st_atr.equals("c"))
         {
-            img_name=map.get("attr_img").toString();
+            img_name=map.get("attr_img");
         }
+
+
+
 
 
 
@@ -99,21 +103,24 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
         language=preferences.getString("language","");
             holder.tv_title.setText(map.get("product_name"));
 
-        holder.tv_mrp.setText( activity.getResources().getString(R.string.currency)+ map.get( "mrp" ) );
+
        holder.tv_mrp.setPaintFlags( holder.tv_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tv_price.setText(activity.getResources().getString(R.string.currency)+map.get("unit_price"));
         holder.tv_contetiy.setText(map.get("qty"));
-        String p=String.valueOf(map.get("price"));
+        String p=String.valueOf(map.get("unit_price"));
         String m=String.valueOf(map.get("mrp"));
         int pp =Integer.parseInt(p);
         int mm =Integer.parseInt(m);
         if (mm>pp) {
             int discount = getDiscount(p, m);
             //Toast.makeText(getActivity(),""+atr,Toast.LENGTH_LONG).show();
+            holder.tv_mrp.setText( activity.getResources().getString(R.string.currency)+ map.get( "mrp" ) );
             holder.tv_product_discout.setText("" + Math.round(discount) + "% OFF");
         }
-        else
+        else {
+            holder.tv_mrp.setVisibility(View.GONE);
             holder.tv_product_discout.setVisibility(View.GONE);
+        }
 
      //   int items = Integer.parseInt(db_cart.getInCartItemQty(map.get("cart_id")));
          price = Double.parseDouble(map.get("unit_price"));
@@ -298,10 +305,10 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             @Override
             public void onClick(View view) {
                 int cnt=db_cart.getCartCount();
-                Toast.makeText(activity,"id- "+map.get("product_id")+"\n img- "+map.get("product_image")+"\n cat_id- "+map.get("category_id")+"\n" +
-                        "\n name- "+map.get("product_name")+"\n price- "+map.get("price")+"\n unit_price- "+map.get("unit_price")+
-                        "\n size- "+ map.get("size")+"\n col- "+ map.get("color")+"rew- "+ map.get("rewards")+"unit_value- "+ map.get("unit_value")+
-                   "unit- "+map.get("unit")+"\n inc- "+map.get("increament")+"stock- "+map.get("stock")+"title- "+map.get("title")+"cnt- "+cnt,Toast.LENGTH_LONG).show();
+//                Toast.makeText(activity,"id- "+map.get("product_id")+"\n img- "+map.get("product_image")+"\n cat_id- "+map.get("category_id")+"\n" +
+//                        "\n name- "+map.get("product_name")+"\n price- "+map.get("price")+"\n unit_price- "+map.get("unit_price")+
+//                        "\n size- "+ map.get("size")+"\n col- "+ map.get("color")+"rew- "+ map.get("rewards")+"unit_value- "+ map.get("unit_value")+
+//                   "unit- "+map.get("unit")+"\n inc- "+map.get("increament")+"stock- "+map.get("stock")+"title- "+map.get("title")+"cnt- "+cnt,Toast.LENGTH_LONG).show();
 
 
             }
@@ -326,39 +333,43 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
         holder.card_cart.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle args = new Bundle();
 
+           //     Toast.makeText(activity,"fghj"+map.get("increment"),Toast.LENGTH_LONG).show();
+//                Bundle args = new Bundle();
+//
+//
+//                // details_product_attribute=bundle.getString("product_attribute");
+//
+//
+//
+//                args.putString("cat_id",map.get( "cat_id" ));
+//                args.putString("product_id",map.get( "product_id" ));
+//                args.putString("product_image",map.get( "product_image" ));
+//                args.putString("product_name",map.get("product_name"));
+//                args.putString("product_description",map.get( "product_description" ));
+//                args.putString("product_attribute",map.get( "product_attribute" ));
+//                args.putString("product_price",map.get("product_price"));
+//                args.putString("stock",map.get("stock"));
+//                args.putString("price",map.get("price"));
+//                args.putString("mrp",map.get("mrp"));
+//                args.putString("unit_value",map.get( "unit_value" ));
+//                args.putString("unit",map.get("unit"));
+//                args.putString("rewards",map.get("rewards"));
+//                args.putString("increment",map.get("increment"));
+//                args.putString("qty",map.get("qty"));
+//                args.putString("title",map.get( "title" ));
+//                // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
+//                Details_Fragment fm = new Details_Fragment();
+//                fm.setArguments(args);
+////                FragmentManager fragmentManager = .beginTransaction().replace(R.id.contentPanel, fm)
+////                        .addToBackStack(null).commit();
+//
+//                AppCompatActivity activity=(AppCompatActivity) view.getContext();
+//                activity.getFragmentManager().beginTransaction().replace(R.id.contentPanel,fm)
+//                        .addToBackStack(null)
+//                        .commit();
 
-                // details_product_attribute=bundle.getString("product_attribute");
-
-
-
-                args.putString("cat_id",map.get( "cat_id" ));
-                args.putString("product_id",map.get( "product_id" ));
-                args.putString("product_image",map.get( "product_image" ));
-                args.putString("product_name",map.get("product_name"));
-                args.putString("product_description",map.get( "product_description" ));
-                args.putString("product_attribute",map.get( "product_attribute" ));
-                args.putString("product_price",map.get("product_price"));
-                args.putString("stock",map.get("stock"));
-                args.putString("price",map.get("price"));
-                args.putString("mrp",map.get("mrp"));
-                args.putString("unit_value",map.get( "unit_value" ));
-                args.putString("unit",map.get("unit"));
-                args.putString("rewards",map.get("rewards"));
-                args.putString("increment",map.get("increment"));
-                args.putString("qty",map.get("qty"));
-                args.putString("title",map.get( "title" ));
-                // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
-                Details_Fragment fm = new Details_Fragment();
-                fm.setArguments(args);
-//                FragmentManager fragmentManager = .beginTransaction().replace(R.id.contentPanel, fm)
-//                        .addToBackStack(null).commit();
-
-                AppCompatActivity activity=(AppCompatActivity) view.getContext();
-                activity.getFragmentManager().beginTransaction().replace(R.id.contentPanel,fm)
-                        .addToBackStack(null)
-                        .commit();
+              //  Toast.makeText(activity,""+map.get("mrp").toString(),Toast.LENGTH_LONG).show();
             }
         } );
 

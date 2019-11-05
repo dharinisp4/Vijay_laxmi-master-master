@@ -2,6 +2,8 @@ package Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import Config.BaseURL;
+import Fragment.Details_Fragment;
 import Model.Product_model;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
@@ -44,7 +48,8 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tv_title, tv_price, tv_reward, tv_total, tv_contetiy, tv_add;
-        public ImageView iv_logo, iv_plus, iv_minus, iv_remove;
+        public ImageView iv_logo, iv_plus, iv_minus, iv_remove ;
+        public RelativeLayout rel_search ;
 
         public MyViewHolder(View view) {
             super(view);
@@ -58,6 +63,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
             iv_plus = (ImageView) view.findViewById(R.id.iv_subcat_plus);
             iv_minus = (ImageView) view.findViewById(R.id.iv_subcat_minus);
             iv_remove = (ImageView) view.findViewById(R.id.iv_subcat_remove);
+            rel_search=(RelativeLayout)view.findViewById(R.id.rel_search);
 
             iv_remove.setVisibility(View.GONE);
 
@@ -65,6 +71,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
             iv_plus.setOnClickListener(this);
             tv_add.setOnClickListener(this);
             iv_logo.setOnClickListener(this);
+            rel_search.setOnClickListener(this);
 
             CardView cardView = (CardView) view.findViewById(R.id.card_view);
             cardView.setOnClickListener(this);
@@ -76,78 +83,74 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
             int id = view.getId();
             int position = getAdapterPosition();
 
-            if (id == R.id.iv_subcat_plus) {
+//            if (id == R.id.iv_subcat_plus) {
+//
+//                int qty = Integer.valueOf(tv_contetiy.getText().toString());
+//                qty = qty + 1;
+//
+//                tv_contetiy.setText(String.valueOf(qty));
+//
+//            } else if (id == R.id.iv_subcat_minus) {
+//
+//                int qty = 0;
+//                if (!tv_contetiy.getText().toString().equalsIgnoreCase(""))
+//                    qty = Integer.valueOf(tv_contetiy.getText().toString());
+//
+//                if (qty > 0) {
+//                    qty = qty - 1;
+//                    tv_contetiy.setText(String.valueOf(qty));
+//                }
+//
+//            } else if (id == R.id.tv_subcat_add) {
+//
+//                HashMap<String, String> map = new HashMap<>();
+//
+//                map.put("product_id", modelList.get(position).getProduct_id());
+//                map.put("product_name", modelList.get(position).getProduct_name());
+//                map.put("category_id",modelList.get(position).getCategory_id());
+//                map.put("product_description", modelList.get(position).getProduct_description());
+//                map.put("deal_price", modelList.get(position).getDeal_price());
+//                map.put("start_date", modelList.get(position).getStart_date());
+//                map.put("start_time", modelList.get(position).getStart_time());
+//                map.put("end_date", modelList.get(position).getEnd_date());
+//                map.put("end_time", modelList.get(position).getEnd_time());
+//                map.put("price", modelList.get(position).getPrice());
+//                map.put("product_image", modelList.get(position).getProduct_image());
+//                map.put("status", modelList.get(position).getStatus());
+//                map.put("in_stock", modelList.get(position).getIn_stock());
+//                map.put("unit_value", modelList.get(position).getUnit_value());
+//                map.put("unit", modelList.get(position).getUnit());
+//                map.put("increament", modelList.get(position).getIncreament());
+//                map.put("rewards",modelList.get(position).getRewards());
+//                map.put("stock", modelList.get(position).getStock());
+//                map.put("title", modelList.get(position).getTitle());
+//
+//
+//                if (!tv_contetiy.getText().toString().equalsIgnoreCase("0")) {
+//
+//                    if (dbcart.isInCart(map.get("product_id"))) {
+//                        dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
+//                        tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+//                    } else {
+//                        dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
+//                        tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+//                    }
+//                } else {
+//                    dbcart.removeItemFromCart(map.get("product_id"));
+//                    tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
+//                }
+//
+//                Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
+//                Double price = Double.parseDouble(map.get("price"));
+//                Double reward = Double.parseDouble(map.get("rewards"));
+//                tv_reward.setText("" + reward * items);
+//
+//                tv_total.setText("" + price * items);
+//                ((MainActivity) context).setCartCounter("" + dbcart.getCartCount());
+//
+//            }
 
-                int qty = Integer.valueOf(tv_contetiy.getText().toString());
-                qty = qty + 1;
-
-                tv_contetiy.setText(String.valueOf(qty));
-
-            } else if (id == R.id.iv_subcat_minus) {
-
-                int qty = 0;
-                if (!tv_contetiy.getText().toString().equalsIgnoreCase(""))
-                    qty = Integer.valueOf(tv_contetiy.getText().toString());
-
-                if (qty > 0) {
-                    qty = qty - 1;
-                    tv_contetiy.setText(String.valueOf(qty));
-                }
-
-            } else if (id == R.id.tv_subcat_add) {
-
-                HashMap<String, String> map = new HashMap<>();
-
-                map.put("product_id", modelList.get(position).getProduct_id());
-                map.put("product_name", modelList.get(position).getProduct_name());
-                map.put("category_id",modelList.get(position).getCategory_id());
-                map.put("product_description", modelList.get(position).getProduct_description());
-                map.put("deal_price", modelList.get(position).getDeal_price());
-                map.put("start_date", modelList.get(position).getStart_date());
-                map.put("start_time", modelList.get(position).getStart_time());
-                map.put("end_date", modelList.get(position).getEnd_date());
-                map.put("end_time", modelList.get(position).getEnd_time());
-                map.put("price", modelList.get(position).getPrice());
-                map.put("product_image", modelList.get(position).getProduct_image());
-                map.put("status", modelList.get(position).getStatus());
-                map.put("in_stock", modelList.get(position).getIn_stock());
-                map.put("unit_value", modelList.get(position).getUnit_value());
-                map.put("unit", modelList.get(position).getUnit());
-                map.put("increament", modelList.get(position).getIncreament());
-                map.put("rewards",modelList.get(position).getRewards());
-                map.put("stock", modelList.get(position).getStock());
-                map.put("title", modelList.get(position).getTitle());
-
-
-                if (!tv_contetiy.getText().toString().equalsIgnoreCase("0")) {
-
-                    if (dbcart.isInCart(map.get("product_id"))) {
-                        dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
-                        tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
-                    } else {
-                        dbcart.setCart(map, Float.valueOf(tv_contetiy.getText().toString()));
-                        tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
-                    }
-                } else {
-                    dbcart.removeItemFromCart(map.get("product_id"));
-                    tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
-                }
-
-                Double items = Double.parseDouble(dbcart.getInCartItemQty(map.get("product_id")));
-                Double price = Double.parseDouble(map.get("price"));
-                Double reward = Double.parseDouble(map.get("rewards"));
-                tv_reward.setText("" + reward * items);
-
-                tv_total.setText("" + price * items);
-                ((MainActivity) context).setCartCounter("" + dbcart.getCartCount());
-
-            } else if (id == R.id.iv_subcat_img) {
-                showProductDetail(modelList.get(position).getProduct_image(),
-                        modelList.get(position).getTitle(),
-                        modelList.get(position).getProduct_description(),
-                        modelList.get(position).getProduct_name(),
-                        position, tv_contetiy.getText().toString());
-            } else if (id == R.id.card_view) {
+            if (id == R.id.rel_search) {
 
 
 //                showProductDetail(modelList.get(position).getProduct_image(),
@@ -155,6 +158,64 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
 //                        modelList.get(position).getProduct_description(),
 //                        modelList.get(position).getProduct_name(),
 //                        position, tv_contetiy.getText().toString());
+                Bundle args = new Bundle();
+//                String cl=String.valueOf( mList.getColor());
+//                String sz=String.valueOf(mList.getSize());
+//                String c="";
+//                String s="";
+//
+//                if(cl.isEmpty())
+//                {
+//
+//                    c="col";
+//
+//                }
+//                else if(cl.equals( "null" ))
+//                {
+//                    c="col";
+//                }
+//                else if(sz.isEmpty())
+//                {
+//                    s="size";
+//                }
+//                else if(sz.equals( "null" ))
+//                {
+//                    s="size";
+//                }
+//
+
+
+                //args.putString("product_id",mList.getProduct_id());
+                //args.putString("product_id",mList.getProduct_id());
+                args.putString("cat_id", modelList.get(position).getCategory_id());
+                args.putString("product_id",modelList.get(position).getProduct_id());
+                args.putString("product_image",modelList.get(position).getProduct_image());
+
+                args.putString("product_name",modelList.get(position).getProduct_name());
+                args.putString("product_description",modelList.get(position).getProduct_description());
+                args.putString("stock",modelList.get(position).getIn_stock());
+//                args.putString("product_size",modelList.get(position).getSize());
+//                args.putString("product_color",modelList.get( position).getColor());
+                args.putString( "unit_price",modelList.get( position ).getUnit_price());
+                args.putString("price",modelList.get(position).getPrice());
+                args.putString("mrp",modelList.get(position).getMrp());
+                args.putString("unit_value",modelList.get(position).getUnit_value());
+                args.putString("unit",modelList.get(position).getUnit());
+                args.putString("product_attribute",modelList.get(position).getProduct_attribute());
+                args.putString("rewards",modelList.get(position).getRewards());
+                args.putString("increment",modelList.get(position).getIncreament());
+                args.putString("title",modelList.get(position).getTitle());
+                // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
+                Details_Fragment fm = new Details_Fragment();
+                fm.setArguments(args);
+//                FragmentManager fragmentManager = .beginTransaction().replace(R.id.contentPanel, fm)
+//                        .addToBackStack(null).commit();
+
+                AppCompatActivity activity=(AppCompatActivity) view.getContext();
+                activity.getFragmentManager().beginTransaction().replace(R.id.contentPanel,fm)
+                        .addToBackStack(null)
+                        .commit();
+
             }
 
         }
@@ -203,20 +264,20 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
         holder.tv_reward.setText(mList.getRewards());
         holder.tv_price.setText(context.getResources().getString(R.string.currency)+ mList.getPrice()+" / "+ mList.getUnit_value()+" "+mList.getUnit());
 
-        if (dbcart.isInCart(mList.getProduct_id())) {
-            holder.tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
-            holder.tv_contetiy.setText(dbcart.getCartItemQty(mList.getProduct_id()));
-        } else {
-            holder.tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
-        }
+//        if (dbcart.isInCart(mList.getProduct_id())) {
+//            holder.tv_add.setText(context.getResources().getString(R.string.tv_pro_update));
+//            holder.tv_contetiy.setText(dbcart.getCartItemQty(mList.getProduct_id()));
+//        } else {
+//            holder.tv_add.setText(context.getResources().getString(R.string.tv_pro_add));
+//        }
 
-        Double items = Double.parseDouble(dbcart.getInCartItemQty(mList.getProduct_id()));
-        Double price = Double.parseDouble(mList.getPrice());
-        Double reward = Double.parseDouble(mList.getRewards());
-        holder.tv_reward.setText("" + reward * items);
-
-
-        holder.tv_total.setText("" + price * items);
+//        Double items = Double.parseDouble(dbcart.getInCartItemQty(mList.getProduct_id()));
+//        Double price = Double.parseDouble(mList.getPrice());
+//        Double reward = Double.parseDouble(mList.getRewards());
+//        holder.tv_reward.setText("" + reward * items);
+//
+//
+//        holder.tv_total.setText("" + price * items);
 
     }
 

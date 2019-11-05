@@ -8,9 +8,7 @@ import android.net.NetworkInfo;
 
 import binplus.vijaylaxmi.AppController;
 
-/**
- * Created by Rajesh Dabhi on 22/6/2017.
- */
+
 
 public class ConnectivityReceiver extends BroadcastReceiver {
 

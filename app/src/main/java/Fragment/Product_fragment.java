@@ -2,6 +2,10 @@ package Fragment;
 
 import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -43,12 +47,11 @@ import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
+import util.WishlistHandler;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 26/6/2017.
- */
+
 
 public class Product_fragment extends Fragment {
     private static String TAG = Product_fragment.class.getSimpleName();
@@ -63,6 +66,7 @@ public class Product_fragment extends Fragment {
     private List<ProductVariantModel> product_variant_list = new ArrayList<>();
     private Product_adapter adapter_product;
     //private SliderLayout  banner_slider;
+    WishlistHandler db_wish;
     String language;
     SharedPreferences preferences;
     public Product_fragment() {
@@ -82,6 +86,7 @@ public class Product_fragment extends Fragment {
       loadingBar=new ProgressDialog(getActivity());
       loadingBar.setMessage("Loading...");
       loadingBar.setCanceledOnTouchOutside(false);
+        db_wish = new WishlistHandler( getActivity() );
         tab_cat = (TabLayout) view.findViewById(R.id.tab_cat);
      //   banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
         rv_cat = (RecyclerView) view.findViewById(R.id.rv_subcategory);
@@ -105,6 +110,7 @@ public class Product_fragment extends Fragment {
             //Top Sale Products
             maketopsaleProductRequest(get_top_sale_id);
           makeGetSliderCategoryRequest(id);
+
 
       //    Toast.makeText(getActivity(),""+product_modelList.size(),Toast.LENGTH_LONG).show();
             //Slider
@@ -205,7 +211,7 @@ public class Product_fragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
+   updateData();
     }
 
     /**
@@ -569,6 +575,36 @@ public class Product_fragment extends Fragment {
 //    }
 
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // unregister reciver
+        getActivity().unregisterReceiver(mWish);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // register reciver
+        getActivity().registerReceiver(mWish, new IntentFilter("Grocery_wish"));
+    }
+
+    // broadcast reciver for receive data
+    private BroadcastReceiver mWish = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("update")) {
+                updateData();
+            }
+        }
+    };
+
+    private void updateData() {
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount());
+    }
 
 }
 
