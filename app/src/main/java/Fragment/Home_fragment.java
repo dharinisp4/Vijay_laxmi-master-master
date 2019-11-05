@@ -85,7 +85,7 @@ public class Home_fragment extends Fragment {
     String getid;
     String getcat_title;
     ScrollView scrollView;
-    TextView footer ;
+   Button footer ;
     SharedPreferences sharedpreferences;
 
     //Home Icons
@@ -176,7 +176,7 @@ public class Home_fragment extends Fragment {
 
         //Deal Of Day Poster
      //   Deal_Of_Day_poster = (ImageView) view.findViewById(R.id.deal_of_day_imageview);
-            footer =(TextView) view.findViewById( R.id.bottombutton );
+            footer =(Button) view.findViewById( R.id.click_here );
 
         //Scroll View
         scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
