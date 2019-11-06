@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -43,10 +44,19 @@ RegisterActivity extends AppCompatActivity {
     private EditText et_phone, et_name, et_password, et_email ,et_saloon_name,et_city,et_address,et_propretier,et_staff,et_years ,et_turnover;
     private RelativeLayout btn_register;
     private AutoCompleteTextView et_pin;
-    private TextView tv_phone, tv_name, tv_password, tv_email;
+    private TextView tv_phone, tv_name, tv_password, tv_email ,tv_saloon_name , tv_city ,tv_add ,tv_prop ,tv_staff,tv_years,tv_turnover,tv_pin;
     private LinearLayout linear_saloon ;
     private CheckBox check_user , check_owner;
     private RadioGroup radioGroup_checked ;
+    String getsaloon_name = "";
+    String getsaloon_add = "";
+    String getturn_over = "";
+    String getstaff = "";
+    String getsaloon_city = "";
+    String getyear = "";
+    String getprop = "";
+    String getpincode = "";
+
     private String [] pincodes ={"202002","2222222" , "284001","248001"};
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -70,6 +80,11 @@ RegisterActivity extends AppCompatActivity {
         tv_phone = (TextView) findViewById(R.id.tv_reg_phone);
         tv_name = (TextView) findViewById(R.id.tv_reg_name);
         tv_email = (TextView) findViewById(R.id.tv_reg_email);
+        tv_saloon_name=(TextView) findViewById(R.id.tv_saloon_name);
+        tv_prop=(TextView) findViewById(R.id.tv_proprietor);
+        tv_add =(TextView) findViewById(R.id.tv_address);
+        tv_city=(TextView) findViewById(R.id.tv_city);
+        tv_pin =(TextView) findViewById(R.id.tv_pin);
         linear_saloon=(LinearLayout)findViewById( R.id.linear_saloon );
         et_saloon_name=(EditText)findViewById( R.id.et_saloon_name );
         et_pin =(AutoCompleteTextView) findViewById( R.id.et_pin );
@@ -118,19 +133,30 @@ RegisterActivity extends AppCompatActivity {
 
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,pincodes);
-        et_pin.setThreshold( 1 );
+       et_pin.setOnTouchListener( new View.OnTouchListener() {
+           @Override
+           public boolean onTouch(View view, MotionEvent motionEvent) {
+               et_pin.showDropDown();
+               return false;
+           }
+       } );
         et_pin.setAdapter( arrayAdapter );
     btn_register = (RelativeLayout) findViewById(R.id.btnRegister);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                 attemptRegister();
+                String getphone = et_phone.getText().toString();
+                String  getname = et_name.getText().toString();
+                String  getpassword = et_password.getText().toString();
+                String  getemail = et_email.getText().toString();
+                Toast.makeText( RegisterActivity.this,"" +getphone ,Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void attemptRegister() {
+
 
         tv_phone.setText(getResources().getString(R.string.et_login_phone_hint));
         tv_email.setText(getResources().getString(R.string.tv_login_email));
@@ -142,10 +168,24 @@ RegisterActivity extends AppCompatActivity {
         tv_password.setTextColor(getResources().getColor(R.color.dark_gray));
         tv_email.setTextColor(getResources().getColor(R.color.dark_gray));
 
-        String getphone = et_phone.getText().toString();
-        String getname = et_name.getText().toString();
-        String getpassword = et_password.getText().toString();
-        String getemail = et_email.getText().toString();
+   String getphone = et_phone.getText().toString();
+     String  getname = et_name.getText().toString();
+     String  getpassword = et_password.getText().toString();
+    String  getemail = et_email.getText().toString();
+
+        if (check_owner.isChecked())
+        {
+            getsaloon_name = et_saloon_name.getText().toString();
+            getsaloon_add = et_address.getText().toString();
+            getturn_over = et_turnover.getText().toString();
+            getstaff = et_staff.getText().toString();
+            getsaloon_city = et_city.getText().toString();
+            getyear = et_years.getText().toString();
+            getprop = et_propretier.getText().toString();
+            getpincode = et_pin.getText().toString();
+        }
+
+
 
         boolean cancel = false;
         View focusView = null;
@@ -188,6 +228,38 @@ RegisterActivity extends AppCompatActivity {
             cancel = true;
         }
 
+//        if (TextUtils.isEmpty(getpincode))
+//        {
+//            tv_pin.setTextColor(getResources().getColor(R.color.black));
+//            focusView = et_pin;
+//            cancel = true;
+//        }
+//        if (TextUtils.isEmpty(getsaloon_name))
+//        {
+//            tv_saloon_name.setTextColor(getResources().getColor(R.color.black));
+//            focusView = et_pin;
+//            cancel = true;
+//        }
+//        if (TextUtils.isEmpty(getsaloon_add))
+//        {
+//            tv_add.setTextColor(getResources().getColor(R.color.black));
+//            focusView = et_pin;
+//            cancel = true;
+//        }
+//        if (TextUtils.isEmpty(getsaloon_city))
+//        {
+//            tv_city.setTextColor(getResources().getColor(R.color.black));
+//            focusView = et_pin;
+//            cancel = true;
+//        }
+//        if (TextUtils.isEmpty(getprop))
+//        {
+//            tv_prop.setTextColor(getResources().getColor(R.color.black));
+//            focusView = et_pin;
+//            cancel = true;
+//        }
+
+
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -198,7 +270,12 @@ RegisterActivity extends AppCompatActivity {
             // perform the user login attempt.
 
             if (ConnectivityReceiver.isConnected()) {
-                makeRegisterRequest(getname, getphone, getemail, getpassword);
+                //  Toast.makeText( RegisterActivity.this,"sada",Toast )
+                makeRegisterRequest(getname, getphone, getemail, getpassword,getsaloon_name,getprop,getsaloon_city,getstaff,getyear,getturn_over,getsaloon_add,getpincode);
+            }
+            else
+            {
+
             }
         }
 
@@ -223,8 +300,9 @@ RegisterActivity extends AppCompatActivity {
     /**
      * Method to make json object request where json response starts wtih
      */
-    private void makeRegisterRequest(String name, String mobile,
-                                     String email, String password) {
+    private void makeRegisterRequest(String name, String mobile,String email, String password ,
+                                     String saloon_name , String propritior ,String saloon_city , String staff ,
+                                     String establishyear ,String turn_over, String saloon_add ,String pincode ) {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_register_req";
@@ -234,6 +312,14 @@ RegisterActivity extends AppCompatActivity {
         params.put("user_mobile", mobile);
         params.put("user_email", email);
         params.put("password", password);
+        params.put ("saloon_name",saloon_name);
+        params.put("proprietor",propritior);
+        params.put("saloon_city",saloon_city);
+        params.put("staff",staff);
+        params.put("establishyear",establishyear);
+        params.put("turn_over",turn_over);
+        params.put("saloon_address",saloon_add);
+        params.put("saloon_pin",pincode);
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.REGISTER_URL, params, new Response.Listener<JSONObject>() {

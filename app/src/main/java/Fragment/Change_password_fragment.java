@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,7 @@ public class Change_password_fragment extends Fragment {
 
     private TextView tv_new_pass, tv_old_pass, tv_con_pass;
     private EditText et_new_pass, et_old_pass, et_con_pass;
-    private Button btn_change_pass;
+    private RelativeLayout btn_change_pass;
 
     private Session_management sessionManagement;
 
@@ -76,7 +77,7 @@ public class Change_password_fragment extends Fragment {
         et_new_pass = (EditText) view.findViewById(R.id.et_change_new_password);
         et_old_pass = (EditText) view.findViewById(R.id.et_change_old_password);
         et_con_pass = (EditText) view.findViewById(R.id.et_change_con_password);
-        btn_change_pass = (Button) view.findViewById(R.id.btn_change_password);
+        btn_change_pass = (RelativeLayout) view.findViewById(R.id.btn_change_password);
 
         btn_change_pass.setOnClickListener(new View.OnClickListener() {
             @Override

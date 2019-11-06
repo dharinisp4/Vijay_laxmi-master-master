@@ -171,7 +171,7 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
             price=Double.parseDouble(p);
             holder.txtrate.setText(mList.getUnit_value()+" "+mList.getUnit());
             holder.product_desc.setText( mList.getProduct_description() );
-            int discount=getDiscount(p,m);
+            double discount=getDiscount(p,m);
             //Toast.makeText(getActivity(),""+atr,Toast.LENGTH_LONG).show();
             if (discount>0)
             {
@@ -211,7 +211,7 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
 
                 String atr_price=String.valueOf(attribute_value);
                 String atr_mrp=String.valueOf(attribute_mrp);
-                int atr_dis=getDiscount(atr_price,atr_mrp);
+               double atr_dis=getDiscount(atr_price,atr_mrp);
 
                 holder.product_prize.setText("\u20B9"+attribute_value.toString());
                 holder.product_mrp.setText("\u20B9"+attribute_mrp.toString());

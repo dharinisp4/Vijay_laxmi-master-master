@@ -82,7 +82,7 @@ public class Shop_Now_fragment extends Fragment {
         }
 
         rv_items = (RecyclerView) view.findViewById(R.id.rv_home);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 3);
         rv_items.setLayoutManager(gridLayoutManager);
        // rv_items.addItemDecoration(new GridSpacingItemDecoration(10, dpToPx(-25), true));
         rv_items.setItemAnimator(new DefaultItemAnimator());

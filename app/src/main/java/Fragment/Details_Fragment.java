@@ -160,6 +160,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         db_wish = new WishlistHandler( getActivity() );
         db_cart=new DatabaseCartHandler(getActivity());
         v_list=new ArrayList<>();
+
         Bundle bundle=getArguments();
 
          vlist = new ArrayList<>();
@@ -209,8 +210,8 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
        txtDesc.setText(details_product_desc);
        txtName.setText(details_product_name);
-        makeTextViewResizable(txtDesc, 3, "Show More", true);
-
+        makeTextViewResizable(txtDesc, 3, "See More", true);
+        makeRelatedProductRequest(cat_id);
 
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -1379,9 +1380,9 @@ public boolean checkAttributeStatus(String atr)
                     tv.setText(tv.getTag().toString(), TextView.BufferType.SPANNABLE);
                     tv.invalidate();
                     if (viewMore) {
-                        makeTextViewResizable(tv, -1, "View Less", false);
+                        makeTextViewResizable(tv, -1, "See Less", false);
                     } else {
-                        makeTextViewResizable(tv, 3, "View More", true);
+                        makeTextViewResizable(tv, 3, "See More", true);
                     }
 
                 }

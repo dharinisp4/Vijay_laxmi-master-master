@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -91,8 +92,16 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         //String getsocity_id = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_ID);
         String getsocity_id = "1";
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.select_dialog_item,pincodes);
-        et_pin.setThreshold( 1 );
+//        et_pin.setThreshold( 1 );
         et_pin.setAdapter( arrayAdapter );
+        et_pin.setOnTouchListener( new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                et_pin.showDropDown();
+                return false;
+            }
+        } );
+
 
         Bundle args = getArguments();
 
@@ -103,7 +112,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             String get_pine = getArguments().getString("pincode");
             String get_socity_id = getArguments().getString("socity_id");
             String get_socity_name = getArguments().getString("socity_name");
-            String get_add = getArguments().getString("address");
+            String get_add = getArguments().getString("house");
 
             if (TextUtils.isEmpty(get_name) && get_name == null) {
                 isEdit = false;
