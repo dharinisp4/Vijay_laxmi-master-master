@@ -1,6 +1,8 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -55,7 +57,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private Session_management sessionManagement;
 
     private boolean isEdit = false;
-
+    Dialog loadingBar ;
     private String getlocation_id;
     private String [] pincodes ={"202002","2222222" , "284001","248001"};
 
@@ -66,6 +68,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -75,6 +80,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         View view = inflater.inflate(R.layout.fragment_add_delivery_address, container, false);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.add));
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         sessionManagement = new Session_management(getActivity());
 

@@ -1,6 +1,8 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -51,6 +53,7 @@ public class Change_password_fragment extends Fragment {
     private RelativeLayout btn_change_pass;
 
     private Session_management sessionManagement;
+   Dialog loadingBar ;
 
     public Change_password_fragment() {
         // Required empty public constructor
@@ -59,6 +62,9 @@ public class Change_password_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -67,6 +73,9 @@ public class Change_password_fragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_change_password, container, false);
         setHasOptionsMenu(true);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.change_password));
 
@@ -171,7 +180,7 @@ public class Change_password_fragment extends Fragment {
      */
     private void makeChangePasswordRequest(String user_id, String new_password,
                                            String current_password) {
-
+        loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_change_password_req";
 
@@ -186,7 +195,7 @@ public class Change_password_fragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-
+                loadingBar.dismiss();
                 try {
                     Boolean status = response.getBoolean("responce");
                     if (status) {

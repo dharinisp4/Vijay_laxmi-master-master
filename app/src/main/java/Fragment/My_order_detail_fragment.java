@@ -1,7 +1,9 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -61,6 +63,7 @@ public class My_order_detail_fragment extends Fragment {
     private RecyclerView rv_detail_order;
     List<String> image_list;
     private String sale_id;
+    Dialog loadingBar ;
 
     private List<My_order_detail_model> my_order_detail_modelList = new ArrayList<>();
 
@@ -71,6 +74,9 @@ public class My_order_detail_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -78,7 +84,9 @@ public class My_order_detail_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_order_detail, container, false);
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         tv_date = (TextView) view.findViewById(R.id.tv_order_Detail_date);
         tv_time = (TextView) view.findViewById(R.id.tv_order_Detail_time);
         tv_delivery_charge = (TextView) view.findViewById(R.id.tv_order_Detail_deli_charge);

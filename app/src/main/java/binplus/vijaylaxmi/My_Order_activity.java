@@ -1,5 +1,7 @@
 package binplus.vijaylaxmi;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -22,6 +24,7 @@ public class My_Order_activity extends AppCompatActivity {
     int padding = 0;
     ImageView back_button;
     DatabaseHandler databaseHandler;
+    Dialog loadingBar ;
     @Override
     protected void attachBaseContext(Context newBase) {
         newBase = LocaleHelper.onAttach(newBase);
@@ -33,6 +36,11 @@ public class My_Order_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         databaseHandler=new DatabaseHandler(My_Order_activity.this);
         setContentView(R.layout.activity_my__oreder_activity);
+
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

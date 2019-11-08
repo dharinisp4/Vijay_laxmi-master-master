@@ -1,6 +1,7 @@
 package Fragment;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +17,7 @@ import binplus.vijaylaxmi.R;
  */
 public class InfoFragment extends Fragment {
 
-
+ProgressDialog loadingBar ;
     public InfoFragment() {
         // Required empty public constructor
     }
@@ -25,6 +26,10 @@ public class InfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        loadingBar=new ProgressDialog(getActivity());
+        loadingBar.setContentView( R.layout.progressbar);
+        loadingBar.setCanceledOnTouchOutside(false);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_info, container, false);
     }

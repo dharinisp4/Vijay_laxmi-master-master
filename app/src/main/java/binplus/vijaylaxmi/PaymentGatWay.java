@@ -1,6 +1,8 @@
 package binplus.vijaylaxmi;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -48,6 +50,7 @@ public class PaymentGatWay extends Activity implements PaymentResultListener {
     private String getuser_id = "";
     String text;
     private String user_id = "";
+   Dialog loadingBar ;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -61,6 +64,11 @@ public class PaymentGatWay extends Activity implements PaymentResultListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instamojo_payment);
+
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
+
         sessionManagement = new Session_management(PaymentGatWay.this);
         String email = sessionManagement.getUserDetails().get(BaseURL.KEY_EMAIL);
         String mobile = sessionManagement.getUserDetails().get(BaseURL.KEY_MOBILE);

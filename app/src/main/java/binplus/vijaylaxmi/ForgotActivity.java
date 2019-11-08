@@ -1,5 +1,7 @@
 package binplus.vijaylaxmi;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,7 +41,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     private TextView tv_email;
     String lan;
     SharedPreferences preferences;
-
+   Dialog loadingBar;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -56,6 +58,9 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         // remove title
 
         setContentView(R.layout.activity_forgot);
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         // Call the function callInstamojo to start payment here
 
         et_email = (EditText) findViewById(R.id.et_login_email);

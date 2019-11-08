@@ -1,6 +1,8 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -33,15 +35,14 @@ import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 
-/**
- * Created by Rajesh Dabhi on 26/6/2017.
- */
+
 
 public class Support_info_fragment extends Fragment {
 
     private static String TAG = Support_info_fragment.class.getSimpleName();
 
     private TextView tv_info;
+   Dialog loadingBar ;
 
     public Support_info_fragment() {
         // Required empty public constructor
@@ -50,6 +51,9 @@ public class Support_info_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -64,7 +68,9 @@ public class Support_info_fragment extends Fragment {
      //   String title = getArguments().getString("title");
 
         ((MainActivity) getActivity()).setTitle("Support");
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         // check internet connection
         if (ConnectivityReceiver.isConnected()) {
             makeGetInfoRequest(geturl);

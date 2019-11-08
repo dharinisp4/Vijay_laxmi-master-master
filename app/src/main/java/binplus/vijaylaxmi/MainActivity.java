@@ -1,9 +1,11 @@
 package binplus.vijaylaxmi;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -99,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     SharedPreferences.Editor editor;
     ExpandableListAdapter expandableListAdapter;
     ExpandableListView expandableListView;
+   Dialog loadingBar ;
     List<MenuModel> headerList = new ArrayList<>();
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
 
@@ -121,6 +124,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //Log.d("MYTAG", "This is your Firebase token" + token);
         sharedPreferences = getSharedPreferences("lan", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         editor.putString("language", "english");
         if (getIntent().getExtras() != null) {

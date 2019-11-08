@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
@@ -80,7 +81,7 @@ public class Payment_fragment extends Fragment {
     String getvalue;
     String text;
     String cp;
-    ProgressDialog loadingBar;
+    Dialog loadingBar;
     String Used_Wallet_amount , Wallet_amount;
     String total_amount;
     String order_total_amount;
@@ -110,6 +111,10 @@ public class Payment_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.activity_payment_method, container, false);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.payment));
+
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         Prefrence_TotalAmmount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
 
@@ -142,9 +147,6 @@ public class Payment_fragment extends Fragment {
         et_Coupon = (EditText) view.findViewById(R.id.et_coupon_code);
         Promo_code_layout = (LinearLayout) view.findViewById(R.id.prommocode_layout);
         Apply_Coupon_Code = (RelativeLayout) view.findViewById(R.id.apply_coupoun_code);
-loadingBar=new ProgressDialog(getActivity());
-        loadingBar.setMessage("Loading...");
-        loadingBar.setCanceledOnTouchOutside(false);
       /*  Apply_Coupon_Code.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

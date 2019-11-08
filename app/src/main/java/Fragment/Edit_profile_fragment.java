@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -69,6 +70,7 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
     private Uri imageuri;
     String image;
     private Session_management sessionManagement;
+    Dialog loadingBar ;
 
     public Edit_profile_fragment() {
         // Required empty public constructor
@@ -77,6 +79,9 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -87,6 +92,9 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
         setHasOptionsMenu(true);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.edit_profile));
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         sessionManagement = new Session_management(getActivity());
 

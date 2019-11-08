@@ -1,6 +1,8 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,9 +42,6 @@ import util.CustomVolleyJsonArrayRequest;
 import util.RecyclerTouchListener;
 import util.Session_management;
 
-/**
- * Created by Rajesh Dabhi on 29/6/2017.
- */
 
 public class Socity_fragment extends Fragment {
 
@@ -53,7 +52,7 @@ public class Socity_fragment extends Fragment {
 
     private List<Socity_model> socity_modelList = new ArrayList<>();
     private Socity_adapter adapter;
-
+Dialog loadingBar ;
     public Socity_fragment() {
         // Required empty public constructor
     }
@@ -74,7 +73,9 @@ public class Socity_fragment extends Fragment {
         et_search = (EditText) view.findViewById(R.id.et_socity_search);
         rv_socity = (RecyclerView) view.findViewById(R.id.rv_socity);
         rv_socity.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

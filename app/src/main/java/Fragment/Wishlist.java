@@ -1,6 +1,7 @@
 package Fragment;
 
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -35,7 +36,7 @@ public class Wishlist extends Fragment {
     private WishlistHandler db_wish;
     private DatabaseCartHandler db_cart;
     RecyclerView rv_wishlist;
-    ProgressDialog loadingBar;
+   Dialog loadingBar;
 
     public Wishlist() {
         // Required empty public constructor
@@ -46,7 +47,9 @@ public class Wishlist extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate( savedInstanceState );
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -55,15 +58,18 @@ public class Wishlist extends Fragment {
         setHasOptionsMenu( true );
 
         ((MainActivity) getActivity()).setTitle( getResources().getString( R.string.wishlist ) );
+
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
+
         rv_wishlist = view.findViewById( R.id.rv_wishlist );
         rv_wishlist.setLayoutManager( new LinearLayoutManager( getActivity() ) );
 
         //db = new DatabaseHandler(getActivity());
         db_wish = new WishlistHandler( getActivity() );
         db_cart=new DatabaseCartHandler(getActivity());
-        loadingBar=new ProgressDialog(getActivity());
-        loadingBar.setMessage("Loading...");
-        loadingBar.setCanceledOnTouchOutside(false);
+
         ArrayList<HashMap<String, String>> map = db_wish.getWishtableAll();
 
 //        Log.d("cart all ",""+db_cart.getCartAll());

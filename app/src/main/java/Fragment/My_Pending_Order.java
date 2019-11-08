@@ -1,5 +1,7 @@
 package Fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -51,6 +53,7 @@ public class My_Pending_Order extends Fragment {
 
     private List<My_Pending_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
+    Dialog loadingBar ;
 
     public My_Pending_Order() {
 
@@ -59,13 +62,18 @@ public class My_Pending_Order extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_pending_order, container, false);
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         // handle the touch event if true
         view.setFocusableInTouchMode(true);

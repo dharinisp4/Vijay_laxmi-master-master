@@ -1,6 +1,8 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,7 @@ public class About_us_fragment extends Fragment {
 //    private static String TAG = About_us_fragment.class.getSimpleName();
 //
 //    private TextView tv_info;
-
+Dialog loadingBar ;
     public About_us_fragment() {
         // Required empty public constructor
     }
@@ -22,6 +24,9 @@ public class About_us_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -29,7 +34,9 @@ public class About_us_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_about_us, container, false);
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 //        tv_info = (TextView) view.findViewById(R.id.tv_info);
 //
 //        String geturl = getArguments().getString("url");

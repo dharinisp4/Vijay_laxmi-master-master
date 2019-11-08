@@ -1,6 +1,8 @@
 package binplus.vijaylaxmi;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -42,6 +44,7 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
     EditText Wallet_Ammount;
     RelativeLayout Recharge_Button;
     String ammount;
+   Dialog loadingBar ;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -55,6 +58,9 @@ public class RechargeWallet extends AppCompatActivity implements PaymentResultLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge_wallet);
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

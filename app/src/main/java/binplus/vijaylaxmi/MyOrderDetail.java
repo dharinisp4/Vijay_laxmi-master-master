@@ -1,5 +1,7 @@
 package binplus.vijaylaxmi;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -52,7 +54,7 @@ public class MyOrderDetail extends AppCompatActivity {
     private TextView tv_date, tv_time, tv_total, tv_delivery_charge;
     private RelativeLayout btn_cancle;
     private RecyclerView rv_detail_order;
-
+Dialog loadingBar ;
     private String sale_id;
     ImageView back_button;
      SharedPreferences preferences;
@@ -72,6 +74,11 @@ public class MyOrderDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_my_order_detail);
+
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

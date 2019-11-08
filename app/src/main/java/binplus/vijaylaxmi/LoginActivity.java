@@ -1,5 +1,7 @@
 package binplus.vijaylaxmi;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private RelativeLayout btn_continue, btn_register;
     private EditText et_password, et_email;
     private TextView tv_password, tv_email, btn_forgot;
+    Dialog loadingBar ;
     private Session_management sessionManagement;
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -51,7 +54,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         // remove title
         setContentView(R.layout.activity_login);
-
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         et_password = (EditText) findViewById(R.id.et_login_pass);
         et_email = (EditText) findViewById(R.id.et_login_email);
         tv_password = (TextView) findViewById(R.id.tv_login_password);

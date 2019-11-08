@@ -46,7 +46,7 @@ public class SelectStore extends AppCompatActivity {
     String GetCityId;
     ListView listView;
     int count;
-
+Dialog loadingBar ;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -60,6 +60,9 @@ public class SelectStore extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_select_store);
         Store_Selected = (LinearLayout) findViewById(R.id.edit_store);

@@ -1,6 +1,8 @@
 package binplus.vijaylaxmi;
 
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import Fragment.Payment_fragment;
 public class OrderFail extends AppCompatActivity {
     RelativeLayout oredr_fail;
     private Payment_fragment mItemsFragment;
+   Dialog loadingBar ;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -25,6 +28,9 @@ public class OrderFail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_fail);
+        loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         mItemsFragment = new Payment_fragment();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

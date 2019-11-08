@@ -105,7 +105,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     AttrColorAdapter colorAdapter;
     private static String TAG = Details_Fragment.class.getSimpleName();
     private RecyclerView rv_cat,rv_color,rv_weight,recyclerView ,varient_recycler;
-    ProgressDialog loadingBar;
+   Dialog loadingBar;
     RelativeLayout rel_variant,rel_weight,rel_color;
     private List<RelatedProductModel> product_modelList = new ArrayList<>();
     private RelatedProductAdapter adapter_product;
@@ -138,8 +138,8 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
          var_respons=new JSONObject();
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
-        loadingBar=new ProgressDialog(getActivity());
-        loadingBar.setMessage("Loading...");
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
 
         models= (List<Product_model>) getArguments().getSerializable("product_model");

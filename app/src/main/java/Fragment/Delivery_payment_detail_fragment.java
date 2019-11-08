@@ -1,7 +1,9 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,7 +39,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
     private String getdate = "";
     private String getuser_id = "";
     private String getstore_id = "";
-
+    Dialog loadingBar ;
     TextView tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal,tv_total;
     TextView reciver_name ,mobile_no ,pincode,house_no,society ;
     private int deli_charges;
@@ -53,6 +55,9 @@ SharedPreferences preferences;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -62,6 +67,9 @@ SharedPreferences preferences;
         View view = inflater.inflate(R.layout.fragment_confirm_order, container, false);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.payment));
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         db_cart = new DatabaseCartHandler(getActivity());
         sessionManagement = new Session_management(getActivity());

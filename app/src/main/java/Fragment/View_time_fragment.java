@@ -1,6 +1,8 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +51,7 @@ public class View_time_fragment extends Fragment {
     private Home_adapter adapter;
 
     private String getdate;
-
+    Dialog loadingBar ;
     private Session_management sessionManagement;
 
     public View_time_fragment() {
@@ -59,6 +61,9 @@ public class View_time_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -68,6 +73,9 @@ public class View_time_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_time_list, container, false);
 
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.delivery_time));
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);;
 
         sessionManagement = new Session_management(getActivity());
 

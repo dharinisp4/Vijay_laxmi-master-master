@@ -1,5 +1,7 @@
 package Fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +24,7 @@ public class View_All_deals_fragments extends Fragment {
     //  private static String TAG = Fragment.My_Past_Order.class.getSimpleName();
 
     private RecyclerView rv_view_all;
+   Dialog loadingBar ;
 
     private List<View_All_Deal_Of_Day_model> view_all_deal_of_day_models = new ArrayList<>();
 
@@ -31,13 +34,18 @@ public class View_All_deals_fragments extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_all_deal, container, false);
 
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         // handle the touch event if true
         view.setFocusableInTouchMode(true);

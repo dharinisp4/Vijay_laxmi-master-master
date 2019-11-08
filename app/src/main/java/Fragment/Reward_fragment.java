@@ -1,6 +1,8 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,9 +37,7 @@ import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.Session_management;
 
-/**
- * Created by Rajesh Dabhi on 29/6/2017.
- */
+
 
 public class Reward_fragment extends Fragment {
     private GifImageView gifImageView;
@@ -45,13 +45,16 @@ public class Reward_fragment extends Fragment {
     RelativeLayout Reedeem_Points;
     TextView Rewards_Points;
     private Session_management sessionManagement;
-
+    Dialog loadingBar ;
     public Reward_fragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -59,6 +62,9 @@ public class Reward_fragment extends Fragment {
         final View view = inflater.inflate(R.layout.activity_reward_points, container, false);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_toolbar_name));
         sessionManagement = new Session_management(getActivity());
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         String getrewards = sessionManagement.getUserDetails().get(BaseURL.KEY_REWARDS_POINTS);
         Rewards_Points = (TextView) view.findViewById(R.id.reward_points);

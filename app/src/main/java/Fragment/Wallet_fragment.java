@@ -1,6 +1,8 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,7 +38,7 @@ public class Wallet_fragment extends Fragment {
     private static String TAG = Wallet_fragment.class.getSimpleName();
 
     TextView Wallet_Ammount;
-
+Dialog loadingBar ;
 
     RelativeLayout Recharge_Wallet;
     private Session_management sessionManagement;
@@ -47,13 +49,19 @@ public class Wallet_fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_wallet_ammount, container, false);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.tv_app_name));
+
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         sessionManagement = new Session_management(getActivity());
         //   String getwallet = sessionManagement.getUserDetails().get(BaseURL.KEY_WALLET_Ammount);
         Wallet_Ammount = (TextView) view.findViewById(R.id.wallet_ammount);

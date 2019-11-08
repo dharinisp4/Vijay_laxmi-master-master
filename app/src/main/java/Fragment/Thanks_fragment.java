@@ -1,5 +1,7 @@
 package Fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.app.Fragment;
 
@@ -29,7 +31,7 @@ public class Thanks_fragment extends Fragment implements View.OnClickListener {
 
     TextView tv_info;
     RelativeLayout btn_home, btn_order;
-
+Dialog loadingBar ;
     SharedPreferences preferences;
 
     String language;
@@ -39,6 +41,9 @@ public class Thanks_fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -50,6 +55,9 @@ public class Thanks_fragment extends Fragment implements View.OnClickListener {
         preferences = getActivity().getSharedPreferences("lan", MODE_PRIVATE);
         language=preferences.getString("language","");
 
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener(new View.OnKeyListener() {

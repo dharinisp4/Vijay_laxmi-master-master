@@ -1,7 +1,9 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 //import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,7 +22,7 @@ public class Empty_wishlist_fragment extends Fragment {
     private static String TAG = Empty_wishlist_fragment.class.getSimpleName();
 
     RelativeLayout Shop_now;
-
+Dialog loadingBar ;
 
     public Empty_wishlist_fragment() {
         // Required empty public constructor
@@ -33,6 +35,9 @@ public class Empty_wishlist_fragment extends Fragment {
         // Inflate the layout for this fragment
         View view =inflater.inflate( R.layout.fragment_empty_wishlist, container, false );
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.wishlist));
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         Shop_now = (RelativeLayout) view.findViewById(R.id.btn_shopnow);
         Shop_now.setOnClickListener(new View.OnClickListener() {

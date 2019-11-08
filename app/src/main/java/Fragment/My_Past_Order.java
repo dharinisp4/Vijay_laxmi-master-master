@@ -1,5 +1,7 @@
 package Fragment;
 
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -46,7 +48,7 @@ public class My_Past_Order extends Fragment {
     //  private static String TAG = Fragment.My_Past_Order.class.getSimpleName();
 
     private RecyclerView rv_myorder;
-
+   Dialog loadingBar ;
     private List<My_Past_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
 
@@ -57,6 +59,9 @@ public class My_Past_Order extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
     }
 
     @Override
@@ -66,7 +71,9 @@ public class My_Past_Order extends Fragment {
         View view = inflater.inflate(R.layout.fragment_my_past_order, container, false);
 
         // ((My_Order_activity) getActivity()).setTitle(getResources().getString(R.string.my_order));
-
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
 
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
