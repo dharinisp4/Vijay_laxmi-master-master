@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Config.BaseURL;
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
@@ -206,10 +207,8 @@ public class Change_password_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
 

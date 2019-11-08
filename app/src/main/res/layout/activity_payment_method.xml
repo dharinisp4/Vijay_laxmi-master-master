@@ -39,7 +39,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/space_12"
                             android:text="@string/order_amount"
-                            android:textAlignment="viewEnd"
+
                             android:fontFamily="@font/cabin"
                             android:textColor="#000"
                             android:textSize="14sp" />
@@ -48,11 +48,11 @@
                             android:id="@+id/order_ammount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:fontFamily="@font/cabin"
-                            android:layout_marginRight="140dp"
                             android:text=""
                             android:textAlignment="viewEnd"
+                            android:paddingEnd="@dimen/space_10"
                             android:textColor="#000"
                             android:textSize="14sp" />
 
@@ -160,8 +160,9 @@
                             android:id="@+id/payable_ammount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="140dp"
+                            android:layout_alignParentEnd="true"
+                            android:textAlignment="viewEnd"
+                            android:paddingEnd="@dimen/space_10"
                             android:text=""
                             android:fontFamily="@font/cabin"
                             android:textStyle="bold"

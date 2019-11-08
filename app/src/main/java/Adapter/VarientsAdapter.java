@@ -47,10 +47,13 @@ public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHo
         final ProductVariantModel model=varientList.get(position);
         holder.txt_weight.setText(model.getAttribute_name());
 
-        if(pos==position)
-            holder.rel_click.setCardBackgroundColor(context.getResources().getColor(R.color.orange));
-        else
-            holder.rel_click.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        if(pos==position) {
+            holder.rel_click.setCardBackgroundColor( context.getResources().getColor( R.color.pink ) );
+            holder.txt_weight.setTextColor( context.getResources().getColor( R.color.white ) );
+        }
+        else {
+            holder.rel_click.setCardBackgroundColor( Color.parseColor( "#ffffff" ) );
+        }
         holder.rel_click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -27,6 +27,7 @@ import java.util.Map;
 
 import Config.BaseURL;
 
+import Module.Module;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseHandler;
@@ -254,10 +255,8 @@ Log.e(TAG, "Exception in onPaymentSuccess", e);
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(PaymentGatWay.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( PaymentGatWay.this,""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);

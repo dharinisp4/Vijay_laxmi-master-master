@@ -40,6 +40,7 @@ import Adapter.My_order_detail_adapter;
 import Config.BaseURL;
 import Fragment.My_order_detail_fragment;
 import Model.My_order_detail_model;
+import Module.Module;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
 import util.CustomVolleyJsonRequest;
@@ -208,10 +209,8 @@ public class MyOrderDetail extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(MyOrderDetail.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( MyOrderDetail.this,""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
 
@@ -262,10 +261,8 @@ public class MyOrderDetail extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(MyOrderDetail.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( MyOrderDetail.this,""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
 

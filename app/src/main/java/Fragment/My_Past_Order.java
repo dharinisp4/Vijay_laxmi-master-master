@@ -31,6 +31,7 @@ import java.util.Map;
 import Adapter.My_Past_Order_adapter;
 import Config.BaseURL;
 import Model.My_Past_order_model;
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.MyOrderDetail;
@@ -166,9 +167,9 @@ public class My_Past_Order extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);

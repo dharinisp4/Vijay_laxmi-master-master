@@ -44,6 +44,7 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.networkconnectivity.NetworkConnection;
@@ -344,7 +345,8 @@ loadingBar=new ProgressDialog(getActivity());
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(),"Something went wrong"+error.getMessage(),Toast.LENGTH_LONG).show();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_wallet_tag);
@@ -376,9 +378,6 @@ loadingBar=new ProgressDialog(getActivity());
             getuser_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
 
             if (ConnectivityReceiver.isConnected()) {
-
-
-
                 Date date=new Date();
 
                 SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
@@ -459,11 +458,8 @@ loadingBar=new ProgressDialog(getActivity());
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                Toast.makeText(getActivity(),"Failed"+error.getMessage(),Toast.LENGTH_LONG).show();
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -493,10 +489,8 @@ loadingBar=new ProgressDialog(getActivity());
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);

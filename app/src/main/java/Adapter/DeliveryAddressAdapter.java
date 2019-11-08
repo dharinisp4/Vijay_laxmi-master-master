@@ -37,6 +37,7 @@ import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
+import Module.*;
 import  Fragment .*;
 
 public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddressAdapter.ViewHolder> {
@@ -284,10 +285,8 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(context, context.getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( context,""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
 

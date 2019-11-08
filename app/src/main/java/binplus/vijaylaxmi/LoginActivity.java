@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import Config.BaseURL;
+import Module.Module;
 import fcm.MyFirebaseRegister;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
@@ -191,10 +192,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(LoginActivity.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( LoginActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
 

@@ -199,10 +199,8 @@ public class Search_fragment extends Fragment {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    VolleyLog.d(TAG, "Error: " + error.getMessage());
-                    if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                        Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                    }
+                    String errormsg = Module.VolleyErrorMessage(error);
+                    Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
                 }
             });
 

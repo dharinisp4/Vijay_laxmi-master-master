@@ -21,7 +21,9 @@ import java.util.Map;
 import Config.BaseURL;
 
 
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.ForgotActivity;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 
@@ -99,8 +101,8 @@ public class MyFirebaseRegister {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                Toast.makeText(_context,
-                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( _context,""+ errormsg,Toast.LENGTH_LONG ).show();
                 //hidepDialog();
             }
         });

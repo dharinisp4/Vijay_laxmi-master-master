@@ -49,6 +49,7 @@ import Adapter.DeliveryAddressAdapter;
 import Config.BaseURL;
 import Config.SharedPref;
 import Model.Delivery_address_model;
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
@@ -388,12 +389,8 @@ String language;
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    if (getActivity() != null) {
-                        Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                    }
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
 

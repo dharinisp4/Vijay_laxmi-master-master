@@ -19,7 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-
+import Module.Module;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -164,10 +164,8 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(ForgotActivity.this, getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( ForgotActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
             }
         });
 
