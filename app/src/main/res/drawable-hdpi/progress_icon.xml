@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <rotate
-            android:drawable="@drawable/beauty"
+            android:drawable="@drawable/icons8_spa_flower_100px"
             
             android:duration="150"
             android:fillAfter="true"

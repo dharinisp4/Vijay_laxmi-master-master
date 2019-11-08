@@ -683,7 +683,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     else {
                         String col=list_color.get(col_position);
                         String id=db_cart.getCartId(product_id,atr_id,col);
-                        Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
                     }
                 }
 

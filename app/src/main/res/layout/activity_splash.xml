@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/colorPrimary"
     tools:context="binplus.vijaylaxmi.SplashActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/splsh"
-        android:alpha=".7"
+        android:background="@drawable/sssss"
+
         ></RelativeLayout>
 <LinearLayout
     android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:paddingLeft="100dp"
-        android:text="Vijay "
+        android:text="Beauty "
         android:textColor="@android:color/holo_red_dark"
         android:textSize="45dp"
         android:textStyle="bold"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:paddingLeft="170dp"
-        android:text="Laxmi "
+        android:text="Mentor"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="45dp"
         android:textStyle="bold"

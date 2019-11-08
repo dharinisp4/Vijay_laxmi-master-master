@@ -59,7 +59,8 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private boolean isEdit = false;
     Dialog loadingBar ;
     private String getlocation_id;
-    private String [] pincodes ={"202002","2222222" , "284001","248001"};
+    private String [] pincodes ={"452001","452002","452003","452004","452005","452006","452007","452008","452009","452010","452011","452012","452013"
+    ,"452014","452015","452016","452017","452018","452019","452020"};
 
     public Add_delivery_address_fragment() {
         // Required empty public constructor

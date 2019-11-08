@@ -15,7 +15,8 @@
         app:tabMode="scrollable"
         app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/MineCustomTabText"
-        app:tabTextColor="@color/white" />
+        app:tabTextColor="@color/white"
+        android:visibility="gone"/>
 
 
 

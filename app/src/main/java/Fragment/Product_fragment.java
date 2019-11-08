@@ -247,6 +247,7 @@ public class Product_fragment extends Fragment {
                                 cat_menu_id.add(category_modelList.get(i).getId());
 
                                // preferences = getActivity().getSharedPreferences("lan", MODE_PRIVATE);
+
                                 tab_cat.addTab(tab_cat.newTab().setText(category_modelList.get(i).getTitle()));
                                 /*language=preferences.getString("language","");
                                 if (language.contains("english")) {
