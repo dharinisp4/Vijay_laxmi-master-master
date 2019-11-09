@@ -100,7 +100,7 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
             Intent updates = new Intent("Grocery_delivery_charge");
             updates.putExtra("type", "update");
             updates.putExtra("charge", getcharge);
-      //     context.sendBroadcast(updates);
+            context.sendBroadcast(updates);
         }
 
 
@@ -133,6 +133,7 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
                 args.putString("socity_id", mList.getSocity_id());
                 args.putString("socity_name", mList.getSocity_name());
                 args.putString("house", mList.getHouse_no());
+                args.putString("address_type", mList.getAddress_type());
                 fm.setArguments(args);
                 FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)

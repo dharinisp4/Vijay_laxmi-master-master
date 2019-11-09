@@ -723,7 +723,7 @@ SharedPreferences preferences;
                         }
 
                     } catch (Exception ex) {
-                        Toast.makeText(context, "" + ex.getMessage(), Toast.LENGTH_LONG).show();
+                  //      Toast.makeText(context, "" + ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                     //Toast.makeText(context,"1\n"+status+"\n"+modelList.get(position).getProduct_attribute(),Toast.LENGTH_LONG).show();
@@ -784,7 +784,7 @@ SharedPreferences preferences;
                         }
 
                     } catch (Exception ex) {
-                        Toast.makeText(context, "" + ex.getMessage(), Toast.LENGTH_LONG).show();
+                      //  Toast.makeText(context, "" + ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
                 }

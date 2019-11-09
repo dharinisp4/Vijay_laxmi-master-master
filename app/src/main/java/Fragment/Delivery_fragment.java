@@ -314,6 +314,7 @@ String language;
 
             sessionManagement.cleardatetime();
 
+
             Bundle args = new Bundle();
             Fragment fm = new Delivery_payment_detail_fragment();
             HashMap<String,String> addmap = adapter.getAlladdress();
@@ -354,7 +355,7 @@ String language;
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", user_id);
 
-        Toast.makeText( getActivity(),"id" + user_id,Toast.LENGTH_LONG ).show();
+      //  Toast.makeText( getActivity(),"id" + user_id,Toast.LENGTH_LONG ).show();
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.GET_ADDRESS_URL, params, new Response.Listener<JSONObject>() {
@@ -428,8 +429,19 @@ String language;
 
             if (type.contentEquals("update")) {
                 //updateData();
-                deli_charges = intent.getStringExtra("charge");
-                //Toast.makeText(getActivity(), deli_charges, Toast.LENGTH_SHORT).show();
+                float tot=Float.parseFloat(db_cart.getTotalAmount());
+                int dt_chargs=0;
+                if(tot>900)
+                {
+                    deli_charges = "0";
+                }
+                else
+                {
+                    deli_charges = intent.getStringExtra("charge");
+                }
+              //  deli_charges = "2";
+
+              //  Toast.makeText(getActivity(), ""+deli_charges+"\n "+db_cart.getTotalAmount(), Toast.LENGTH_SHORT).show();
 
                 Double total = Double.parseDouble(db_cart.getTotalAmount()) + Integer.parseInt(deli_charges);
 

@@ -14,6 +14,7 @@ public class Delivery_address_model {
     String receiver_mobile;
     String socity_name;
     String pincode;
+    String address_type;
 
     String delivery_charge;
     boolean ischeckd;
@@ -51,6 +52,9 @@ public class Delivery_address_model {
     }
 
 
+    public String getAddress_type() {
+        return address_type;
+    }
 
     public String getDelivery_charge(){
         return delivery_charge;

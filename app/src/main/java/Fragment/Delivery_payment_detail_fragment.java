@@ -108,8 +108,8 @@ SharedPreferences preferences;
         }
         getlocation_id = getArguments().getString("location_id");
         getstore_id = getArguments().getString("store_id");
-//        deli_charges = Integer.parseInt(getArguments().getString("deli_charges"));
-        deli_charges = 50;
+        deli_charges = Integer.parseInt(getArguments().getString("deli_charges"));
+//        deli_charges = 50;
         String name = getArguments().getString("name");
         String phone = getArguments().getString( "phone" );
         String house = getArguments().getString( "house" );

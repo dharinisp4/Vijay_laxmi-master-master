@@ -8,7 +8,7 @@ public class Socity_model {
 
     String socity_id;
     String socity_name;
-    String pincode;
+    String s_pincode;
 
     String delivery_charge;
 
@@ -20,11 +20,9 @@ public class Socity_model {
         return socity_name;
     }
 
-    public String getPincode(){
-        return pincode;
+    public String getS_pincode() {
+        return s_pincode;
     }
-
-
 
     public String getDelivery_charge(){
         return delivery_charge;

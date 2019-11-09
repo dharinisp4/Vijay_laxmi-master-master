@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,9 +42,6 @@ import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
 
-/**
- * Created by Rajesh Dabhi on 6/7/2017.
- */
 
 public class Add_delivery_address_fragment extends Fragment implements View.OnClickListener {
 
@@ -53,11 +52,12 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_pin, tv_address, tv_socity, btn_socity;
     private String getsocity = "";
-
+    LinearLayout lay_office,lay_home;
     private Session_management sessionManagement;
-
+  ImageView image_office,image_home;
     private boolean isEdit = false;
     Dialog loadingBar ;
+    int add_type=0;
     private String getlocation_id;
     private String [] pincodes ={"452001","452002","452003","452004","452005","452006","452007","452008","452009","452010","452011","452012","452013"
     ,"452014","452015","452016","452017","452018","452019","452020"};
@@ -86,7 +86,10 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         loadingBar.setCanceledOnTouchOutside(false);
 
         sessionManagement = new Session_management(getActivity());
-
+        image_home=(ImageView)view.findViewById(R.id.image_home);
+        image_office=(ImageView)view.findViewById(R.id.image_office);
+        lay_home=(LinearLayout)view.findViewById(R.id.lay_home);
+        lay_office=(LinearLayout)view.findViewById(R.id.lay_office);
         et_phone = (EditText) view.findViewById(R.id.et_add_adres_phone);
         et_name = (EditText) view.findViewById(R.id.et_add_adres_name);
         tv_phone = (TextView) view.findViewById(R.id.tv_add_adres_phone);
@@ -124,24 +127,51 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             String get_socity_id = getArguments().getString("socity_id");
             String get_socity_name = getArguments().getString("socity_name");
             String get_add = getArguments().getString("house");
+            String get_address_type = getArguments().getString("address_type");
 
             if (TextUtils.isEmpty(get_name) && get_name == null) {
                 isEdit = false;
             } else {
                 isEdit = true;
 
-                Toast.makeText(getActivity(), "edit", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(getActivity(), "edit", Toast.LENGTH_SHORT).show();
 
                 et_name.setText(get_name);
                 et_phone.setText(get_phone);
                 et_pin.setText(get_pine);
                 et_address.setText(get_add);
+                if(get_address_type.equals("home"))
+                {
+                    image_home.setVisibility(View.VISIBLE);
+                    image_office.setVisibility(View.GONE);
+                }
+                else if(get_address_type.equals("office"))
+                {
+                    image_office.setVisibility(View.VISIBLE);
+                    image_home.setVisibility(View.GONE);
+                }
               //  btn_socity.setText(get_socity_name);
 
                // sessionManagement.updateSocity(get_socity_name, get_socity_id);
             }
         }
 
+        lay_office.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                image_office.setVisibility(View.VISIBLE);
+                image_home.setVisibility(View.GONE);
+                add_type=2;
+            }
+        });
+        lay_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                image_home.setVisibility(View.VISIBLE);
+                image_office.setVisibility(View.GONE);
+                add_type=1;
+            }
+        });
        /* if (!TextUtils.isEmpty(getsocity_name)) {
 
             btn_socity.setText(getsocity_name);
@@ -233,6 +263,13 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             cancel = true;
         }
 
+        if(add_type==0)
+        {
+            Toast.makeText(getActivity(),"Please select any one option",Toast.LENGTH_LONG).show();
+            cancel = true;
+        }
+
+
         /*if (TextUtils.isEmpty(getsocity) && getsocity == null) {
             tv_socity.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = btn_socity;
@@ -251,13 +288,23 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
             if (ConnectivityReceiver.isConnected()) {
 
                 String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
-
+                String address_type="";
+                if(add_type==1)
+                {
+                    address_type="home";
+                }
+                else if(add_type==2)
+                {
+                    address_type="office";
+                }
                 // check internet connection
                 if (ConnectivityReceiver.isConnected()) {
                     if (isEdit) {
-                        makeEditAddressRequest(getlocation_id, getpin,getsocity, getadd, getname, getphone);
+
+                        makeEditAddressRequest(getlocation_id, getpin,getsocity, getadd, getname, getphone,address_type);
                     } else {
-                        makeAddAddressRequest(user_id, getpin, getsocity,getadd, getname, getphone);
+
+                        makeAddAddressRequest(user_id, getpin, getsocity,getadd, getname, getphone,address_type);
                     }
                 }
             }
@@ -273,7 +320,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
      * Method to make json object request where json response starts wtih
      */
     private void makeAddAddressRequest(String user_id, String pincode,String socity_id,
-                                       String address, String receiver_name, String receiver_mobile) {
+                                       String address, String receiver_name, String receiver_mobile,String address_type) {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_add_address_req";
@@ -285,6 +332,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         params.put("house_no", address);
         params.put("receiver_name", receiver_name);
         params.put("receiver_mobile", receiver_mobile);
+        params.put("address_type", address_type);
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.ADD_ADDRESS_URL, params, new Response.Listener<JSONObject>() {
@@ -321,7 +369,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
      * Method to make json object request where json response starts wtih
      */
     private void makeEditAddressRequest(String location_id, String pincode,String socity_id,
-                                        String add, String receiver_name, String receiver_mobile) {
+                                        String add, String receiver_name, String receiver_mobile,String address_type) {
 
         // Tag used to cancel the request
         String tag_json_obj = "json_edit_address_req";
@@ -333,6 +381,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         params.put("house_no", add);
         params.put("receiver_name", receiver_name);
         params.put("receiver_mobile", receiver_mobile);
+        params.put("address_type", address_type);
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.EDIT_ADDRESS_URL, params, new Response.Listener<JSONObject>() {

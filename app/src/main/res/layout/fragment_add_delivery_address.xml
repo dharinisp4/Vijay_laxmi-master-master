@@ -161,6 +161,130 @@
                 android:fontFamily="@font/cabin"
                 android:textSize="@dimen/space_14" />
 
+
+            <LinearLayout
+                android:id="@+id/lay_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/dark_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bgcolor2"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_10">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/home" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/space_20"
+                        android:gravity="center"
+                        android:text="Home Address"
+                        android:textColor="@color/black"
+                        android:textSize="18sp"
+                       android:fontFamily="@font/cabin" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/space_10"
+                        android:gravity="center|right">
+
+                        <ImageView
+                            android:id="@+id/image_home"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/status_delivered"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/dark_gray" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lay_office"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10"
+                android:orientation="vertical">
+
+                <View
+                    android:id="@+id/line_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+
+                    android:background="@color/dark_gray" />
+
+                <LinearLayout
+                    android:id="@+id/linear_pay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/bgcolor2"
+                    android:orientation="horizontal"
+
+                    android:padding="@dimen/space_10">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/office" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:gravity="center"
+                        android:text="Office Address"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/space_18"
+                        android:fontFamily="@font/cabin" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="@dimen/space_10"
+                        android:gravity="center|right">
+
+                        <ImageView
+                            android:id="@+id/image_office"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:background="@drawable/status_delivered"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/line1_pay"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/dark_gray"
+                    />
+
+            </LinearLayout>
+
+
             <RelativeLayout
                 android:id="@+id/btn_add_adres_edit"
                 android:layout_width="match_parent"

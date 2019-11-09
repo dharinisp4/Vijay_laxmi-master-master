@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name" translatable="false">BeautyMentor</string>
-    <string name="name" translatable="false">BeautyMentor</string>
+    <string name="app_name" translatable="false">Beauty Mentor</string>
+    <string name="name" translatable="false">Beauty Mentor</string>
     <string name="currency" translatable="false">\u20B9</string>
     <string name="title_activity_main" translatable="false">MainActivity</string>
     <string name="txtCredits" translatable="false"><a href="http://www.google.com">Google</a></string>
