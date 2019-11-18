@@ -78,9 +78,10 @@
                 android:background="@drawable/bg_rounded_button"
                 android:padding="12dp">
 
-                <Fonts.LatoBLack
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fontFamily="@font/cabin"
                     android:gravity="center"
                     android:text="@string/tv_thanks_order"
                     android:textColor="#fff"

@@ -87,33 +87,34 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void attemptLogin() {
 
-        tv_email.setText(getResources().getString(R.string.tv_login_email));
-        tv_password.setText(getResources().getString(R.string.tv_login_password));
-        tv_password.setTextColor(getResources().getColor(R.color.black));
-        tv_email.setTextColor(getResources().getColor(R.color.black));
+//        tv_email.setText(getResources().getString(R.string.tv_login_email));
+//        tv_password.setText(getResources().getString(R.string.tv_login_password));
+//        tv_password.setTextColor(getResources().getColor(R.color.black));
+//        tv_email.setTextColor(getResources().getColor(R.color.black));
         String getpassword = et_password.getText().toString();
         String getemail = et_email.getText().toString();
         boolean cancel = false;
         View focusView = null;
         if (TextUtils.isEmpty(getpassword)) {
-            tv_password.setTextColor(getResources().getColor(R.color.black));
+            et_password.setError("Enter Password");
+
             focusView = et_password;
             cancel = true;
         } else if (!isPasswordValid(getpassword)) {
-            tv_password.setText(getResources().getString(R.string.password_too_short));
-            tv_password.setTextColor(getResources().getColor(R.color.black));
+            et_password.setError("Password Too Short");
             focusView = et_password;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getemail)) {
 
-            tv_email.setTextColor(getResources().getColor(R.color.black));
+            et_email.setError("Enter Mobile Number");
             focusView = et_email;
             cancel = true;
-        } else if (!isEmailValid(getemail)) {
-            tv_email.setText(getResources().getString(R.string.invalide_email_address));
-            tv_email.setTextColor(getResources().getColor(R.color.black));
+        } else if (!isPhoneValid(getemail)) {
+            et_email.setError("Invalid Mobile Number");
+              tv_email.setText(getResources().getString(R.string.invalide_email_address));
+//            tv_email.setTextColor(getResources().getColor(R.color.black));
             focusView = et_email;
             cancel = true;
         }
@@ -134,11 +135,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
 
+    private boolean isPhoneValid(String phoneno) {
+        //TODO: Replace this with your own logic
+        return phoneno.length() > 9;
+    }
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
         return password.length() > 4;
@@ -152,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         // Tag used to cancel the request
         String tag_json_obj = "json_login_req";
         Map<String, String> params = new HashMap<String, String>();
-        params.put("user_email", email);
+        params.put("user_phone", email);
         params.put("password", password);
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,

@@ -274,7 +274,16 @@ public class Product_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                if(errormsg.isEmpty() || errormsg.equals(null))
+                {
+
+                }
+                else {
+                    Toast.makeText( getActivity(),"er5"+ errormsg,Toast.LENGTH_LONG ).show();
+                }
+
+
+
             }
         });
 
@@ -341,7 +350,13 @@ public class Product_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                if(errormsg.isEmpty() || errormsg.equals(null))
+                {
+
+                }
+                else {
+                    Toast.makeText( getActivity(),"er4"+ errormsg,Toast.LENGTH_LONG ).show();
+                }
 
             }
         });
@@ -402,7 +417,13 @@ public class Product_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                if(errormsg.isEmpty() || errormsg.equals(null))
+                {
+
+                }
+                else {
+                    Toast.makeText( getActivity(),"er3"+ errormsg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -452,7 +473,13 @@ public class Product_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                if(errormsg.isEmpty() || errormsg.equals(null))
+                {
+
+                }
+                else {
+                    Toast.makeText( getActivity(),"er2"+ errormsg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -500,7 +527,13 @@ public class Product_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                if(errormsg.isEmpty() || errormsg.equals(null))
+                {
+
+                }
+                else {
+                    Toast.makeText( getActivity(),"er1"+ errormsg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

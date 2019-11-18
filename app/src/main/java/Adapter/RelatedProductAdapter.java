@@ -90,6 +90,15 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         }
+        double stock = Double.parseDouble(modelList.get(position).getStock());
+        if (stock < 1) {
+            holder.itemView.setVisibility(View.GONE);
+            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+        }
+        else
+        {
+           // rel_out.setVisibility(View.GONE);
+        }
 
 //        if(db_wish.isInWishtable( getid ))
 //        {

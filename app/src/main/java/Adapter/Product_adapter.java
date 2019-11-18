@@ -62,6 +62,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
     String attribute_name="";
     String attribute_value="";
     String attribute_mrp="";
+    RelativeLayout rel_out;
     Module module=new Module();
     ArrayList<ProductVariantModel> variantList;
     ArrayList<ProductVariantModel> attributeList;
@@ -106,6 +107,7 @@ SharedPreferences preferences;
             product_mrp = (TextView) view.findViewById(R.id.product_mrp);
             discount= view.findViewById( R.id.dis );
             rel_click=view.findViewById(R.id.rel_click);
+            rel_out=view.findViewById(R.id.rel_out);
             add = view.findViewById( R.id.btn_add );
             wish_after=view.findViewById( R.id.wish_after );
             wish_before=view.findViewById( R.id.wish_before );
@@ -150,41 +152,48 @@ SharedPreferences preferences;
 
 
 
-                if(id==R.id.rel_click)
-            {
-              //  Toast .makeText(context ,"attribute " + "\n" +modelList.get(position).getProduct_attribute(),Toast.LENGTH_LONG).show();
-                Details_Fragment details_fragment=new Details_Fragment();
-                AppCompatActivity activity = (AppCompatActivity) view.getContext();
-                Bundle args = new Bundle();
-                 List<Product_model> lst=modelList;
-                args.putString("cat_id", modelList.get(position).getCategory_id());
-                args.putString("product_id",modelList.get(position).getProduct_id());
-                args.putString("product_image",modelList.get(position).getProduct_image());
-                args.putString("product_name",modelList.get(position).getProduct_name());
-                args.putString("product_description",modelList.get(position).getProduct_description());
-                args.putString("stock",modelList.get(position).getIn_stock());
+                if(id==R.id.rel_click) {
+                    double stock = Double.parseDouble(modelList.get(position).getStock());
+                    if (stock < 1) {
+   //rel_out.setVisibility(View.VISIBLE);
+   Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
+                    } else {
+
+                        //  Toast .makeText(context ,"attribute " + "\n" +modelList.get(position).getProduct_attribute(),Toast.LENGTH_LONG).show();
+                        Details_Fragment details_fragment = new Details_Fragment();
+                        AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                        Bundle args = new Bundle();
+                        List<Product_model> lst = modelList;
+                        args.putString("cat_id", modelList.get(position).getCategory_id());
+                        args.putString("product_id", modelList.get(position).getProduct_id());
+                        args.putString("product_image", modelList.get(position).getProduct_image());
+                        args.putString("product_name", modelList.get(position).getProduct_name());
+                        args.putString("product_description", modelList.get(position).getProduct_description());
+                        args.putString("in_stock", modelList.get(position).getIn_stock());
+                        args.putString("stock", modelList.get(position).getStock());
 //                args.putString("product_size",modelList.get(position).getSize());
-               // args.putString("product_color",modelList.get( position).getColor());
-                args.putString("price",modelList.get(position).getPrice());
-                args.putString("mrp",modelList.get(position).getMrp());
-                args.putString( "unit_price",modelList.get( position ).getPrice());
-                args.putString("unit_value",modelList.get(position).getUnit_value());
-                args.putString("unit",modelList.get(position).getUnit());
-                args.putString("product_attribute",modelList.get(position).getProduct_attribute());
-                args.putString("rewards",modelList.get(position).getRewards());
-                args.putString("increment",modelList.get(position).getIncreament());
-                args.putString("title",modelList.get(position).getTitle());
+                        // args.putString("product_color",modelList.get( position).getColor());
+                        args.putString("price", modelList.get(position).getPrice());
+                        args.putString("mrp", modelList.get(position).getMrp());
+                        args.putString("unit_price", modelList.get(position).getPrice());
+                        args.putString("unit_value", modelList.get(position).getUnit_value());
+                        args.putString("unit", modelList.get(position).getUnit());
+                        args.putString("product_attribute", modelList.get(position).getProduct_attribute());
+                        args.putString("rewards", modelList.get(position).getRewards());
+                        args.putString("increment", modelList.get(position).getIncreament());
+                        args.putString("title", modelList.get(position).getTitle());
 
-                args.putSerializable("product_model", (Serializable) lst);
-                details_fragment.setArguments(args);
+                        args.putSerializable("product_model", (Serializable) lst);
+                        details_fragment.setArguments(args);
 
 
-                FragmentManager fragmentManager=activity.getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel,details_fragment)
+                        FragmentManager fragmentManager = activity.getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
 
-                        .addToBackStack(null).commit();
+                                .addToBackStack(null).commit();
 
-            }
+                    }
+                }
 
 
 
@@ -277,7 +286,14 @@ SharedPreferences preferences;
 
 
         holder.product_mrp.setPaintFlags( holder.product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
+        double stock = Double.parseDouble(modelList.get(position).getStock());
+        if (stock < 1) {
+            rel_out.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            rel_out.setVisibility(View.GONE);
+        }
         String atr=mList.getProduct_attribute();
         if(atr.equals("[]") )
         {

@@ -360,7 +360,8 @@ public class DealsOfTheDayAdapter extends RecyclerView.Adapter<DealsOfTheDayAdap
                 args.putString("product_image",modelList.get(position).getProduct_image());
                 args.putString("product_name",modelList.get(position).getProduct_name());
                 args.putString("product_description",modelList.get(position).getProduct_description());
-                args.putString("stock",modelList.get(position).getIn_stock());
+                args.putString("in_stock",modelList.get(position).getIn_stock());
+                args.putString("stock",modelList.get(position).getStock());
 //                args.putString("product_size",modelList.get(position).getSize());
 //                args.putString("product_color",modelList.get( position).getColor());
                 args.putString("unit_price",modelList.get( position ).getUnit_price());

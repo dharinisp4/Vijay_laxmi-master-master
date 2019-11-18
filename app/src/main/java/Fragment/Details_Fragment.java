@@ -96,8 +96,9 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     String atr_id="";
     public static Button btn_adapter,btn_color;
     String atr_product_id,attribute_name,attribute_value,attribute_mrp,attribute_color,attribute_img;
-  int flag=0;
-  RelativeLayout rel;
+    int flag=0;
+    RelativeLayout rel;
+    double stock;
     Context context;
     List<Product_model> models;
     VarientsAdapter varientsAdapter;
@@ -116,7 +117,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     public static ImageView wish_before ,wish_after,btn ;
     int status=0;
     String cat_id,product_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
-    String details_product_price,details_product_mrp,details_product_unit_value,details_product_unit,details_product_rewards,details_product_increament,details_product_title;
+    String details_product_price,details_product_stock,details_product_mrp,details_product_unit_value,details_product_unit,details_product_rewards,details_product_increament,details_product_title;
     List<String> image_list;
     public static ElegantNumberButton numberButton;
     Module module=new Module();
@@ -171,7 +172,8 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         product_images=bundle.getString("product_image");
         details_product_name=bundle.getString("product_name");
         details_product_desc=bundle.getString("product_description");
-        details_product_inStock=bundle.getString("stock");
+        details_product_inStock=bundle.getString("in_stock");
+        details_product_stock=bundle.getString("stock");
         details_product_attribute=bundle.getString("product_attribute");
         details_product_unit_price =bundle.getString("unit_price");
         details_product_price=bundle.getString("price");
@@ -181,6 +183,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         details_product_rewards=bundle.getString("rewards");
         details_product_increament=bundle.getString("increment");
         details_product_title=bundle.getString("title");
+        stock=Double.parseDouble(details_product_stock);
 
 
     btn_add=(Button)view.findViewById(R.id.btn_add);
@@ -216,6 +219,14 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        if(stock<1)
+        {
+
+        }
+        else
+        {
+            numberButton.setRange(1,(int)Math.round(stock));
+        }
 
         if(details_product_attribute.equals("[]"))
         {
@@ -661,31 +672,33 @@ btn_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(details_product_attribute.equals("[]"))
-                {
-                    if (ConnectivityReceiver.isConnected()) {
-                        makeGetLimiteRequest();
-                    } else {
-                        ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-                    }
-                }
-                else
-                {
-                    if(position<0)
-                    {
-                        Toast.makeText(getActivity(),"Please select any weight",Toast.LENGTH_LONG).show();
-                    }
-                    else if(col_position<0)
-                    {
-                        Toast.makeText(getActivity(),"Please select any color",Toast.LENGTH_LONG).show();
-                    }
+                Toast.makeText(getActivity(),""+details_product_stock,Toast.LENGTH_LONG).show();
 
-                    else {
-                        String col=list_color.get(col_position);
-                        String id=db_cart.getCartId(product_id,atr_id,col);
-                      //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
-                    }
-                }
+//                if(details_product_attribute.equals("[]"))
+//                {
+//                    if (ConnectivityReceiver.isConnected()) {
+//                        makeGetLimiteRequest();
+//                    } else {
+//                        ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+//                    }
+//                }
+//                else
+//                {
+//                    if(position<0)
+//                    {
+//                        Toast.makeText(getActivity(),"Please select any weight",Toast.LENGTH_LONG).show();
+//                    }
+//                    else if(col_position<0)
+//                    {
+//                        Toast.makeText(getActivity(),"Please select any color",Toast.LENGTH_LONG).show();
+//                    }
+//
+//                    else {
+//                        String col=list_color.get(col_position);
+//                        String id=db_cart.getCartId(product_id,atr_id,col);
+//                      //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
+//                    }
+//                }
 
             }
         });

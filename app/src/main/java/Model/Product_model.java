@@ -25,7 +25,7 @@ public class Product_model {
     String in_stock;
     String unit_value;
     String unit_price;
-  String unit;
+    String unit;
     String increament;
     String rewards;
     String stock;

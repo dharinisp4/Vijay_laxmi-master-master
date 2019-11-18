@@ -182,7 +182,7 @@ public class Home_fragment extends Fragment {
 
         //Deal Of Day Poster
      //   Deal_Of_Day_poster = (ImageView) view.findViewById(R.id.deal_of_day_imageview);
-            footer =(Button) view.findViewById( R.id.click_here );
+         //   footer =(Button) view.findViewById( R.id.click_here );
 
         //Scroll View
         scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
@@ -270,16 +270,16 @@ public class Home_fragment extends Fragment {
         rv_headre_icons.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);
 
 
-        footer.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fm = new Help_Fragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                        .addToBackStack(null).commit();
-            }
-
-        } );
+//        footer.setOnClickListener( new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Fragment fm = new Help_Fragment();
+//                FragmentManager fragmentManager = getFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+//                        .addToBackStack(null).commit();
+//            }
+//
+//        } );
 
 //        //Call And Whatsapp
 //        iv_Call = (ImageView) view.findViewById(R.id.iv_call);

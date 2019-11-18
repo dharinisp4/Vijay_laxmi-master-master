@@ -59,7 +59,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     Dialog loadingBar ;
     int add_type=0;
     private String getlocation_id;
-    private String [] pincodes ={"452001","452002","452003","452004","452005","452006","452007","452008","452009","452010","452011","452012","452013"
+    private String[] pincodes ={"452001","452002","452003","452004","452005","452006","452007","452008","452009","452010","452011","452012","452013"
     ,"452014","452015","452016","452017","452018","452019","452020"};
 
     public Add_delivery_address_fragment() {
@@ -144,11 +144,13 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 {
                     image_home.setVisibility(View.VISIBLE);
                     image_office.setVisibility(View.GONE);
+                    add_type=1;
                 }
                 else if(get_address_type.equals("office"))
                 {
                     image_office.setVisibility(View.VISIBLE);
                     image_home.setVisibility(View.GONE);
+                    add_type=2;
                 }
               //  btn_socity.setText(get_socity_name);
 
@@ -300,11 +302,31 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 // check internet connection
                 if (ConnectivityReceiver.isConnected()) {
                     if (isEdit) {
+                        String pin=et_pin.getText().toString();
+                       boolean ch_pin= checkPinCode(pincodes,pin);
+                       if(ch_pin)
+                       {
+                           makeEditAddressRequest(getlocation_id, getpin,getsocity, getadd, getname, getphone,address_type);
+                       }
+                       else
+                       {
+                              Toast.makeText(getActivity(),"We don't deliver this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
+                       }
 
-                        makeEditAddressRequest(getlocation_id, getpin,getsocity, getadd, getname, getphone,address_type);
                     } else {
 
-                        makeAddAddressRequest(user_id, getpin, getsocity,getadd, getname, getphone,address_type);
+                        String pin=et_pin.getText().toString();
+                        boolean ch_pin= checkPinCode(pincodes,pin);
+                        if(ch_pin)
+                        {
+                            makeAddAddressRequest(user_id, getpin, getsocity,getadd, getname, getphone,address_type);
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(),"We don't deliver this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
+                        }
+
+
                     }
                 }
             }
@@ -415,6 +437,22 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+    public boolean checkPinCode(String[] pincodes,String value)
+    {
+        boolean tr=false;
+        for (String element : pincodes) {
+            if (element.equals(value)) {
+                tr=true;
+                break;
+            }
+            else
+
+                tr=false;
+
+        }
+      return tr;
     }
 
 }
