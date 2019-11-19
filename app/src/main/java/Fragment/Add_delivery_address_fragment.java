@@ -105,7 +105,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         String getsocity_name = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_NAME);
         //String getsocity_id = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_ID);
         String getsocity_id = "1";
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.select_dialog_item,pincodes);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line,pincodes);
 //        et_pin.setThreshold( 1 );
         et_pin.setAdapter( arrayAdapter );
         et_pin.setOnTouchListener( new View.OnTouchListener() {
@@ -237,30 +237,34 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         View focusView = null;
 
         if (TextUtils.isEmpty(getphone)) {
-            tv_phone.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_phone.setError("Enter Mobile Number");
+           // tv_phone.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_phone;
             cancel = true;
         } else if (!isPhoneValid(getphone)) {
-            tv_phone.setText(getResources().getString(R.string.phone_too_short));
-            tv_phone.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_phone.setError(getResources().getString(R.string.phone_too_short));
+            //tv_phone.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_phone;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getname)) {
-            tv_name.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_name.setError("Enter Name");
+           // tv_name.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_name;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getpin)) {
-            tv_pin.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_pin.setError("Enter PIN Code");
+           // tv_pin.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_pin;
             cancel = true;
         }
 
         if (TextUtils.isEmpty(getadd)) {
-            tv_address.setTextColor(getResources().getColor(R.color.colorPrimary));
+            et_address.setError("Enter Address");
+            //tv_address.setTextColor(getResources().getColor(R.color.colorPrimary));
             focusView = et_address;
             cancel = true;
         }

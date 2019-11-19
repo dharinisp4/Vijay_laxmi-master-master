@@ -159,7 +159,7 @@
     <string name="please_enter_pincode" translatable="false">Please enter pincode</string>
     <string name="receiver_mobile_number" translatable="false">Receiver Mobile Number(Required)</string>
     <string name="receiver_name_req" translatable="false">Receiver Name(Required)</string>
-    <string name="phone_too_short" translatable="false">Phone Too short</string>
+    <string name="phone_too_short" translatable="false">Mobile Number Too short</string>
     <string name="please_add_address">Please add address</string>
     <string name="pay" translatable="false">Payment</string>
     <string name="please_select_address">Please select address</string>
