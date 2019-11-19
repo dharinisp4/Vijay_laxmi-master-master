@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -87,24 +88,22 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 
         if(getid.equals(product_id))
         {
-            modelList.remove(position);
-
-
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
         }
         double stock = Double.parseDouble(modelList.get(position).getStock());
         if (stock < 1) {
-            modelList.remove(position);
+
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
-            notifyDataSetChanged();
+//            notifyDataSetChanged();
         }
         else
         {
            // rel_out.setVisibility(View.GONE);
         }
 
+     //  Toast.makeText(context,""+modelList.size(),Toast.LENGTH_LONG).show();
 //        if(db_wish.isInWishtable( getid ))
 //        {
 //            holder.wish_after.setVisibility( View.VISIBLE );
