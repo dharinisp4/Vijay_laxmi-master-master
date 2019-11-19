@@ -485,6 +485,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void setTitle(String title) {
         getSupportActionBar().setTitle(title);
+
     }
 
 

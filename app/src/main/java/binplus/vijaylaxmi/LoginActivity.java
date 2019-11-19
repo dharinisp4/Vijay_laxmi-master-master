@@ -54,9 +54,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         // remove title
         setContentView(R.layout.activity_login);
+
         loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+
         et_password = (EditText) findViewById(R.id.et_login_pass);
         et_email = (EditText) findViewById(R.id.et_login_email);
         tv_password = (TextView) findViewById(R.id.tv_login_password);

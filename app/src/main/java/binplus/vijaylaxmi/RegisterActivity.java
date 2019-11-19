@@ -63,7 +63,7 @@ RegisterActivity extends AppCompatActivity {
     Dialog loadingBar ;
     int flag=1;
 
-    private String [] pincodes ={"202002","2222222" , "284001","248001"};
+    private String [] pincodes ={"202002","222222" , "284001","248001"};
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -213,7 +213,7 @@ RegisterActivity extends AppCompatActivity {
                return false;
            }
        } );
-        et_pin.setAdapter( arrayAdapter );
+        et_pin.setAdapter( arrayAdapter);
     btn_register = (RelativeLayout) findViewById(R.id.btnRegister);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -248,16 +248,18 @@ RegisterActivity extends AppCompatActivity {
                     {
                         et_cpass.setError( "Enter confirm password" );
                         et_cpass.requestFocus();
-                    } else if(!isEmailValid(getemail))
+                    }
+                    else if(!(getemail.contains( "@" )))
                     {
                         et_email.setError( "Invalid Email" );
                         et_email.requestFocus();
                     }
-                    else if(!isPhoneValid( getphone ))
+                    else if(getphone.charAt( 0 )<6)
                     {
                         et_phone.setError( "Invalid phone number" );
                         et_phone.requestFocus();
                     }
+
                     else if(!isPasswordValid( getpassword ))
                     {
                         et_password.setError( "Invalid password" );
