@@ -348,7 +348,7 @@ String language;
      * Method to make json object request where json response starts wtih
      */
     private void makeGetAddressRequest(String user_id) {
-
+        loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_get_address_req";
 
@@ -363,6 +363,7 @@ String language;
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("address", response.toString());
+
 
                 try {
                     Boolean status = response.getBoolean("responce");
@@ -392,6 +393,7 @@ String language;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
 

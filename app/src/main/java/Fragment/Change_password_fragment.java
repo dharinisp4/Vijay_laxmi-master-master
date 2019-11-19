@@ -211,6 +211,7 @@ public class Change_password_fragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
 

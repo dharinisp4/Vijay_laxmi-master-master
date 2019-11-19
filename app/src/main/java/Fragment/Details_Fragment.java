@@ -127,7 +127,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     List<String> list_images=new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
     JSONObject var_respons=null;
-    RelativeLayout rel_relative ;
+   public static RelativeLayout rel_relative ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -157,7 +157,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
         rel_relative = view.findViewById( R.id.rel_relative_product );
         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-
         rv_cat.setLayoutManager(linearLayoutManager1);
         LinearLayoutManager linearLayoutManager2=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         varient_recycler.setLayoutManager( linearLayoutManager2 );
@@ -224,7 +223,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
         if(stock<1)
         {
-
         }
         else
         {
@@ -1174,15 +1172,18 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                         product_modelList = gson.fromJson(response.getString("data"), listType);
                         loadingBar.dismiss();
                         adapter_product = new RelatedProductAdapter( getActivity(),product_modelList,product_id);
-
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
                         if (getActivity() != null) {
                             if (product_modelList.isEmpty()) {
 
                                  loadingBar.dismiss();
-                                 rel_relative.setVisibility( View.GONE );
+
                                 //  Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                            }
+                            else if(product_modelList.size()==1)
+                            {
+                                rel_relative.setVisibility( View.GONE );
                             }
                         }
 

@@ -171,6 +171,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
      * Method to make json array request where json response starts wtih
      */
     private void makeGetLimiteRequest() {
+        loadingBar.show();
 
         JsonArrayRequest req = new JsonArrayRequest(BaseURL.GET_LIMITE_SETTING_URL,
                 new Response.Listener<JSONArray>() {
@@ -236,6 +237,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
                                     "Error: " + e.getMessage(),
                                     Toast.LENGTH_LONG).show();
                         }
+                        loadingBar.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override

@@ -348,6 +348,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private void makeAddAddressRequest(String user_id, String pincode,String socity_id,
                                        String address, String receiver_name, String receiver_mobile,String address_type) {
 
+        loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_add_address_req";
 
@@ -377,6 +378,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
 
@@ -396,6 +398,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
      */
     private void makeEditAddressRequest(String location_id, String pincode,String socity_id,
                                         String add, String receiver_name, String receiver_mobile,String address_type) {
+        loadingBar.show();
 
         // Tag used to cancel the request
         String tag_json_obj = "json_edit_address_req";
@@ -429,6 +432,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
 

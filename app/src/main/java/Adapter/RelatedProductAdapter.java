@@ -87,23 +87,20 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 
         if(getid.equals(product_id))
         {
-            modelList.remove(position);
-
+           // modelList.remove(position);
 
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+
+
         }
-        double stock = Double.parseDouble(modelList.get(position).getStock());
-        if (stock < 1) {
-            modelList.remove(position);
-            holder.itemView.setVisibility(View.GONE);
-            holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
-            notifyDataSetChanged();
-        }
-        else
-        {
-           // rel_out.setVisibility(View.GONE);
-        }
+
+//        double stock = Double.parseDouble(modelList.get(position).getStock());
+//        if (stock < 1) {
+//           Details_Fragment.rel_relative.setVisibility( View.GONE );
+//         //   notifyDataSetChanged();
+//        }
+
 
 //        if(db_wish.isInWishtable( getid ))
 //        {
