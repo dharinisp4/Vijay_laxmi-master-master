@@ -56,7 +56,7 @@ import util.Session_management;
 public class Edit_profile_fragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = Edit_profile_fragment.class.getSimpleName();
-
+    Uri sel_image;
     private EditText et_phone, et_name, et_email, et_house;
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_email, tv_house, tv_socity, btn_socity;
@@ -156,8 +156,19 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.btn_pro_edit) {
-            attemptEditProfile();
-            storeImage(bitmap);
+            if(bitmap !=null)
+            {
+                attemptEditProfile();
+                storeImage(bitmap);
+                // Toast.makeText(getActivity(),"not null ",Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+               Toast.makeText(getActivity(),"Please Select any one image for profile",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity()," null ",Toast.LENGTH_LONG).show();
+            }
+
+
         } else if (id == R.id.iv_pro_img) {
             Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             // Start the Intent
@@ -205,11 +216,7 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(getemail)) {
-            tv_email.setTextColor(getResources().getColor(R.color.colorPrimary));
-            focusView = et_email;
-            cancel = true;
-        }
+
 
         /*if (TextUtils.isEmpty(getsocity) && getsocity == null) {
             tv_socity.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -283,6 +290,7 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
             if (resultCode == getActivity().RESULT_OK) {
                 try {
                     Uri selectedImage = data.getData();
+                    sel_image=data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                     // Get the cursor

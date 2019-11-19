@@ -59,6 +59,7 @@
                 android:layout_marginBottom="@dimen/space_5"
                 android:layout_marginTop="@dimen/space_4"
                 android:textSize="14sp"
+                android:hint="Enter Name"
                 android:fontFamily="@font/cabin"
                 android:background="@drawable/xml_textbox_bg"
                 android:ems="10"
@@ -88,6 +89,7 @@
 
 
             <EditText
+                android:hint="Enter Mobile number"
                 android:id="@+id/et_pro_phone"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/space_4"
@@ -96,10 +98,12 @@
                 android:background="@drawable/xml_textbox_bg"
                 android:ems="10"
                 android:textSize="14sp"
+                android:enabled="false"
                 android:fontFamily="@font/cabin"
                 android:inputType="number"
                 android:maxLength="15" />
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
                 android:layout_height="wrap_content">
@@ -122,6 +126,7 @@
 
 
             <EditText
+                android:visibility="gone"
                 android:id="@+id/et_pro_email"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
