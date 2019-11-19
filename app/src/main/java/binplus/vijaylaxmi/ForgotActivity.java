@@ -129,7 +129,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
                     number=et_mobile.getText().toString().trim();
                     if(type.equals("l"))
                     {
-                        Toast.makeText(ForgotActivity.this,"REset",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ForgotActivity.this,"Reset",Toast.LENGTH_LONG).show();
                         Intent intent=new Intent(ForgotActivity.this,ReserPasswordActivity.class);
                         intent.putExtra("number",number);
                         startActivity(intent);

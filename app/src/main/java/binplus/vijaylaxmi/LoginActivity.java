@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         // remove title
         setContentView(R.layout.activity_login);
-
         loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);

@@ -127,6 +127,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     List<String> list_images=new ArrayList<>();
     RecyclerView.LayoutManager layoutManager;
     JSONObject var_respons=null;
+    RelativeLayout rel_relative ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -153,6 +154,8 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         details_product_weight=(TextView)view.findViewById(R.id.details_product_weight);
         btn_adapter=(Button) view.findViewById(R.id.btn_adapter);
         btn_color=(Button) view.findViewById(R.id.btn_color);
+
+        rel_relative = view.findViewById( R.id.rel_relative_product );
         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
 
         rv_cat.setLayoutManager(linearLayoutManager1);
@@ -1177,7 +1180,8 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                         if (getActivity() != null) {
                             if (product_modelList.isEmpty()) {
 
-                                loadingBar.dismiss();
+                                 loadingBar.dismiss();
+                                 rel_relative.setVisibility( View.GONE );
                                 //  Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                             }
                         }
