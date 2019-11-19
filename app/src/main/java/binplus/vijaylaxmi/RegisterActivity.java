@@ -63,7 +63,7 @@ RegisterActivity extends AppCompatActivity {
     Dialog loadingBar ;
     int flag=1;
 
-    private String [] pincodes ={"202002","222222" , "284001","248001"};
+   // private String [] pincodes ={"202002","222222", "284001","248001"};
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -204,16 +204,16 @@ RegisterActivity extends AppCompatActivity {
             }
         } );
 
-
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,pincodes);
-       et_pin.setOnTouchListener( new View.OnTouchListener() {
-           @Override
-           public boolean onTouch(View view, MotionEvent motionEvent) {
-               et_pin.showDropDown();
-               return false;
-           }
-       } );
-        et_pin.setAdapter( arrayAdapter);
+//
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item,pincodes);
+//       et_pin.setOnTouchListener( new View.OnTouchListener() {
+//           @Override
+//           public boolean onTouch(View view, MotionEvent motionEvent) {
+//               et_pin.showDropDown();
+//               return false;
+//           }
+//       } );
+//        et_pin.setAdapter( arrayAdapter );
     btn_register = (RelativeLayout) findViewById(R.id.btnRegister);
 
         btn_register.setOnClickListener(new View.OnClickListener() {
@@ -231,45 +231,52 @@ RegisterActivity extends AppCompatActivity {
                         et_name.setError( "Enter Name" );
                         et_name.requestFocus();
                     }
-                    else if(TextUtils.isEmpty(getemail))
-                    {
-                        et_email.setError( "Enter email address" );
-                        et_email.requestFocus();
-                    }
+//                    else if(TextUtils.isEmpty(getemail))
+//                    {
+//                        et_email.setError( "Enter email address" );
+//                        et_email.requestFocus();
+//                    }
                     else if(TextUtils.isEmpty(getphone))
                     {
                         et_phone.setError( "Enter phone number" );
                         et_phone.requestFocus();
-                    }else if(TextUtils.isEmpty(getpassword))
-                    {
-                        et_password.setError( "Enter password" );
-                        et_password.requestFocus();
-                    }else if(TextUtils.isEmpty(getcpass))
+                    }
+
+                    else if(TextUtils.isEmpty(getcpass))
                     {
                         et_cpass.setError( "Enter confirm password" );
                         et_cpass.requestFocus();
                     }
-                    else if(!(getemail.contains( "@" )))
-                    {
-                        et_email.setError( "Invalid Email" );
-                        et_email.requestFocus();
-                    }
-                    else if(getphone.charAt( 0 )<6)
+//                    else if(!isEmailValid(getemail))
+//                    {
+//                        et_email.setError( "Invalid Email" );
+//                        et_email.requestFocus();
+//                    }
+                    else if(!isPhoneValid( getphone ))
                     {
                         et_phone.setError( "Invalid phone number" );
                         et_phone.requestFocus();
                     }
-
-                    else if(!isPasswordValid( getpassword ))
-                    {
-                        et_password.setError( "Invalid password" );
-                        et_password.requestFocus();
-                    }
-                    else if(!isPasswordValid( getcpass ))
-                    {
-                        et_cpass.setError( "Invalid confirm password" );
+                else if (et_password.getText().toString().length() == 0) {
+                    et_password.setError("Enter Password");
+                    et_password.requestFocus();
+                } else if (et_password.getText().toString().length() < 6 || et_password.getText().toString().length() > 32) {
+                    et_password.setError("Password length must be between 6-32 characters");
+                    et_password.requestFocus();
+                } else if (!isValidPass(et_password.getText().toString().trim())) {
+                    et_password.setError("Please enter password with letter & numbers");
+                    et_password.requestFocus();
+                }
+                else if (et_cpass.getText().toString().length() == 0) {
+                        et_cpass.setError("Enter Password");
                         et_cpass.requestFocus();
-                    }
+                } else if (et_cpass.getText().toString().length() < 6 || et_cpass.getText().toString().length() > 32) {
+                        et_cpass.setError("Password length must be between 6-32 characters");
+                        et_cpass.requestFocus();
+                } else if (!isValidPass(et_cpass.getText().toString().trim())) {
+                        et_cpass.setError("Please enter password with letter & numbers");
+                        et_cpass.requestFocus();
+                }
                     else
                     {
                         if(flag==1)
@@ -283,7 +290,15 @@ RegisterActivity extends AppCompatActivity {
                             getprop = "";
                             getpincode = "";
 
-                            makeRegisterRequest( getname, getphone, getemail, getpassword, getsaloon_name, getprop, getsaloon_city, getstaff, getyear, getturn_over, getsaloon_add, getpincode );
+                            if(getcpass.equals(getpassword))
+                            {
+                                makeRegisterRequest( getname, getphone, getemail, getpassword, getsaloon_name, getprop, getsaloon_city, getstaff, getyear, getturn_over, getsaloon_add, getpincode );
+                            }
+                            else
+                            {
+                              Toast.makeText(RegisterActivity.this,"Password & Confirm Password doesn't match",Toast.LENGTH_LONG).show();
+                            }
+
                         }
                         else if(flag==2)
                         {
@@ -319,7 +334,14 @@ RegisterActivity extends AppCompatActivity {
                                 et_pin.requestFocus();
                             }
                             else {
+                                if(getcpass.equals(getpassword))
+                                {
                                 makeRegisterRequest( getname, getphone, getemail, getpassword, getsaloon_name, getprop, getsaloon_city, getstaff, getyear, getturn_over, getsaloon_add, getpincode );
+                            }
+                            else
+                            {
+                                Toast.makeText(RegisterActivity.this,"Password & Confirm Password doesn't match",Toast.LENGTH_LONG).show();
+                            }
                             }
 
 
@@ -386,7 +408,7 @@ RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
-                Toast.makeText(RegisterActivity.this, "" + saloon_name, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RegisterActivity.this, "" + saloon_name, Toast.LENGTH_SHORT).show();
                 try {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
@@ -421,4 +443,9 @@ RegisterActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
+    public boolean isValidPass(String s) {
+        String n = ".*[0-9].*";
+        String a = ".*[a-zA-Z].*";
+        return s.matches(n) && s.matches(a);
+    }
 }
