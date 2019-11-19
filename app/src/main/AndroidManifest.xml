@@ -44,7 +44,7 @@
             android:name="binplus.vijaylaxmi.ForgotActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="binplus.vijaylaxmi.PaymentGatWay"
+            android:name="binplus.vijaylaxmi.ReserPasswordActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- ./Firebase Notifications -->
         <activity android:name="binplus.vijaylaxmi.My_Order_activity" />
 

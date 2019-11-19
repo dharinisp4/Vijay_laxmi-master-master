@@ -417,7 +417,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000"
                         android:layout_marginTop="@dimen/space_10"
-                        android:text="Proprietor"
+                        android:text="Type of organisation or company"
                         android:textSize="14sp" />
 
                     <ImageView

@@ -688,7 +688,7 @@ public class Payment_fragment extends Fragment {
             Toast.makeText(getActivity(), "Please Select One", Toast.LENGTH_SHORT).show();
         }
        /* if (rb_card.isChecked()) {
-            Intent myIntent = new Intent(getActivity(), PaymentGatWay.class);
+            Intent myIntent = new Intent(getActivity(), ReserPasswordActivity.class);
             if (checkBox_Wallet.isChecked()) {
                 myIntent.putExtra("total", total_amount);
             } else {
@@ -702,7 +702,7 @@ public class Payment_fragment extends Fragment {
             getActivity().startActivity(myIntent);
         }*/
        /* if (rb_Netbanking.isChecked()) {
-            Intent myIntent1 = new Intent(getActivity(), PaymentGatWay.class);
+            Intent myIntent1 = new Intent(getActivity(), ReserPasswordActivity.class);
             if (checkBox_Wallet.isChecked()) {
                 myIntent1.putExtra("total", total_amount);
 

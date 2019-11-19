@@ -77,10 +77,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (id == R.id.btnContinue) {
             attemptLogin();
         } else if (id == R.id.btnRegister) {
-            Intent startRegister = new Intent(LoginActivity.this, RegisterActivity.class);
+            Intent startRegister = new Intent(LoginActivity.this, ForgotActivity.class);
+            startRegister.putExtra("type","r");
             startActivity(startRegister);
         } else if (id == R.id.btnForgot) {
             Intent startRegister = new Intent(LoginActivity.this, ForgotActivity.class);
+            startRegister.putExtra("type","l");
             startActivity(startRegister);
         }
     }

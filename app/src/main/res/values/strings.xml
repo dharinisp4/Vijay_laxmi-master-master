@@ -220,6 +220,8 @@
     <string name="edit">Edit</string>
     <string name="description">Description:</string>
 
+    <string name="password_valid">Please enter password with letter &amp; numbers</string>
+    <string name="password_length">Password length must be between 6-32 characters</string>
     <!-- row_delivery_time.xml -->
     <string name="tv_deli_socity">Society:</string>
     <string name="tv_deli_mobile">Mobile No.:</string>

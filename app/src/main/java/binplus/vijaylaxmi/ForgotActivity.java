@@ -5,12 +5,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +29,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 
 import Config.BaseURL;
 import util.ConnectivityReceiver;
@@ -35,11 +40,18 @@ import util.CustomVolleyJsonRequest;
 public class ForgotActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static String TAG = ForgotActivity.class.getSimpleName();
-
-    private RelativeLayout btn_continue;
-    private EditText et_email;
-    private TextView tv_email;
+    private static final long START_TIME_IN_MILLI=120000;
+    boolean mmTimerRunning;
+    private long mTimeLeftINMILLIS=START_TIME_IN_MILLI;
+    public String otp="";
+    CountDownTimer countDownTimer;
+    public static String number="";
+    LinearLayout lin_verify_otp,lin_send_otp;
+    private RelativeLayout btn_continue,btnVerify;
+    private EditText et_mobile,et_verify_otp;
+    private TextView tv_countdown;
     String lan;
+    String type="";
     SharedPreferences preferences;
    Dialog loadingBar;
     @Override
@@ -63,9 +75,14 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         loadingBar.setCanceledOnTouchOutside(false);
         // Call the function callInstamojo to start payment here
 
-        et_email = (EditText) findViewById(R.id.et_login_email);
-        tv_email = (TextView) findViewById(R.id.tv_login_email);
+        type=getIntent().getStringExtra("type");
+        lin_verify_otp=(LinearLayout)findViewById(R.id.lin_verify_otp);
+        lin_send_otp=(LinearLayout)findViewById(R.id.lin_send_otp);
+        et_mobile = (EditText) findViewById(R.id.et_mobile);
+        et_verify_otp = (EditText) findViewById(R.id.et_verify_otp);
+        tv_countdown = (TextView) findViewById(R.id.tv_countdown);
         btn_continue = (RelativeLayout) findViewById(R.id.btnContinue);
+        btnVerify = (RelativeLayout) findViewById(R.id.btnVerify);
 
         btn_continue.setOnClickListener(this);
         preferences = getSharedPreferences("lan", MODE_PRIVATE);
@@ -79,27 +96,77 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         if (id == R.id.btnContinue) {
             attemptForgot();
         }
+        else if(id == R.id.btnVerify)
+        {
+             verifyOTP();
+        }
+    }
+
+    private void verifyOTP() {
+
+        String otp_code=et_verify_otp.getText().toString().trim();
+
+        if(otp_code.isEmpty())
+        {
+            et_verify_otp.setError("Enter OTP");
+            et_verify_otp.requestFocus();
+        }
+        else
+        {
+            String timout=tv_countdown.getText().toString();
+
+            if(timout.equals("timeout"))
+            {
+                Toast.makeText(ForgotActivity.this,"Timeout",Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                if(otp_code.equals(otp))
+                {
+                    number=et_mobile.getText().toString().trim();
+                    if(type.equals("l"))
+                    {
+                        Intent intent=new Intent(ForgotActivity.this,ReserPasswordActivity.class);
+                        intent.putExtra("number",number);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else if(type.equals("r"))
+                    {
+                        Intent intent=new Intent(ForgotActivity.this,RegisterActivity.class);
+                        intent.putExtra("number",number);
+                        startActivity(intent);
+                        finish();
+                    }
+                    // Toast.makeText(PasswordActivity.this,"Verification is completed...",Toast.LENGTH_LONG).show();
+
+                }
+                else
+                {
+                    Toast.makeText(ForgotActivity.this,"Invalid OTP",Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
+
     }
 
     private void attemptForgot() {
 
-        tv_email.setText(getResources().getString(R.string.tv_login_email));
 
-        tv_email.setTextColor(getResources().getColor(R.color.dark_gray));
-
-        String getemail = et_email.getText().toString();
+        String getemail = et_mobile.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
         if (TextUtils.isEmpty(getemail)) {
-            tv_email.setTextColor(getResources().getColor(R.color.black));
-            focusView = et_email;
+            et_mobile.setError("Enter Mobile Number");
+
+            focusView = et_mobile;
             cancel = true;
-        } else if (!isEmailValid(getemail)) {
-            tv_email.setText(getResources().getString(R.string.invalide_email_address));
-            tv_email.setTextColor(getResources().getColor(R.color.black));
-            focusView = et_email;
+        } else if (!isPhoneValid(getemail)) {
+            et_mobile.setError("Invalid Mobile Number");
+            focusView = et_mobile;
             cancel = true;
         }
 
@@ -113,7 +180,16 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
             // perform the user login attempt.
 
             if (ConnectivityReceiver.isConnected()) {
-                makeForgotRequest(getemail);
+
+
+                if(type.equals("l"))
+                {
+                    makeForgotRequest(getemail);
+                }
+                else if(type.equals("r"))
+                {
+                   makeVerificationRequest(getemail);
+                }
             }
         }
 
@@ -127,32 +203,39 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     /**
      * Method to make json object request where json response starts wtih
      */
-    private void makeForgotRequest(String email) {
+    private void makeForgotRequest(String phone) {
 
+        loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_forgot_req";
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("email", email);
+        params.put("email", phone);
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
-                BaseURL.FORGOT_URL, params, new Response.Listener<JSONObject>() {
+                BaseURL.GENOTP_URL, params, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
 
+                loadingBar.dismiss();
                 try {
                     Boolean status = response.getBoolean("responce");
-                    String error = response.getString("error");
-                    String error_arb=response.getString("error_arb");
+
+                   // String error_arb=response.getString("error_arb");
                     if (status) {
-                        Toast.makeText(ForgotActivity.this, "" + error, Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(ForgotActivity.this, LoginActivity.class);
-                        startActivity(i);
-                        finish();
+
+                         lin_send_otp.setVisibility(View.GONE);
+                         lin_verify_otp.setVisibility(View.VISIBLE);
+                         statTimer();
+//                        Toast.makeText(ForgotActivity.this, "" + error, Toast.LENGTH_SHORT).show();
+//                        Intent i = new Intent(ForgotActivity.this, LoginActivity.class);
+//                        startActivity(i);
+//                        finish();
 
                     } else {
+                        String error = response.getString("error");
                         if (lan.contains("english")) {
                             Toast.makeText(ForgotActivity.this, "" + error, Toast.LENGTH_SHORT).show();
                         }
@@ -169,6 +252,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
                 String errormsg = Module.VolleyErrorMessage(error);
                 Toast.makeText( ForgotActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
             }
@@ -176,6 +260,112 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+    private void makeVerificationRequest(String phone) {
+
+        loadingBar.show();
+        // Tag used to cancel the request
+        String tag_json_obj = "json_forgot_req";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("email", phone);
+
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.VERIFY_MOBILE_URL, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+                loadingBar.dismiss();
+                try {
+                    Boolean status = response.getBoolean("responce");
+
+                   // String error_arb=response.getString("error_arb");
+                    if (status) {
+
+                         lin_send_otp.setVisibility(View.GONE);
+                         lin_verify_otp.setVisibility(View.VISIBLE);
+                         statTimer();
+//                        Toast.makeText(ForgotActivity.this, "" + error, Toast.LENGTH_SHORT).show();
+//                        Intent i = new Intent(ForgotActivity.this, LoginActivity.class);
+//                        startActivity(i);
+//                        finish();
+
+                    } else {
+                        String error = response.getString("error");
+                        if (lan.contains("english")) {
+                            Toast.makeText(ForgotActivity.this, "" + error, Toast.LENGTH_SHORT).show();
+                        }
+                       /* else {
+                            Toast.makeText(ForgotActivity.this, "" + error_arb, Toast.LENGTH_SHORT).show();
+
+                        }*/
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String errormsg = Module.VolleyErrorMessage(error);
+                Toast.makeText( ForgotActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+    private boolean isPhoneValid(String phoneno) {
+        //TODO: Replace this with your own logic
+        return phoneno.length() > 9;
+    }
+
+    public static String getRandomKey(int i)
+    {
+        final String characters="0123456789";
+        StringBuilder stringBuilder=new StringBuilder();
+        while (i>0)
+        {
+            Random ran=new Random();
+            stringBuilder.append(characters.charAt(ran.nextInt(characters.length())));
+            i--;
+        }
+        return stringBuilder.toString();
+    }
+
+    public void statTimer()
+    {
+        countDownTimer=new CountDownTimer(mTimeLeftINMILLIS,1000) {
+            @Override
+            public void onTick(long l) {
+
+                mTimeLeftINMILLIS=l;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                otp="";
+                tv_countdown.setText("timeout");
+                tv_countdown.setTextColor(Color.RED);
+
+
+            }
+        }.start();
+        mmTimerRunning=true;
+    }
+
+    private void updateCountDownText() {
+        int minutes=(int)(mTimeLeftINMILLIS/1000)/60;
+        int seconds=(int)(mTimeLeftINMILLIS/1000)%60;
+        String timeLeftForamatedd=String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds);
+        tv_countdown.setText(timeLeftForamatedd);
+
     }
 
 }

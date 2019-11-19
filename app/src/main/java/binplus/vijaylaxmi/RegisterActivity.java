@@ -43,7 +43,7 @@ public class
 RegisterActivity extends AppCompatActivity {
 
     private static String TAG = RegisterActivity.class.getSimpleName();
-
+   String number="";
     private EditText et_phone, et_name, et_password, et_email,et_cpass,et_saloon_name,et_city,et_address,et_propretier,et_staff,et_years ,et_turnover;
     private RelativeLayout btn_register;
     private AutoCompleteTextView et_pin;
@@ -81,6 +81,7 @@ RegisterActivity extends AppCompatActivity {
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
 
+        number=getIntent().getStringExtra("number");
         et_phone = (EditText) findViewById(R.id.et_reg_phone);
         et_name = (EditText) findViewById(R.id.et_reg_name);
         et_password = (EditText) findViewById(R.id.et_reg_password);
@@ -109,6 +110,8 @@ RegisterActivity extends AppCompatActivity {
         check_owner=(CheckBox)findViewById( R.id.chk_owner );
         check_user=(CheckBox)findViewById( R.id.chk_user );
 
+        et_phone.setText(number);
+        et_phone.setEnabled(false);
         check_user.setOnCheckedChangeListener( new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

@@ -128,6 +128,8 @@ public class BaseURL {
     public static String DELETE_ADDRESS_URL = BASE_URL + "index.php/api/delete_address";
 
     public static String EDIT_ADDRESS_URL = BASE_URL + "index.php/api/edit_address";
+    public static String GENOTP_URL = BASE_URL + "index.php/api/generate_otp";
+    public static String VERIFY_MOBILE_URL = BASE_URL + "index.php/api/verification_mobile";
 
 
     // global topic to receive app wide push notifications
