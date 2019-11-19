@@ -85,6 +85,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         btnVerify = (RelativeLayout) findViewById(R.id.btnVerify);
 
         btn_continue.setOnClickListener(this);
+        btnVerify.setOnClickListener(this);
         preferences = getSharedPreferences("lan", MODE_PRIVATE);
         lan=preferences.getString("language","");
     }
@@ -126,6 +127,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
                     number=et_mobile.getText().toString().trim();
                     if(type.equals("l"))
                     {
+                        Toast.makeText(ForgotActivity.this,"REset",Toast.LENGTH_LONG).show();
                         Intent intent=new Intent(ForgotActivity.this,ReserPasswordActivity.class);
                         intent.putExtra("number",number);
                         startActivity(intent);
@@ -133,6 +135,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
                     }
                     else if(type.equals("r"))
                     {
+                        Toast.makeText(ForgotActivity.this,"Register",Toast.LENGTH_LONG).show();
                         Intent intent=new Intent(ForgotActivity.this,RegisterActivity.class);
                         intent.putExtra("number",number);
                         startActivity(intent);
@@ -184,11 +187,13 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
                 if(type.equals("l"))
                 {
-                    makeForgotRequest(getemail);
+                    otp=getRandomKey(6);
+                    makeForgotRequest(getemail,otp);
                 }
                 else if(type.equals("r"))
                 {
-                   makeVerificationRequest(getemail);
+                    otp=getRandomKey(6);
+                   makeVerificationRequest(getemail,otp);
                 }
             }
         }
@@ -203,14 +208,16 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
     /**
      * Method to make json object request where json response starts wtih
      */
-    private void makeForgotRequest(String phone) {
+    private void makeForgotRequest(String phone,String otp) {
 
         loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_forgot_req";
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("email", phone);
+        params.put("mobile", phone);
+        params.put("otp", otp);
+
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.GENOTP_URL, params, new Response.Listener<JSONObject>() {
@@ -236,9 +243,8 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
                     } else {
                         String error = response.getString("error");
-                        if (lan.contains("english")) {
+
                             Toast.makeText(ForgotActivity.this, "" + error, Toast.LENGTH_SHORT).show();
-                        }
                        /* else {
                             Toast.makeText(ForgotActivity.this, "" + error_arb, Toast.LENGTH_SHORT).show();
 
@@ -262,14 +268,16 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
-    private void makeVerificationRequest(String phone) {
+    private void makeVerificationRequest(String phone,String otp) {
 
         loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_forgot_req";
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put("email", phone);
+        params.put("mobile", phone);
+        params.put("otp", otp);
+
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.VERIFY_MOBILE_URL, params, new Response.Listener<JSONObject>() {
@@ -294,9 +302,9 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
                     } else {
                         String error = response.getString("error");
-                        if (lan.contains("english")) {
+
                             Toast.makeText(ForgotActivity.this, "" + error, Toast.LENGTH_SHORT).show();
-                        }
+
                        /* else {
                             Toast.makeText(ForgotActivity.this, "" + error_arb, Toast.LENGTH_SHORT).show();
 
