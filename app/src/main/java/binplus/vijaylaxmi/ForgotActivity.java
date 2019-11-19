@@ -88,6 +88,8 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         btnVerify.setOnClickListener(this);
         preferences = getSharedPreferences("lan", MODE_PRIVATE);
         lan=preferences.getString("language","");
+
+
     }
 
     @Override
@@ -158,27 +160,47 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
 
 
         String getemail = et_mobile.getText().toString();
+        String mobile = et_mobile.getText().toString();
+        int first = mobile.charAt(0);
 
-        boolean cancel = false;
-        View focusView = null;
-
-        if (TextUtils.isEmpty(getemail)) {
-            et_mobile.setError("Enter Mobile Number");
-
-            focusView = et_mobile;
-            cancel = true;
-        } else if (!isPhoneValid(getemail)) {
-            et_mobile.setError("Invalid Mobile Number");
-            focusView = et_mobile;
-            cancel = true;
+        if(first<6 )
+        {
+            et_mobile.setError( "invalid mobile no" );
+            et_mobile.requestFocus();
         }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            if (focusView != null)
-                focusView.requestFocus();
-        } else {
+        else if(mobile.contains( "+" ))
+        {
+            et_mobile.setError( "invalid mobile no" );
+            et_mobile.requestFocus();
+        }
+        else if (mobile.length()<9)
+        {
+            et_mobile.setError( "invalid mobile no" );
+            et_mobile.requestFocus();
+        }
+
+//        boolean cancel = false;
+//        View focusView = null;
+//
+//        if (TextUtils.isEmpty(getemail)) {
+//            et_mobile.setError("Enter Mobile Number");
+//
+//            focusView = et_mobile;
+//            cancel = true;
+//        } else if (!isPhoneValid(getemail)) {
+//            et_mobile.setError("Invalid Mobile Number");
+//            focusView = et_mobile;
+//            cancel = true;
+//        }
+//
+//        if (cancel) {
+//            // There was an error; don't attempt login and focus the first
+//            // form field with an error.
+//            if (focusView != null)
+//                focusView.requestFocus();
+//        }
+      else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
 

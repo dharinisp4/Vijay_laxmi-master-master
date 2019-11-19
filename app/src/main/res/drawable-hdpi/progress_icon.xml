@@ -2,9 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <rotate
-            android:drawable="@drawable/icons8_spa_flower_100px"
-            
-            android:duration="150"
+            android:drawable="@drawable/icons8_succulent_filled_100px"
+            android:duration="200"
             android:fillAfter="true"
             android:fromDegrees="0"
             android:pivotX="50%"

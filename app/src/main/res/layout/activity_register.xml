@@ -27,7 +27,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:src="@drawable/ic_launcher"
+                android:src="@drawable/beautymentor"
                 android:textAlignment="center" />
 
             <TextView
