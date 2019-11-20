@@ -128,6 +128,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     RecyclerView.LayoutManager layoutManager;
     JSONObject var_respons=null;
    public static RelativeLayout rel_relative ;
+   String qty_in_cart ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -186,6 +187,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         details_product_increament=bundle.getString("increment");
         details_product_title=bundle.getString("title");
         stock=Double.parseDouble(details_product_stock);
+
 
 
     btn_add=(Button)view.findViewById(R.id.btn_add);
@@ -673,33 +675,33 @@ btn_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getActivity(),""+details_product_stock,Toast.LENGTH_LONG).show();
+         //       Toast.makeText(getActivity(),""+details_product_stock,Toast.LENGTH_LONG).show();
 
-//                if(details_product_attribute.equals("[]"))
-//                {
-//                    if (ConnectivityReceiver.isConnected()) {
-//                        makeGetLimiteRequest();
-//                    } else {
-//                        ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-//                    }
-//                }
-//                else
-//                {
-//                    if(position<0)
-//                    {
-//                        Toast.makeText(getActivity(),"Please select any weight",Toast.LENGTH_LONG).show();
-//                    }
-//                    else if(col_position<0)
-//                    {
-//                        Toast.makeText(getActivity(),"Please select any color",Toast.LENGTH_LONG).show();
-//                    }
-//
-//                    else {
-//                        String col=list_color.get(col_position);
-//                        String id=db_cart.getCartId(product_id,atr_id,col);
-//                      //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
-//                    }
-//                }
+                if(details_product_attribute.equals("[]"))
+                {
+                    if (ConnectivityReceiver.isConnected()) {
+                        makeGetLimiteRequest();
+                    } else {
+                        ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+                    }
+                }
+                else
+                {
+                    if(position<0)
+                    {
+                        Toast.makeText(getActivity(),"Please select any weight",Toast.LENGTH_LONG).show();
+                    }
+                    else if(col_position<0)
+                    {
+                        Toast.makeText(getActivity(),"Please select any color",Toast.LENGTH_LONG).show();
+                    }
+
+                    else {
+                        String col=list_color.get(col_position);
+                        String id=db_cart.getCartId(product_id,atr_id,col);
+                      //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
+                    }
+                }
 
             }
         });

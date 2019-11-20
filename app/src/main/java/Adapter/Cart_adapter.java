@@ -199,11 +199,13 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                     boolean b = db_cart.updateCartWithQty(map.get("cart_id"), pr, qt);
                     if (b) {
                         Toast.makeText(activity, "Qty Updated", Toast.LENGTH_LONG).show();
+                        Details_Fragment.numberButton.setNumber( String.valueOf( qty ) );
                     } else {
                         Toast.makeText(activity, "Qty not Updated", Toast.LENGTH_LONG).show();
                     }
                 }
                     Cart_fragment.tv_total.setText(activity.getResources().getString(R.string.currency)+" "+db_cart.getTotalAmount());
+
 
                     if (holder.tv_contetiy.getText().toString().equalsIgnoreCase("0")) {
 
@@ -243,6 +245,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                if(b)
                {
                    Toast.makeText(activity,"Qty Updated",Toast.LENGTH_LONG).show();
+                   Details_Fragment.numberButton.setNumber( String.valueOf( qty ) );
                }
                else
                {

@@ -158,7 +158,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_phone", email);
         params.put("password", password);
-
+        loadingBar.show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.LOGIN_URL, params, new Response.Listener<JSONObject>() {
 
@@ -196,6 +196,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
 

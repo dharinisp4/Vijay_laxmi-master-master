@@ -278,11 +278,11 @@
                         android:text="Name of Saloon"
                         android:textSize="14sp" />
 
-                    <ImageView
-                        android:id="@+id/iconsaloon"
-                        android:src="@drawable/iconn"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/iconsaloon"-->
+<!--                        android:src="@drawable/iconn"-->
+<!--                        android:layout_width="10dp"-->
+<!--                        android:layout_height="10dp" />-->
 
                 </LinearLayout>
 
@@ -313,12 +313,12 @@
                         android:text="PIN Code"
                         android:textSize="14sp" />
 
-                    <ImageView
-                        android:id="@+id/iconpin"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp"
-                        android:layout_marginTop="@dimen/space_10"
-                        android:src="@drawable/iconn" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/iconpin"-->
+<!--                        android:layout_width="10dp"-->
+<!--                        android:layout_height="10dp"-->
+<!--                        android:layout_marginTop="@dimen/space_10"-->
+<!--                        android:src="@drawable/iconn" />-->
 
                 </LinearLayout>
 
@@ -388,11 +388,11 @@
                         android:text="Address"
                         android:textSize="14sp" />
 
-                    <ImageView
-                        android:id="@+id/iconaddress"
-                        android:src="@drawable/iconn"
-                        android:layout_width="10dp"
-                        android:layout_height="10dp" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/iconaddress"-->
+<!--                        android:src="@drawable/iconn"-->
+<!--                        android:layout_width="10dp"-->
+<!--                        android:layout_height="10dp" />-->
 
                 </LinearLayout>
 
@@ -413,7 +413,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linear_radio">
                     <TextView
                         android:fontFamily="@font/cabin"
                         android:id="@+id/tv_proprietor"
@@ -421,7 +422,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="#000"
                         android:layout_marginTop="@dimen/space_10"
-                        android:text="Type of organisation or company"
+                        android:text="Type of Parlour/Saloon"
                         android:textSize="14sp" />
 
                     <ImageView
@@ -432,6 +433,7 @@
                         android:src="@drawable/iconn" />
 
                 </LinearLayout>
+
 
 
                 <EditText
@@ -445,7 +447,45 @@
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/xml_textbox_bg"
                     android:ems="10"
+                    android:visibility="gone"
                     />
+                <RadioGroup
+                    android:id="@+id/radio_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_4">
+                    <RadioButton
+                        android:id="@+id/female"
+                        android:tag="female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Only for Female"
+                        android:textSize="14sp"
+                        android:textColor="#000"
+                        android:fontFamily="@font/cabin"
+                        android:checked="false"/>
+                    <RadioButton
+                        android:id="@+id/male"
+                        android:tag="male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Only for Male"
+                        android:textSize="14sp"
+                        android:textColor="#000"
+                        android:fontFamily="@font/cabin"
+                        android:checked="false"/>
+                    <RadioButton
+                        android:id="@+id/unisex"
+                        android:tag="unisex"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Unisex"
+                        android:textSize="14sp"
+                        android:textColor="#000"
+                        android:fontFamily="@font/cabin"
+                        android:checked="false"/>
+
+                </RadioGroup>
 
                 <LinearLayout
                     android:layout_width="match_parent"

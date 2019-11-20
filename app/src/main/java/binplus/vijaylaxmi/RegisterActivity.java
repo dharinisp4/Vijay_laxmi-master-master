@@ -16,6 +16,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,16 +49,17 @@ RegisterActivity extends AppCompatActivity {
     private RelativeLayout btn_register;
     private AutoCompleteTextView et_pin;
     private TextView tv_phone, tv_name, tv_password, tv_email,tv_cpass ,tv_saloon_name , tv_city ,tv_add ,tv_prop ,tv_staff,tv_years,tv_turnover,tv_pin;
-    private LinearLayout linear_saloon ;
+    private LinearLayout linear_saloon ,linear_radio;
     private CheckBox check_user , check_owner;
-    private RadioGroup radioGroup_checked ;
+    private RadioGroup radioGroup_checked ,radioGroup_type;
+    RadioButton saloon_type;
     String getsaloon_name = "";
     String getsaloon_add = "";
     String getturn_over = "";
     String getstaff = "";
     String getsaloon_city = "";
     String getyear = "";
-    String getprop = "";
+    String gettype = "";
     String getpincode = "";
     String getname ,getphone ,getpassword,getemail ,getcpass;
     Dialog loadingBar ;
@@ -107,8 +109,10 @@ RegisterActivity extends AppCompatActivity {
         et_years =(EditText)findViewById( R.id.et_year );
         et_turnover=(EditText)findViewById( R.id.et_turnover );
         radioGroup_checked=(RadioGroup)findViewById( R.id.radio_checked );
+        radioGroup_type=(RadioGroup) findViewById( R.id.radio_type );
         check_owner=(CheckBox)findViewById( R.id.chk_owner );
         check_user=(CheckBox)findViewById( R.id.chk_user );
+        linear_radio =(LinearLayout)findViewById( R.id.linear_radio );
 
         et_phone.setText(number);
         et_phone.setEnabled(false);
@@ -120,40 +124,14 @@ RegisterActivity extends AppCompatActivity {
                     linear_saloon.setVisibility( View.GONE );
                     flag=1;
 
-//                    check_user.setChecked( true );
-//                    linear_saloon.setVisibility( View.GONE );
-//                    getphone = et_phone.getText().toString();
-//                    getname = et_name.getText().toString();
-//                    getpassword = et_password.getText().toString();
-//                    getemail = et_email.getText().toString();
-//                    getcpass =et_cpass.getText().toString();
-//                    getsaloon_name = "";
-//                    getsaloon_add = "";
-//                    getturn_over = "";
-//                    getstaff = "";
-//                    getsaloon_city = "";
-//                    getyear = "";
-//                    getprop = "";
-//                    getpincode = "";
+//
                 }
                 else
                 {
                     check_owner.setChecked( true );
                     linear_saloon.setVisibility( View.VISIBLE );
                     flag=2;
-//                    getphone = et_phone.getText().toString();
-//                    getname = et_name.getText().toString();
-//                    getpassword = et_password.getText().toString();
-//                    getcpass = et_cpass.getText().toString();
-//                    getemail = et_email.getText().toString();
-//                    getsaloon_name = et_saloon_name.getText().toString();
-//                    getsaloon_add = et_address.getText().toString();
-//                    getturn_over = et_turnover.getText().toString();
-//                    getstaff = et_staff.getText().toString();
-//                    getsaloon_city = et_city.getText().toString();
-//                    getyear = et_years.getText().toString();
-//                    getprop = et_propretier.getText().toString();
-//                    getpincode = et_pin.getText().toString();
+//
                 }
             }
         } );
@@ -167,38 +145,14 @@ RegisterActivity extends AppCompatActivity {
                     check_user.setChecked( false );
                     linear_saloon.setVisibility( View.VISIBLE );
                     flag=2;
-//                    getphone = et_phone.getText().toString();
-//                    getname = et_name.getText().toString();
-//                    getpassword = et_password.getText().toString();
-//                    getcpass = et_cpass.getText().toString();
-//                    getemail = et_email.getText().toString();
-//                    getsaloon_name = et_saloon_name.getText().toString();
-//                    getsaloon_add = et_address.getText().toString();
-//                    getturn_over = et_turnover.getText().toString();
-//                    getstaff = et_staff.getText().toString();
-//                    getsaloon_city = et_city.getText().toString();
-//                    getyear = et_years.getText().toString();
-//                    getprop = et_propretier.getText().toString();
-//                    getpincode = et_pin.getText().toString();
+//
                 }
                 else
                 {
                     check_user.setChecked( true );
                     linear_saloon.setVisibility( View.GONE );
                     flag=1;
-//                   getphone = et_phone.getText().toString();
-//                   getname = et_name.getText().toString();
-//                     getpassword = et_password.getText().toString();
-//                    getemail = et_email.getText().toString();
-//                    getcpass =et_cpass.getText().toString();
-//                    getsaloon_name = "";
-//                     getsaloon_add = "";
-//                  getturn_over = "";
-//                    getstaff = "";
-//                    getsaloon_city = "";
-//                    getyear = "";
-//                 getprop = "";
-//                    getpincode = "";
+//
                 }
 
             }
@@ -219,6 +173,7 @@ RegisterActivity extends AppCompatActivity {
         btn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
 
                     getphone = et_phone.getText().toString();
                     getname = et_name.getText().toString();
@@ -260,23 +215,26 @@ RegisterActivity extends AppCompatActivity {
                 else if (et_password.getText().toString().length() == 0) {
                     et_password.setError("Enter Password");
                     et_password.requestFocus();
-                } else if (et_password.getText().toString().length() < 6 || et_password.getText().toString().length() > 32) {
-                    et_password.setError("Password length must be between 6-32 characters");
-                    et_password.requestFocus();
-                } else if (!isValidPass(et_password.getText().toString().trim())) {
-                    et_password.setError("Please enter password with letter & numbers");
-                    et_password.requestFocus();
                 }
+                else if (et_password.getText().toString().length() < 6 || et_password.getText().toString().length() > 32) {
+                        et_password.setError( "Password length must be between 6-32 characters" );
+                        et_password.requestFocus();
+                    }
+//                } else if (!isValidPass(et_password.getText().toString().trim())) {
+//                    et_password.setError("Please enter password with letter & numbers");
+//                    et_password.requestFocus();
+//                }
                 else if (et_cpass.getText().toString().length() == 0) {
                         et_cpass.setError("Enter Password");
                         et_cpass.requestFocus();
                 } else if (et_cpass.getText().toString().length() < 6 || et_cpass.getText().toString().length() > 32) {
                         et_cpass.setError("Password length must be between 6-32 characters");
                         et_cpass.requestFocus();
-                } else if (!isValidPass(et_cpass.getText().toString().trim())) {
-                        et_cpass.setError("Please enter password with letter & numbers");
-                        et_cpass.requestFocus();
                 }
+//                else if (!isValidPass(et_cpass.getText().toString().trim())) {
+//                        et_cpass.setError("Please enter password with letter & numbers");
+//                        et_cpass.requestFocus();
+//                }
                     else
                     {
                         if(flag==1)
@@ -287,12 +245,12 @@ RegisterActivity extends AppCompatActivity {
                             getstaff = "";
                             getsaloon_city = "";
                             getyear = "";
-                            getprop = "";
+                            gettype = "";
                             getpincode = "";
 
                             if(getcpass.equals(getpassword))
                             {
-                                makeRegisterRequest( getname, getphone, getemail, getpassword, getsaloon_name, getprop, getsaloon_city, getstaff, getyear, getturn_over, getsaloon_add, getpincode );
+                                makeRegisterRequest( getname, getphone, getemail, getpassword, getsaloon_name, gettype, getsaloon_city, getstaff, getyear, getturn_over, getsaloon_add, getpincode );
                             }
                             else
                             {
@@ -308,40 +266,58 @@ RegisterActivity extends AppCompatActivity {
                             getstaff = et_staff.getText().toString();
                             getsaloon_city = et_city.getText().toString();
                             getyear = et_years.getText().toString();
-                            getprop = et_propretier.getText().toString();
+                     //       getprop = et_propretier.getText().toString();
                             getpincode = et_pin.getText().toString();
+                            radioGroup_type.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                                    int id = radioGroup.getCheckedRadioButtonId();
+                                    saloon_type = findViewById( id );
+                                    gettype = saloon_type.getText().toString();
+                                  //  Toast.makeText( RegisterActivity.this ,"selected:" +gettype,Toast.LENGTH_LONG ).show();
+                                }
+                            } );
 
-                            if(TextUtils.isEmpty(getsaloon_name))
-                            {
-                                et_saloon_name.setError("Enter Saloon Name");
-                                et_saloon_name.requestFocus();
-                            }
-                            else if(TextUtils.isEmpty(getprop))
-                            {
-                                et_propretier.setError("Enter Proprietor");
-                                et_propretier.requestFocus();
-                            }else if(TextUtils.isEmpty(getsaloon_city))
+
+//                            if(TextUtils.isEmpty(getsaloon_name))
+//                            {
+//                                et_saloon_name.setError("Enter Saloon Name");
+//                                et_saloon_name.requestFocus();
+//                            }
+//                            if(TextUtils.isEmpty(getprop))
+//                            {
+//                                tv_propretier.setError("Select Type");
+//                                tv_propretier.requestFocus();
+//                            }
+                           if(TextUtils.isEmpty(getsaloon_city))
                             {
                                 et_city.setError("Enter Saloon city");
                                 et_city.requestFocus();
-                            }else if(TextUtils.isEmpty(getsaloon_add))
-                            {
-                                et_address.setError("Enter Saloon address");
-                                et_address.requestFocus();
-                            }else if(TextUtils.isEmpty(getpincode))
-                            {
-                                et_pin.setError("Enter Pin code");
-                                et_pin.requestFocus();
                             }
+                           else if(gettype.equals( "" ))
+                           {
+                              linear_radio.requestFocus();
+                             Toast.makeText( RegisterActivity.this,"Select parlor/saloon type",Toast.LENGTH_LONG ).show();
+                           }
+//                           else if(TextUtils.isEmpty(getsaloon_add))
+//                            {
+//                                et_address.setError("Enter Saloon address");
+//                                et_address.requestFocus();
+//                            }else if(TextUtils.isEmpty(getpincode))
+//                            {
+//                                et_pin.setError("Enter Pin code");
+//                                et_pin.requestFocus();
+//                            }
                             else {
                                 if(getcpass.equals(getpassword))
                                 {
-                                makeRegisterRequest( getname, getphone, getemail, getpassword, getsaloon_name, getprop, getsaloon_city, getstaff, getyear, getturn_over, getsaloon_add, getpincode );
-                            }
-                            else
-                            {
+                                makeRegisterRequest( getname, getphone, getemail, getpassword, getsaloon_name, gettype, getsaloon_city, getstaff, getyear, getturn_over, getsaloon_add, getpincode );
+
+                                 }
+                                 else
+                                {
                                 Toast.makeText(RegisterActivity.this,"Password & Confirm Password doesn't match",Toast.LENGTH_LONG).show();
-                            }
+                                }
                             }
 
 
@@ -382,8 +358,9 @@ RegisterActivity extends AppCompatActivity {
      * Method to make json object request where json response starts wtih
      */
     private void makeRegisterRequest(String name, String mobile, String email, String password ,
-                                     final String saloon_name , String propritior , String saloon_city , String staff ,
+                                     final String saloon_name , String type , String saloon_city , String staff ,
                                      String establishyear , String turn_over, String saloon_add , String pincode ) {
+        loadingBar.show();
 
         // Tag used to cancel the request
         String tag_json_obj = "json_register_req";
@@ -394,7 +371,7 @@ RegisterActivity extends AppCompatActivity {
         params.put("user_email", email);
         params.put("password", password);
         params.put ("saloon_name",saloon_name);
-        params.put("proprietor",propritior);
+        params.put("proprietor",type);
         params.put("saloon_city",saloon_city);
         params.put("staff",staff);
         params.put("establishyear",establishyear);
@@ -429,6 +406,7 @@ RegisterActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
 
