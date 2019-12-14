@@ -366,11 +366,13 @@ public class Payment_fragment extends Fragment {
                 JSONObject jObjP = new JSONObject();
                 try {
                     jObjP.put("product_id", map.get("product_id"));
+                    jObjP.put("product_name", map.get("product_name")+map.get("attr_color"));
                     jObjP.put("qty", map.get("qty"));
                     jObjP.put("unit_value", map.get("unit_price"));
                     jObjP.put("unit", map.get("unit"));
                     jObjP.put("price", map.get("price"));
                     jObjP.put("rewards", "0");
+                    jObjP.put("atr_img",map.get("attr_img"));
                     passArray.put(jObjP);
                 } catch (JSONException e) {
                     e.printStackTrace();

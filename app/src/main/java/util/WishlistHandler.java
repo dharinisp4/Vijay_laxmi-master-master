@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class WishlistHandler extends SQLiteOpenHelper {
-    private static String DB_NAME = "dbwi";
+    private static String DB_NAME = "dbwih";
     private static int DB_VERSION = 3;
     private SQLiteDatabase db;
 
@@ -21,7 +21,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
     public static final String COLUMN_NAME = "product_name";
     public static final String COLUMN_PRICE = "price";
     public static final String COLUMN_MRP = "mrp";
-    public static final String COLUMN_UNIT_PRICE = "unit_price";
+    public static final String COLUMN_IN_STOCK = "in_stock";
     public static final String COLUMN_UNIT_VALUE = "unit_value";
     public static final String COLUMN_UNIT = "unit";
     public static final String COLUMN_DESC = "product_description";
@@ -45,7 +45,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
                 + COLUMN_NAME + " TEXT NOT NULL, "
                 + COLUMN_PRICE + " DOUBLE NOT NULL, "
                 + COLUMN_MRP + " DOUBLE NOT NULL, "
-                + COLUMN_UNIT_PRICE + " DOUBLE NOT NULL, "
+                + COLUMN_IN_STOCK + " TEXT NOT NULL, "
                 + COLUMN_UNIT + " TEXT NOT NULL, "
                 + COLUMN_UNIT_VALUE + " TEXT NOT NULL, "
                 + COLUMN_STOCK + " TEXT NOT NULL, "
@@ -77,7 +77,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
             values.put(COLUMN_NAME, map.get(COLUMN_NAME));
             values.put(COLUMN_PRICE, map.get(COLUMN_PRICE));
             values.put(COLUMN_MRP, map.get(COLUMN_MRP));
-            values.put(COLUMN_UNIT_PRICE, map.get(COLUMN_UNIT_PRICE));
+            values.put(COLUMN_IN_STOCK, map.get(COLUMN_IN_STOCK));
             values.put(COLUMN_UNIT, map.get(COLUMN_UNIT));
             values.put(COLUMN_DESC, map.get(COLUMN_DESC));
             values.put(COLUMN_UNIT_VALUE, map.get(COLUMN_UNIT_VALUE));
@@ -160,7 +160,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
             map.put(COLUMN_NAME, cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
             map.put(COLUMN_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_PRICE)));
             map.put(COLUMN_MRP, cursor.getString(cursor.getColumnIndex(COLUMN_MRP)));
-            map.put(COLUMN_UNIT_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_PRICE)));
+            map.put(COLUMN_IN_STOCK, cursor.getString(cursor.getColumnIndex(COLUMN_IN_STOCK)));
             map.put(COLUMN_UNIT, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT)));
             map.put(COLUMN_DESC, cursor.getString(cursor.getColumnIndex(COLUMN_DESC)));
             map.put(COLUMN_UNIT_VALUE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_VALUE)));
@@ -190,7 +190,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
             map.put(COLUMN_NAME, cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
             map.put(COLUMN_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_PRICE)));
             map.put(COLUMN_MRP, cursor.getString(cursor.getColumnIndex(COLUMN_MRP)));
-            map.put(COLUMN_UNIT_PRICE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_PRICE)));
+            map.put(COLUMN_IN_STOCK, cursor.getString(cursor.getColumnIndex(COLUMN_IN_STOCK)));
             map.put(COLUMN_UNIT, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT)));
             map.put(COLUMN_DESC, cursor.getString(cursor.getColumnIndex(COLUMN_DESC)));
             map.put(COLUMN_UNIT_VALUE, cursor.getString(cursor.getColumnIndex(COLUMN_UNIT_VALUE)));

@@ -48,25 +48,46 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/tv_reg_name_hint"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:fontFamily="@font/cabin"
-                    android:textColor="#000"
-                    android:id="@+id/txtQty"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal"
-                    android:text="@string/tv_order_qty"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal">
+                    <TextView
+                        android:fontFamily="@font/cabin"
+                        android:textColor="#000"
+                        android:id="@+id/txtQty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/tv_order_qty"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:fontFamily="@font/cabin"
+                        android:textColor="#000"
+                        android:layout_marginRight="@dimen/space_20"
+                        android:layout_gravity="center_vertical"
+                        android:id="@+id/tv_order_Detail_qty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="0" />
+
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:weightSum="10"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -74,8 +95,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_5"
                     android:layout_marginStart="@dimen/space_5"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:layout_weight="5"
+                    android:orientation="horizontal">
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -101,25 +122,42 @@
                             android:text="15 " />
                     </LinearLayout>
 
-                </LinearLayout>
 
+                </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/linear_color"
                     android:layout_width="0dp"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_weight="5"
                     android:orientation="horizontal">
+                    <TextView
+                        android:fontFamily="@font/cabin"
+                        android:textColor="#000"
+                        android:id="@+id/txtcol"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+
+                        android:gravity="center_horizontal"
+                        android:text="Color"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:fontFamily="@font/cabin"
                         android:textColor="#000"
-                        android:id="@+id/tv_order_Detail_qty"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/space_10"
+                        android:id="@+id/txt_color"
+                        android:background="@color/colorPrimary"
+                        android:layout_width="@dimen/space_20"
+                        android:layout_height="@dimen/space_20"
                         android:gravity="center_horizontal"
-                        android:text="0" />
+                        android:text="" />
+
 
                 </LinearLayout>
+
 
             </LinearLayout>
         </LinearLayout>

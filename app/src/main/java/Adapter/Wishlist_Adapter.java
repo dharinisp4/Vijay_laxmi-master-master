@@ -209,22 +209,39 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
                 AppCompatActivity activity = (AppCompatActivity) view.getContext();
                 Bundle args = new Bundle();
 
+//                args.putString("cat_id",map.get("cat_id"));
+//                args.putString("product_id",map.get("product_id"));
+//                args.putString("product_image",map.get("product_image"));
+//                args.putString("product_name",map.get("product_name"));
+//                args.putString("product_description",map.get("product_description"));
+//                args.putString("stock",map.get("stock"));
+//                args.putString("price",map.get("price"));
+//                args.putString("mrp",map.get("mrp"));
+//                args.putString("unit_price",map.get("unit_price"));
+//                args.putString("unit_value",map.get("unit_value"));
+//                args.putString("unit",map.get("unit"));
+//                args.putString("product_attribute",map.get("product_attribute"));
+//                args.putString("rewards",map.get("rewards"));
+//                args.putString("increment",map.get("increment"));
+//                args.putString("title",map.get("title"));
+
                 args.putString("cat_id",map.get("cat_id"));
-                args.putString("product_id",map.get("product_id"));
-                args.putString("product_image",map.get("product_image"));
+                args.putString("product_id", map.get("product_id"));
+                args.putString("product_image", map.get("product_image"));
                 args.putString("product_name",map.get("product_name"));
                 args.putString("product_description",map.get("product_description"));
+                args.putString("in_stock", map.get("in_stock"));
                 args.putString("stock",map.get("stock"));
 //                args.putString("product_size",modelList.get(position).getSize());
-          //      args.putString("product_color",map.get("cat_id"));
+                // args.putString("product_color",modelList.get( position).getColor());
                 args.putString("price",map.get("price"));
-                args.putString("mrp",map.get("mrp"));
-                args.putString("unit_price",map.get("unit_price"));
-                args.putString("unit_value",map.get("unit_value"));
+                args.putString("mrp", map.get("mrp"));
+                args.putString("unit_price",map.get("price"));
+                args.putString("unit_value", map.get("unit_value"));
                 args.putString("unit",map.get("unit"));
                 args.putString("product_attribute",map.get("product_attribute"));
                 args.putString("rewards",map.get("rewards"));
-                args.putString("increment",map.get("increment"));
+                args.putString("increment", map.get("increment"));
                 args.putString("title",map.get("title"));
 
 

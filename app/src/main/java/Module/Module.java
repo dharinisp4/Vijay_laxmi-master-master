@@ -117,7 +117,7 @@ public class Module {
                 //      txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
 
             } else if (tr == false) {
-                Toast.makeText(activity, "cart updated", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Cart Updated", Toast.LENGTH_LONG).show();
                 // txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
             }
 

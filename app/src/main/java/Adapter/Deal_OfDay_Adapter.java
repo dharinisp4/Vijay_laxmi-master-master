@@ -383,15 +383,18 @@ public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.
 //
 
                 //args.putString("product_id",mList.getProduct_id());
+
                 args.putString("cat_id", modelList.get(position).getCategory_id());
                 args.putString("product_id",modelList.get(position).getProduct_id());
                 args.putString("product_image",modelList.get(position).getProduct_image());
 
                 args.putString("product_name",modelList.get(position).getProduct_name());
                 args.putString("product_description",modelList.get(position).getProduct_description());
-                args.putString("stock",modelList.get(position).getIn_stock());
+                args.putString("in_stock",modelList.get(position).getIn_stock());
+                args.putString("stock",modelList.get(position).getStock());
 //                args.putString("product_size",modelList.get(position).getSize());
 //                args.putString("product_color",modelList.get( position).getColor());
+                args.putString( "unit_price",modelList.get( position ).getUnit_price());
                 args.putString("price",modelList.get(position).getPrice());
                 args.putString("mrp",modelList.get(position).getMrp());
                 args.putString("unit_value",modelList.get(position).getUnit_value());
@@ -400,6 +403,7 @@ public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.
                 args.putString("rewards",modelList.get(position).getRewards());
                 args.putString("increment",modelList.get(position).getIncreament());
                 args.putString("title",modelList.get(position).getTitle());
+
                 // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
                 Details_Fragment fm = new Details_Fragment();
                 fm.setArguments(args);

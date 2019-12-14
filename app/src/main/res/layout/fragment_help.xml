@@ -58,6 +58,7 @@
         android:backgroundTint="@color/colorPrimary"
         />
     <EditText
+        android:visibility="gone"
         android:id="@+id/et_email"
         android:fontFamily="@font/cabin"
         android:layout_below="@+id/et_name"

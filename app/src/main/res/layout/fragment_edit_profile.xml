@@ -18,14 +18,13 @@
             android:orientation="vertical"
             android:padding="@dimen/space_10">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/iv_pro_img"
                 android:layout_width="120dp"
                 android:layout_height="100dp"
-                android:scaleType="fitXY"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/space_10"
-                android:background="@drawable/ic_photo_camera_black_24dp"
+                android:src="@drawable/user"
                 android:layout_marginTop="@dimen/space_10"
                />
 

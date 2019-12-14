@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -57,6 +58,7 @@ public class Search_fragment extends Fragment {
     private RelativeLayout btn_search;
     private RecyclerView rv_search;
     Module module = new Module();
+    ImageView no_product;
     private List<Product_model> modelList = new ArrayList<>();
     private Search_adapter adapter_product;
     Dialog loadingBar ;
@@ -88,6 +90,7 @@ public class Search_fragment extends Fragment {
         acTextView.setTextColor(getResources().getColor(R.color.green));
         btn_search = (RelativeLayout) view.findViewById(R.id.btn_search);
         rv_search = (RecyclerView) view.findViewById(R.id.rv_search);
+        no_product=(ImageView)view.findViewById(R.id.no_product);
         rv_search.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         btn_search.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +162,7 @@ public class Search_fragment extends Fragment {
 
         private void makeGetProductRequest (String search_text){
 
+        loadingBar.show();
             // Tag used to cancel the request
             String tag_json_obj = "json_product_req";
 
@@ -173,10 +177,16 @@ public class Search_fragment extends Fragment {
                 public void onResponse(JSONObject response) {
                     Log.d("search", response.toString());
 
+                    loadingBar.dismiss();
                     try {
                         Boolean status = response.getBoolean("responce");
                         if (status) {
 
+                            if(!response.has("data"))
+                            {
+                             no_product.setVisibility(View.VISIBLE);
+                              rv_search.setVisibility(View.GONE);
+                            }
                             Gson gson = new Gson();
                             Type listType = new TypeToken<List<Product_model>>() {
                             }.getType();
@@ -187,6 +197,8 @@ public class Search_fragment extends Fragment {
                             rv_search.setAdapter(adapter_product);
                             adapter_product.notifyDataSetChanged();
 
+                            no_product.setVisibility(View.GONE);
+                            rv_search.setVisibility(View.VISIBLE);
 
                             if (getActivity() != null) {
                                 if (modelList.isEmpty()) {
@@ -203,6 +215,7 @@ public class Search_fragment extends Fragment {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    loadingBar.dismiss();
                     String errormsg = Module.VolleyErrorMessage(error);
                     Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
                 }

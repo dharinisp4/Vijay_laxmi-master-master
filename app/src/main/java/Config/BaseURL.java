@@ -27,6 +27,7 @@ public class BaseURL {
     public static final String KEY_HOUSE = "house_no";
     public static final String KEY_DATE = "date";
     public static final String KEY_TIME = "time";
+    public static final String KEY_CNT = "img_count";
 
     //Store Selection
 
@@ -62,7 +63,7 @@ public class BaseURL {
     public static String WALLET_REFRESH = BASE_URL + "index.php/api/wallet?user_id=";
     public static String REWARDS_REFRESH = BASE_URL + "index.php/api/rewards?user_id=";
 
-
+    public static String GET_CANCEL_ORDERS = BASE_URL + "index.php/api/my_cancel_orders";
 
     public static String PUT_SUGGESTION_URL = BASE_URL + "index.php/api/put_suggestion";
     public static String GET_CATEGORY_URL = BASE_URL + "index.php/api/get_categories";
@@ -142,4 +143,6 @@ public class BaseURL {
     // product details
 
     public static String PRODUCT_DETAILS = BASE_URL + "index.php/api/get_products_details";
+    public static String GET_UPLOAD = BASE_URL + "index.php/api/upload_images";
+
 }

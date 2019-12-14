@@ -211,7 +211,7 @@ SharedPreferences preferences;
                     mapProduct.put("price", mList.getPrice());
                     mapProduct.put("product_description",mList.getProduct_description());
                     mapProduct.put("rewards", mList.getRewards());
-                    mapProduct.put("unit_price",mList.getPrice());
+                    mapProduct.put("in_stock",mList.getIn_stock());
                     mapProduct.put("unit_value",mList.getUnit_value());
                     mapProduct.put("unit", mList.getUnit());
                     mapProduct.put("increment",mList.getIncreament());
@@ -256,7 +256,7 @@ SharedPreferences preferences;
                 wish_before.setVisibility( View.VISIBLE );
                db_wish.removeItemFromWishtable(mList.getProduct_id());
                     updateintent();
-               Toast.makeText(context, "removed from Wishlist", Toast.LENGTH_LONG).show();
+               Toast.makeText(context, "Removed from Wishlist", Toast.LENGTH_LONG).show();
                // list.remove(position);
               notifyDataSetChanged();
 

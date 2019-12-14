@@ -410,7 +410,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     String id=db_cart.getCartId(product_id,atr_id,list_color.get(col_position));
                     qty=db_cart.getCartIdItemQty(id);
                     //String id=db_cart.getCartId();
-                    Toast.makeText(getActivity(),"id - "+id+"\n qty"+qty,Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getActivity(),"id - "+id+"\n qty"+qty,Toast.LENGTH_LONG).show();
                     numberButton.setVisibility(View.VISIBLE);
                     btn_add.setVisibility(View.GONE);
                     numberButton.setNumber(qty);
@@ -462,7 +462,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                 mapProduct.put("price", details_product_price);
                 mapProduct.put("product_description",details_product_desc);
                 mapProduct.put("rewards", details_product_rewards);
-                mapProduct.put( "unit_price",details_product_price );
+                mapProduct.put( "in_stock",details_product_inStock );
                 mapProduct.put("unit_value",details_product_unit_value);
                 mapProduct.put("unit", details_product_unit);
                 mapProduct.put("increment",details_product_increament);
@@ -476,12 +476,12 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     boolean tr =db_wish.setwishTable(mapProduct);
                     if (tr == true) {
                         updateWishData();
-                        Toast.makeText(context, "Added to Wishlist"  , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Added to Wishlist"  , Toast.LENGTH_LONG).show();
 
                     }
                     else
                     {
-                        Toast.makeText(context, "Something Went Wrong" , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Something Went Wrong" , Toast.LENGTH_LONG).show();
                     }
 
                 } catch (Exception ex) {
@@ -499,7 +499,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                 wish_before.setVisibility( View.VISIBLE );
                 db_wish.removeItemFromWishtable(product_id);
                 updateWishData();
-                Toast.makeText(getActivity(), "removed from Wishlist" , Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Removed from Wishlist" , Toast.LENGTH_LONG).show();
             }
         } );
 
@@ -675,34 +675,17 @@ btn_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-         //       Toast.makeText(getActivity(),""+details_product_stock,Toast.LENGTH_LONG).show();
-
-                if(details_product_attribute.equals("[]"))
+                if(db_cart.getCartCount()<1)
                 {
-                    if (ConnectivityReceiver.isConnected()) {
-                        makeGetLimiteRequest();
-                    } else {
-                        ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-                    }
+                    Toast.makeText(getActivity(),"Your cart is empty",Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    if(position<0)
-                    {
-                        Toast.makeText(getActivity(),"Please select any weight",Toast.LENGTH_LONG).show();
-                    }
-                    else if(col_position<0)
-                    {
-                        Toast.makeText(getActivity(),"Please select any color",Toast.LENGTH_LONG).show();
-                    }
-
-                    else {
-                        String col=list_color.get(col_position);
-                        String id=db_cart.getCartId(product_id,atr_id,col);
-                      //  Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
-                    }
+                    Fragment fragment=new Cart_fragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fragment)
+                            .addToBackStack(null).commit();
                 }
-
             }
         });
 
@@ -732,7 +715,8 @@ btn_color.setOnClickListener(new View.OnClickListener() {
     public void onStart() {
         super.onStart();
 
-
+            position=-1;
+        col_position=-1;
 
         txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
 //
@@ -1167,7 +1151,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     Boolean status = response.getBoolean("responce");
 
                     if (status) {
-                        ///         Toast.makeText(getActivity(),""+response.getString("data"),Toast.LENGTH_LONG).show();
+                        //        Toast.makeText(getActivity(),""+response.getString("data"),Toast.LENGTH_LONG).show();
                         Gson gson = new Gson();
                         Type listType = new TypeToken<List<RelatedProductModel>>() {
                         }.getType();
@@ -1176,6 +1160,8 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                         adapter_product = new RelatedProductAdapter( getActivity(),product_modelList,product_id);
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
+//                       String i= adapter_product.getItemsCount().get("cnt");
+//                        Toast.makeText(getActivity(), ""+i, Toast.LENGTH_SHORT).show();
                         if (getActivity() != null) {
                             if (product_modelList.isEmpty()) {
 
@@ -1443,5 +1429,7 @@ public boolean checkAttributeStatus(String atr)
             }
         }
     };
+
+
 }
 

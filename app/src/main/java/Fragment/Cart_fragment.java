@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -124,7 +125,18 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         } else if (id == R.id.btn_cart_checkout) {
 
             if (ConnectivityReceiver.isConnected()) {
-                makeGetLimiteRequest();
+                if(db_cart.getCartCount()<1)
+                {
+                    Fragment fm = new Empty_cart_fragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+
+                            .addToBackStack(null).commit();
+                }
+                else {
+                    makeGetLimiteRequest();
+                }
+
             } else {
                 ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
             }
@@ -160,6 +172,12 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
 
                 updateData();
 
+
+                Fragment fm = new Empty_cart_fragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+
+                        .addToBackStack(null).commit();
                 dialogInterface.dismiss();
             }
         });

@@ -67,13 +67,14 @@ public class My_Order_activity extends AppCompatActivity {
 
         tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.pending)));
         tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.past)));
+        tabLayout.addTab(tabLayout.newTab().setText(getResources().getString(R.string.cancel_order)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         final PagerOrderAdapter adapter = new PagerOrderAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(adapter);
-        wrapTabIndicatorToTitle(tabLayout,80,80);
+        wrapTabIndicatorToTitle(tabLayout,10,10);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -117,7 +118,7 @@ public class My_Order_activity extends AppCompatActivity {
             for (int i = 0; i < childCount; i++) {
                 View tabView = tabStripGroup.getChildAt(i);
                 tabView.setMinimumWidth(0);
-                tabView.setPadding(0, tabView.getPaddingTop(), 0, tabView.getPaddingBottom());
+               tabView.setPadding(0, tabView.getPaddingTop(), 0, tabView.getPaddingBottom());
                 if (tabView.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
                     ViewGroup.MarginLayoutParams layoutParams = (ViewGroup.MarginLayoutParams) tabView.getLayoutParams();
                     if (i == 0) {

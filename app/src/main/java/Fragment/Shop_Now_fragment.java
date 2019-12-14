@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.NoConnectionError;
@@ -55,6 +56,7 @@ public class Shop_Now_fragment extends Fragment {
     String getid;
     String getcat_title;
     Dialog loadingBar;
+    ImageView no_product;
 
 
 
@@ -78,6 +80,7 @@ public class Shop_Now_fragment extends Fragment {
         loadingBar.setCanceledOnTouchOutside(false);
         setHasOptionsMenu(true);
 
+        no_product=(ImageView)view.findViewById(R.id.no_product);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.shop_now));
 
 
@@ -182,6 +185,11 @@ public class Shop_Now_fragment extends Fragment {
 
                             rv_items.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
+                            if(category_modelList.size()==0)
+                            {
+                                rv_items.setVisibility(View.GONE);
+                                no_product.setVisibility(View.VISIBLE);
+                            }
                             loadingBar.dismiss();
                         }
                     }

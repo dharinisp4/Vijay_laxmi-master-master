@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import Config.BaseURL;
@@ -53,6 +54,7 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 //    ArrayList<String> list_atr_name;
 //    ArrayList<String> list_atr_mrp;
 
+    int item=0;
     String atr_id="";
     String atr_product_id="";
     String attribute_name="";
@@ -85,18 +87,23 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 
         final RelatedProductModel mList = modelList.get(position);
         final String getid = mList.getProduct_id();
-
+       item=modelList.size();
         if(getid.equals(product_id))
         {
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+            //modelList.remove(position);
+            item--;
         }
         double stock = Double.parseDouble(modelList.get(position).getStock());
         if (stock < 1) {
 
             holder.itemView.setVisibility(View.GONE);
             holder.itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+
+            //modelList.remove(position);
 //            notifyDataSetChanged();
+            item--;
         }
         else
         {
@@ -783,6 +790,13 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
             sts=true;
         }
         return sts;
+    }
+
+    public HashMap<String,String> getItemsCount()
+    {
+        HashMap<String,String> map=new HashMap<>();
+        map.put("cnt",String.valueOf(item));
+        return map;
     }
 
 }

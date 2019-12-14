@@ -15,8 +15,16 @@ public class My_order_detail_model {
     String unit_value;
     String price;
     String qty_in_kg;
-
+    String atr_img;
     String product_image;
+
+    public String getAtr_img() {
+        return atr_img;
+    }
+
+    public void setAtr_img(String atr_img) {
+        this.atr_img = atr_img;
+    }
 
     public String getSale_item_id(){
         return sale_item_id;

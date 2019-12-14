@@ -45,6 +45,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.FirebaseApp;
 //import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -78,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private TextView totalBudgetCount, totalBudgetCount2, totalBudgetCount3, tv_name, powerd_text;
-    private ImageView iv_profile;
+    public static ImageView iv_profile;
     private DatabaseHandler dbcart;
     private DatabaseCartHandler db_cart;
     private WishlistHandler db_wish ;
@@ -239,6 +241,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             });
         }
         iv_profile = (ImageView) header.findViewById(R.id.iv_header_img);
+
+        String getimage=sessionManagement.getUpdateProfile().get(BaseURL.KEY_IMAGE);
+        if (!TextUtils.isEmpty(getimage)) {
+
+
+            Glide.with( MainActivity.this )
+                    .load( BaseURL.IMG_PROFILE_URL + getimage)
+                    .fitCenter()
+                    .placeholder( R.drawable.user )
+                    .crossFade()
+                    .diskCacheStrategy( DiskCacheStrategy.ALL )
+                    .dontAnimate()
+                    .into( iv_profile );
+        }
+
         tv_name = (TextView) header.findViewById(R.id.tv_header_name);
         My_Order = (LinearLayout) header.findViewById(R.id.my_orders);
         My_Wishlist = (LinearLayout) header.findViewById(R.id.my_wishlist);

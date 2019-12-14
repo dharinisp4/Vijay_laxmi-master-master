@@ -10,6 +10,7 @@ import binplus.vijaylaxmi.LoginActivity;
 import binplus.vijaylaxmi.MainActivity;
 
 import static Config.BaseURL.IS_LOGIN;
+import static Config.BaseURL.KEY_CNT;
 import static Config.BaseURL.KEY_DATE;
 import static Config.BaseURL.KEY_EMAIL;
 import static Config.BaseURL.KEY_HOUSE;
@@ -198,4 +199,26 @@ public class Session_management {
         return prefs.getBoolean(IS_LOGIN, false);
     }
 
+    public void updateProfile(String image,String name,String cnt)
+    {
+        editor.putString(KEY_IMAGE,image);
+        editor.putString(KEY_NAME,name);
+        editor.putString(KEY_CNT,cnt);
+        editor.commit();
+    }
+
+    public HashMap<String,String> getUpdateProfile()
+    {
+        HashMap<String,String> map=new HashMap<>();
+        map.put(KEY_IMAGE,prefs.getString(KEY_IMAGE,null));
+        map.put(KEY_NAME,prefs.getString(KEY_NAME,null));
+       map.put(KEY_CNT,prefs.getString(KEY_CNT,null));
+        return map;
+    }
+
+    public void updateUserName(String name)
+    {
+        editor.putString(KEY_NAME,name);
+        editor.commit();
+    }
 }

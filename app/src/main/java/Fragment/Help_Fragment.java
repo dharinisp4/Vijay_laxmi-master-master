@@ -79,8 +79,7 @@ public class Help_Fragment extends Fragment {
         et_name.setEnabled( false );
         et_phone.setText(getphone);
         et_phone.setEnabled( false );
-        et_email.setText( getemail );
-        et_email.setEnabled( false );
+
 
         submit.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -105,7 +104,7 @@ public class Help_Fragment extends Fragment {
             String getphone = et_phone.getText().toString();
             String getname = et_name.getText().toString();
             String getmessage = et_message.getText().toString();
-            String getemail = et_email.getText().toString();
+
 
             if(getmessage.isEmpty())
             {
@@ -113,7 +112,7 @@ public class Help_Fragment extends Fragment {
             }
             else
             {
-                makeRegisterRequest(getname, getphone, getemail, getmessage);
+                makeRegisterRequest(getname, getphone, getmessage);
             }
   //          Toast.makeText( getActivity(),"you response is accepted :" +getname +""+getemail+""+getmessage+""+getphone,Toast.LENGTH_LONG ).show();
 
@@ -128,7 +127,7 @@ public class Help_Fragment extends Fragment {
 
     }
     private void makeRegisterRequest(String name, String mobile,
-                                     String email, String message) {
+                                      String message) {
 
         loadingBar.show();
 
@@ -142,7 +141,6 @@ public class Help_Fragment extends Fragment {
         params.put("user_name", name);
 
         params.put("user_phone", mobile);
-        params.put("user_email", email);
         params.put("message", message);
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.PUT_SUGGESTION_URL, params, new Response.Listener<JSONObject>() {

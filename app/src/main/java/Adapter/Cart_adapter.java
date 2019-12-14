@@ -1,10 +1,13 @@
 package Adapter;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
+import Fragment.*;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.app.Fragment.*;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
@@ -384,6 +387,17 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 list.remove(position);
                 notifyDataSetChanged();
 
+                if(db_cart.getCartCount()<1)
+                {
+                    Empty_cart_fragment details_fragment = new Empty_cart_fragment();
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+
+                    Fragment fm = new Empty_cart_fragment();
+                    FragmentManager fragmentManager = activity.getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
+
+                            .addToBackStack(null).commit();
+                }
                 updateintent();
             }
         });

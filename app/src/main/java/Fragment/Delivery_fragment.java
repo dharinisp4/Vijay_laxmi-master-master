@@ -67,7 +67,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class Delivery_fragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = Delivery_fragment.class.getSimpleName();
-
     private TextView tv_afternoon, tv_morning, tv_total, tv_item, tv_socity;
     private TextView tv_date, tv_time;
     private EditText et_address;

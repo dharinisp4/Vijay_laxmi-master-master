@@ -162,6 +162,7 @@
     <string name="phone_too_short" translatable="false">Mobile Number Too short</string>
     <string name="please_add_address">Please add address</string>
     <string name="pay" translatable="false">Payment</string>
+    <string name="cancel_order" translatable="false">My Cancel Orders</string>
     <string name="please_select_address">Please select address</string>
     <string name="please_select_date_time">Please select date and time</string>
     <string name="profile_updated">Profile updated</string>

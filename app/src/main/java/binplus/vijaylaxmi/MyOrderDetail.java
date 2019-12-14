@@ -196,7 +196,7 @@ Dialog loadingBar ;
 
             @Override
             public void onResponse(JSONArray response) {
-                Log.d(TAG, response.toString());
+                Log.d("details..", response.toString());
 
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<My_order_detail_model>>() {
