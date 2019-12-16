@@ -46,9 +46,6 @@ import util.ConnectivityReceiver;
 import util.DatabaseCartHandler;
 import util.Session_management;
 
-/**
- * Created by Rajesh Dabhi on 26/6/2017.
- */
 
 public class Cart_fragment extends Fragment implements View.OnClickListener {
 

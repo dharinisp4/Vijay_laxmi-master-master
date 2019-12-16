@@ -363,8 +363,33 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
             public void onClick(View view) {
                 final RelatedProductModel mList = modelList.get(position);
                 Bundle args = new Bundle();
+//                String cl=String.valueOf( mList.getColor());
+//                String sz=String.valueOf(mList.getSize());
+//                String c="";
+//                String s="";
+//
+//                if(cl.isEmpty())
+//                {
+//
+//                    c="col";
+//
+//                }
+//                else if(cl.equals( "null" ))
+//                {
+//                    c="col";
+//                }
+//                else if(sz.isEmpty())
+//                {
+//                    s="size";
+//                }
+//                else if(sz.equals( "null" ))
+//                {
+//                    s="size";
+//                }
 //
 
+
+                //args.putString("product_id",mList.getProduct_id());
                 //args.putString("product_id",mList.getProduct_id());
                 args.putString("cat_id", modelList.get(position).getCategory_id());
                 args.putString("product_id",modelList.get(position).getProduct_id());
@@ -372,10 +397,11 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
 
                 args.putString("product_name",modelList.get(position).getProduct_name());
                 args.putString("product_description",modelList.get(position).getProduct_description());
-                args.putString("stock",modelList.get(position).getIn_stock());
+                args.putString("in_stock",modelList.get(position).getIn_stock());
+                args.putString("stock",modelList.get(position).getStock());
 //                args.putString("product_size",modelList.get(position).getSize());
 //                args.putString("product_color",modelList.get( position).getColor());
-                args.putString("unit_price",modelList.get( position ).getUnit_price());
+                args.putString( "unit_price",modelList.get( position ).getUnit_price());
                 args.putString("price",modelList.get(position).getPrice());
                 args.putString("mrp",modelList.get(position).getMrp());
                 args.putString("unit_value",modelList.get(position).getUnit_value());

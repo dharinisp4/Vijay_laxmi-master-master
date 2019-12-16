@@ -286,7 +286,7 @@ SharedPreferences preferences;
 
 
         holder.product_mrp.setPaintFlags( holder.product_mrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        double stock = Double.parseDouble(modelList.get(position).getStock());
+        int stock =Integer.parseInt(modelList.get(position).getStock());
         if (stock < 1) {
             rel_out.setVisibility(View.VISIBLE);
         }

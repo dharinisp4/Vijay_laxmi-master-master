@@ -98,7 +98,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     String atr_product_id,attribute_name,attribute_value,attribute_mrp,attribute_color,attribute_img;
     int flag=0;
     RelativeLayout rel;
-    double stock;
+    int stock;
     Context context;
     List<Product_model> models;
     VarientsAdapter varientsAdapter;
@@ -186,7 +186,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         details_product_rewards=bundle.getString("rewards");
         details_product_increament=bundle.getString("increment");
         details_product_title=bundle.getString("title");
-        stock=Double.parseDouble(details_product_stock);
+        stock=Integer.parseInt(details_product_stock);
 
 
 
@@ -228,7 +228,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         }
         else
         {
-            numberButton.setRange(1,(int)Math.round(stock));
+            numberButton.setRange(1,  stock+1 );
         }
 
         if(details_product_attribute.equals("[]"))
@@ -302,7 +302,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 ProductVariantModel model=vlist.get(position);
 
                 atr_id=model.getId();
-             //   Toast.makeText(getActivity(),""+atr_id, Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getActivity(),""+atr_id, Toast.LENGTH_SHORT).show();
 
                 atr_product_id=model.getProduct_id();
                 attribute_mrp=model.getAttribute_mrp();
@@ -333,7 +333,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                             String id=db_cart.getCartId(product_id,atr_id,"");
                             qty=db_cart.getCartIdItemQty(id);
                             //String id=db_cart.getCartId();
-                          //  Toast.makeText(getActivity(),"id - "+id+"\n qty"+qty,Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getActivity(),"id - "+id+"\n qty"+qty,Toast.LENGTH_SHORT).show();
                             numberButton.setVisibility(View.VISIBLE);
                             btn_add.setVisibility(View.GONE);
                             numberButton.setNumber(qty);
@@ -353,7 +353,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                         String str_col=vlist.get(position).getAttribute_color();
                         if(str_col.isEmpty() || str_col.equals(null))
                         {
-                            // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                            // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_SHORT).show();
                             rv_color.setVisibility(View.GONE);
                             colorAdapter.notifyDataSetChanged();
                         }
@@ -393,14 +393,14 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 catch (Exception ex)
                 {
                     ex.printStackTrace();
-                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_SHORT).show();
                 }
 
 
             }
         });
 
-btn_color.setOnClickListener(new View.OnClickListener() {
+        btn_color.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
 
@@ -410,7 +410,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     String id=db_cart.getCartId(product_id,atr_id,list_color.get(col_position));
                     qty=db_cart.getCartIdItemQty(id);
                     //String id=db_cart.getCartId();
-                   // Toast.makeText(getActivity(),"id - "+id+"\n qty"+qty,Toast.LENGTH_LONG).show();
+                   // Toast.makeText(getActivity(),"id - "+id+"\n qty"+qty,Toast.LENGTH_SHORT).show();
                     numberButton.setVisibility(View.VISIBLE);
                     btn_add.setVisibility(View.GONE);
                     numberButton.setNumber(qty);
@@ -476,12 +476,12 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     boolean tr =db_wish.setwishTable(mapProduct);
                     if (tr == true) {
                         updateWishData();
-                        Toast.makeText(getActivity(), "Added to Wishlist"  , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Added to Wishlist"  , Toast.LENGTH_SHORT).show();
 
                     }
                     else
                     {
-                        Toast.makeText(getActivity(), "Something Went Wrong" , Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Something Went Wrong" , Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (Exception ex) {
@@ -499,7 +499,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                 wish_before.setVisibility( View.VISIBLE );
                 db_wish.removeItemFromWishtable(product_id);
                 updateWishData();
-                Toast.makeText(getActivity(), "Removed from Wishlist" , Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Removed from Wishlist" , Toast.LENGTH_SHORT).show();
             }
         } );
 
@@ -533,7 +533,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     if(flag>0)
                     {
                         if (position < 0) {
-                            Toast.makeText(getActivity(), "Please select any weight", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Please select any weight", Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -552,10 +552,10 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     else if(flag<=0)
                     {
                         if (position < 0) {
-                            Toast.makeText(getActivity(), "Please select any weight", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Please select any weight", Toast.LENGTH_SHORT).show();
                         }
                         if (col_position < 0) {
-                            Toast.makeText(getActivity(), "Please select any color", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), "Please select any color", Toast.LENGTH_SHORT).show();
                         } else {
                             String as=  list_color.get(col_position);
                             String img=list_images.get(col_position);
@@ -583,87 +583,85 @@ btn_color.setOnClickListener(new View.OnClickListener() {
         });
 
 
+
         numberButton.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
 
-
-                if(newValue<=0)
+                int stck=Integer.parseInt( details_product_stock );
+             if (newValue >= stck)
                 {
-                   boolean st=checkAttributeStatus(details_product_attribute);
-                   if(st==false)
-                   {
-                       String id=db_cart.getCartId(product_id,"","");
-                       db_cart.removeItemFromCart(id);
-                   }
-                   else if(st==true)
-                   {
-                       if(flag==1)
-                       {
-
-                           String id=db_cart.getCartId(product_id,atr_id,"");
-                           db_cart.removeItemFromCart(id);
-                       }
-                       else
-                       {
-                           String col=list_color.get(col_position);
-                           String id=db_cart.getCartId(product_id,atr_id,col);
-                           db_cart.removeItemFromCart(id);
-                       }
-
-                       //Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
-
-                       //db_cart.removeItemFromCart(at_id);
-                   }
-
-                   numberButton.setVisibility(View.GONE);
-                   btn_add.setVisibility(View.VISIBLE);
+                    Toast.makeText( getActivity(), "Only "+stock +" in stock" ,Toast.LENGTH_SHORT ).show();
+                    numberButton.setNumber( String.valueOf(  stck) );
                 }
-                else {
+             else {
+                 if (newValue <= 0) {
+                     //Toast.makeText( getActivity(), "Only "+stock +" in stock" ,Toast.LENGTH_SHORT ).show();
+                     boolean st = checkAttributeStatus( details_product_attribute );
+                     if (st == false) {
+                         String id = db_cart.getCartId( product_id, "", "" );
+                         db_cart.removeItemFromCart( id );
+                     } else if (st == true) {
+                         if (flag == 1) {
+                             String id = db_cart.getCartId( product_id, atr_id, "" );
+                             db_cart.removeItemFromCart( id );
+                         } else {
+                             String col = list_color.get( col_position );
+                             String id = db_cart.getCartId( product_id, atr_id, col );
+                             db_cart.removeItemFromCart( id );
+                         }
+
+                         //Toast.makeText(getActivity(),""+id,Toast.LENGTH_LONG).show();
+
+                         //db_cart.removeItemFromCart(at_id);
+                     }
+
+                     numberButton.setVisibility( View.GONE );
+                     btn_add.setVisibility( View.VISIBLE );
+                 } else {
+                     //  Toast.makeText( getActivity(), "Only "+stock +" in stock" ,Toast.LENGTH_SHORT ).show();
 
 
-                    float qty = Float.parseFloat(String.valueOf(newValue));
-
-                    String atr = String.valueOf(details_product_attribute);
-                    if (atr.equals("[]")) {
-                        double pr = Double.parseDouble(details_product_price);
-                        double amt = pr * qty;
-                        HashMap<String, String> mapProduct = new HashMap<String, String>();
-                        String unt = String.valueOf(details_product_unit_value + " " + details_product_unit);
-
-                        Module.setWithoutAttrIntoCart(getActivity(),"0",product_id,product_images,cat_id,details_product_name,String.valueOf(amt),
-                                details_product_desc,details_product_rewards,details_product_price,unt,details_product_increament,
-                                details_product_inStock,"","",details_product_title,details_product_mrp,details_product_attribute,"p",qty);
-                        txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
+                     float qty = Float.parseFloat( String.valueOf( newValue ) );
 
 
+                     String atr = String.valueOf( details_product_attribute );
+                     if (atr.equals( "[]" )) {
+                         double pr = Double.parseDouble( details_product_price );
+                         double amt = pr * qty;
+                         HashMap<String, String> mapProduct = new HashMap<String, String>();
+                         String unt = String.valueOf( details_product_unit_value + " " + details_product_unit );
+
+                         Module.setWithoutAttrIntoCart( getActivity(), "0", product_id, product_images, cat_id, details_product_name, String.valueOf( amt ),
+                                 details_product_desc, details_product_rewards, details_product_price, unt, details_product_increament,
+                                 details_product_inStock, "", "", details_product_title, details_product_mrp, details_product_attribute, "p", qty );
+                         txtTotal.setText( "\u20B9" + String.valueOf( db_cart.getTotalAmount() ) );
 
 
-                    } else {
-                        double pr=Double.parseDouble( attribute_value);
-                        double amt = pr * qty;
-                        if(flag==1)
-                        {
-                            Module.setIntoCart(getActivity(),atr_id,product_id,product_images,cat_id,details_product_name,String.valueOf(amt),
-                                    details_product_desc,details_product_rewards,attribute_value,attribute_name,details_product_increament,
-                                    details_product_inStock,"","",details_product_title,attribute_mrp,details_product_attribute,"a",qty);
-                        }
-                        else
-                        {
-                            String col=list_color.get(col_position);
-                            String img=list_images.get(col_position);
-                            Module.setIntoCart(getActivity(),atr_id,product_id,product_images,cat_id,details_product_name,String.valueOf(amt),
-                                    details_product_desc,details_product_rewards,attribute_value,attribute_name,details_product_increament,
-                                    details_product_inStock,col,img,details_product_title,attribute_mrp,details_product_attribute,"c",qty);
-                        }
-                        //       Toast.makeText(context,""+str[0].toString()+"\n"+str[1].toString(),Toast.LENGTH_LONG).show();
+                     } else {
+                         double pr = Double.parseDouble( attribute_value );
+                         double amt = pr * qty;
+                         if (flag == 1) {
+                             Module.setIntoCart( getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, String.valueOf( amt ),
+                                     details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
+                                     details_product_inStock, "", "", details_product_title, attribute_mrp, details_product_attribute, "a", qty );
+                         } else {
+                             String col = list_color.get( col_position );
+                             String img = list_images.get( col_position );
+                             Module.setIntoCart( getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, String.valueOf( amt ),
+                                     details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
+                                     details_product_inStock, col, img, details_product_title, attribute_mrp, details_product_attribute, "c", qty );
+                         }
+                         //       Toast.makeText(context,""+str[0].toString()+"\n"+str[1].toString(),Toast.LENGTH_LONG).show();
 
 
-                        txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
+                         txtTotal.setText( "\u20B9" + String.valueOf( db_cart.getTotalAmount() ) );
 
-                    }
-                }
-                txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
+                     }
+                 }
+                 txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
+             }
+
             }
         });
 
@@ -674,10 +672,10 @@ btn_color.setOnClickListener(new View.OnClickListener() {
         btn_add_to_cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(db_cart.getCartCount()<1)
+                //Toast.makeText( getActivity(),""+details_product_stock,Toast.LENGTH_SHORT ).show();
+                            if(db_cart.getCartCount()<1)
                 {
-                    Toast.makeText(getActivity(),"Your cart is empty",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Your cart is empty",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -727,10 +725,10 @@ btn_color.setOnClickListener(new View.OnClickListener() {
             {
                 image_list.clear();
                 JSONArray array=new JSONArray(product_images);
-                //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
+                //Toast.makeText(this,""+product_images,Toast.LENGTH_SHORT).show();
                 if(product_images.equals(null))
                 {
-                    Toast.makeText(getActivity(),"There is no image for this product",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"There is no image for this product",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -742,7 +740,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
 
                 }
 
-                //   Toast.makeText(getActivity(),""+image_list.get(0).toString(),Toast.LENGTH_LONG).show();
+                //   Toast.makeText(getActivity(),""+image_list.get(0).toString(),Toast.LENGTH_SHORT).show();
                 Glide.with(getActivity())
                         .load(BaseURL.IMG_PRODUCT_URL +image_list.get(0) )
                         .fitCenter()
@@ -756,7 +754,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
             }
             catch (Exception ex)
             {
-                // Toast.makeText(Product_Frag_details.this,""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                // Toast.makeText(Product_Frag_details.this,""+ex.getMessage(),Toast.LENGTH_SHORT).show();
             }
 //
 //        }
@@ -820,9 +818,9 @@ btn_color.setOnClickListener(new View.OnClickListener() {
 
                 try {
                     String status = response.getString("responce");
-                    //    Toast.makeText(Product_Frag_details.this,"asssssssssj"+response,Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(Product_Frag_details.this,"asssssssssj"+response,Toast.LENGTH_SHORT).show();
 
-                    //    Toast.makeText(Product_Frag_details.this,""+status.toString()+"\n ",Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(Product_Frag_details.this,""+status.toString()+"\n ",Toast.LENGTH_SHORT).show();
 
                     if(status.equals("true")) {
 
@@ -840,12 +838,12 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                            // txtSize.setVisibility( View.GONE );
                             pg.setVisibility(View.GONE);
                             dialog.dismiss();
-                           // Toast.makeText(getActivity(), "There are no other size", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getActivity(), "There are no other size", Toast.LENGTH_SHORT).show();
                         } else if (sdf.equals("null")) {
                           //  txtSize.setVisibility( View.GONE );
                             pg.setVisibility(View.GONE);
                             dialog.dismiss();
-                           // Toast.makeText(getActivity(), "There are no other size", Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getActivity(), "There are no other size", Toast.LENGTH_SHORT).show();
                         } else {
 
                             list.add("Select Size");
@@ -877,7 +875,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -903,9 +901,9 @@ btn_color.setOnClickListener(new View.OnClickListener() {
 
                 try {
                     String status = response.getString("responce");
-                    //    Toast.makeText(Product_Frag_details.this,"asssssssssj"+response,Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(Product_Frag_details.this,"asssssssssj"+response,Toast.LENGTH_SHORT).show();
 
-                    //    Toast.makeText(Product_Frag_details.this,""+status.toString()+"\n ",Toast.LENGTH_LONG).show();
+                    //    Toast.makeText(Product_Frag_details.this,""+status.toString()+"\n ",Toast.LENGTH_SHORT).show();
 
                     if(status.equals("true")) {
 
@@ -923,12 +921,12 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                             //txtColor.setVisibility( View.GONE );
                             pg.setVisibility(View.GONE);
                             dialog.dismiss();
-                            //Toast.makeText(getActivity(), "There are no other color", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(), "There are no other color", Toast.LENGTH_SHORT).show();
                         } else if (sdf.equals("null")) {
                            // txtColor.setVisibility( View.GONE );
                             pg.setVisibility(View.GONE);
                             dialog.dismiss();
-                          //  Toast.makeText(getActivity(), "There are no other color", Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(getActivity(), "There are no other color", Toast.LENGTH_SHORT).show();
                         } else {
 
                             list.add("Select color");
@@ -959,9 +957,9 @@ btn_color.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-             //   Toast.makeText(getContext().getApplicationContext(),"Error"+error.getMessage(),Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getContext().getApplicationContext(),"Error"+error.getMessage(),Toast.LENGTH_SHORT).show();
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -992,7 +990,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                 {
                     JSONArray jsonArr=response.getJSONArray("product_attribute");
 
-                    // Toast.makeText(getActivity(),""+jsonArr.length(),Toast.LENGTH_LONG).show();
+                    // Toast.makeText(getActivity(),""+jsonArr.length(),Toast.LENGTH_SHORT).show();
 
                     int len=jsonArr.length();
 
@@ -1045,7 +1043,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                             vlist.add(model);
                             varientsAdapter.notifyDataSetChanged();
                         }
-                      // Toast.makeText(getActivity(),"asdasd"+lst.size(),Toast.LENGTH_LONG).show();
+                      // Toast.makeText(getActivity(),"asdasd"+lst.size(),Toast.LENGTH_SHORT).show();
                         list_color.clear();
                         atr_id=vlist.get(0).getId();
                         atr_product_id=vlist.get(0).getProduct_id();
@@ -1067,7 +1065,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                         if(str_col.isEmpty() || str_col.equals(null))
                         {
                             flag=1;
-                           // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                           // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -1080,14 +1078,14 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                             //colorAdapter.notifyDataSetChanged();
                             attribute_color=list_color.get(0).toString();
 
-                            //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_SHORT).show();
                         }
 
                         list_images.clear();
                         String str_img=vlist.get(0).getAttribute_image();
                         if(str_img.isEmpty() || str_img.equals(null))
                         {
-                            //Toast.makeText(getActivity(),"empty ",Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(),"empty ",Toast.LENGTH_SHORT).show();
                         }
                         else
                         {
@@ -1099,7 +1097,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                             }
                             attribute_img=list_images.get(0).toString();
 
-                            //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getActivity(),""+col_array+"\n "+col_array.length(),Toast.LENGTH_SHORT).show();
                         }
                         colorAdapter.notifyDataSetChanged();
                     }
@@ -1114,9 +1112,9 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                 }
                 catch (Exception ex)
                 {
-                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_SHORT).show();
                 }
-              //  Toast.makeText(getActivity(),""+response,Toast.LENGTH_LONG).show();
+              //  Toast.makeText(getActivity(),""+response,Toast.LENGTH_SHORT).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -1124,7 +1122,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
 
                 loadingBar.dismiss();
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -1151,7 +1149,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
                     Boolean status = response.getBoolean("responce");
 
                     if (status) {
-                        //        Toast.makeText(getActivity(),""+response.getString("data"),Toast.LENGTH_LONG).show();
+                        //        Toast.makeText(getActivity(),""+response.getString("data"),Toast.LENGTH_SHORT).show();
                         Gson gson = new Gson();
                         Type listType = new TypeToken<List<RelatedProductModel>>() {
                         }.getType();
@@ -1191,7 +1189,7 @@ btn_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
 
             }
         });
@@ -1287,14 +1285,14 @@ public boolean checkAttributeStatus(String atr)
                             e.printStackTrace();
                             Toast.makeText(getActivity(),
                                     "Error: " + e.getMessage(),
-                                    Toast.LENGTH_LONG).show();
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
             }
         });
 
@@ -1401,7 +1399,7 @@ public boolean checkAttributeStatus(String atr)
         try {
             image_list.clear();
             JSONArray array = new JSONArray(im);
-            //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,""+product_images,Toast.LENGTH_SHORT).show();
 
             for (int i = 0; i <= array.length() - 1; i++) {
                 image_list.add(array.get(i).toString());
@@ -1413,7 +1411,7 @@ public boolean checkAttributeStatus(String atr)
         }
         catch (Exception ex)
         {
-            Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_SHORT).show();
         }
         return img;
     }

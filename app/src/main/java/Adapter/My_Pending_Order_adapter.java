@@ -49,6 +49,7 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
         public TextView tv_methid1;
         public String method;
         LinearLayout linearLayout;
+        TextView reciever_mobile , reciever_add ;
 
         public MyViewHolder(View view) {
 
@@ -61,6 +62,8 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
             tv_time = (TextView) view.findViewById(R.id.tv_order_time);
             tv_price = (TextView) view.findViewById(R.id.tv_order_price);
             tv_item = (TextView) view.findViewById(R.id.tv_order_item);
+            reciever_add=view.findViewById( R.id.user_address );
+            reciever_mobile=view.findViewById( R.id.user_mobile );
 
             cardView = view.findViewById(R.id.card_view);
 
@@ -152,7 +155,7 @@ holder.linearLayout.setVisibility(View.GONE);
             holder.tv_methid1.setText("Wallet");
         }
         holder.tv_date.setText(mList.getOn_date());
-        holder.tv_tracking_date.setText(mList.getOn_date());
+        holder.tv_tracking_date.setText(mList.getConfirm_date());
 
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         String language=preferences.getString("language","");
@@ -185,11 +188,13 @@ holder.linearLayout.setVisibility(View.GONE);
 //        holder.tv_pending_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
         holder.tv_pending_date.setText(mList.getOn_date());
 //        holder.tv_confirm_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_confirm_date.setText(mList.getOn_date());
+        holder.tv_confirm_date.setText(mList.getConfirm_date());
 //        holder.tv_delevered_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_delevered_date.setText(mList.getOn_date());
+        holder.tv_delevered_date.setText(mList.getDelivered_date());
 //        holder.tv_cancel_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_cancel_date.setText(mList.getOn_date());
+      //  holder.tv_cancel_date.setText(mList.getOn_date());
+        holder.reciever_mobile.setText( mList.getReceiver_mobile() );
+        holder.reciever_add.setText( mList.getDelivery_address() );
     }
     public void removeddata(int postion){
         modelList.remove(postion);

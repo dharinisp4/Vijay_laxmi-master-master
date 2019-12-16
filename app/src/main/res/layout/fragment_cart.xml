@@ -15,18 +15,18 @@
             android:id="@+id/tv_cart_clear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/pink"
-            android:gravity="center"
-            android:paddingBottom="@dimen/space_8"
             android:paddingTop="@dimen/space_8"
             android:text="@string/tv_cart_clear"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_small" />
+            android:textColor="@color/colorPrimary"
+            android:textAlignment="viewEnd"
+            android:paddingEnd="@dimen/space_15"
+            android:textSize="@dimen/space_15" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_cart"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -122,6 +122,8 @@
 
         </RelativeLayout>
 
+
     </LinearLayout>
+
 
 </LinearLayout>

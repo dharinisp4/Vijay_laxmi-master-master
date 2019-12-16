@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -41,9 +42,7 @@ import util.WishlistHandler;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 22/6/2017.
- */
+
 
 public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.MyViewHolder> {
 
@@ -77,7 +76,7 @@ public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.
         RelativeLayout relativeLayout ;
         ElegantNumberButton elegantNumberButton ;
         Button add_Button;
-        public RelativeLayout rel_variant;
+        public RelativeLayout rel_variant ,rel_out;
         private TextView dialog_unit_type,dialog_txtId,txtrate;
 
 
@@ -105,6 +104,8 @@ public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.
             dialog_txtId=(TextView)view.findViewById(R.id.txtId);
             txtrate=(TextView)view.findViewById(R.id.single_varient);
             dialog_txtVar=(TextView)view.findViewById(R.id.txtVar);
+
+            rel_out = view.findViewById( R.id.rel_out );
 
 
 
@@ -137,6 +138,15 @@ public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.
 //            holder.wish_after.setVisibility( View.VISIBLE );
 //            holder.wish_before.setVisibility( View.GONE );
 //        }
+
+        final int stock =Integer.parseInt(modelList.get(position).getStock());
+        if (stock < 1) {
+           holder.rel_out.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+          holder.rel_out.setVisibility(View.GONE);
+        }
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         final String language=preferences.getString("language","");
 
@@ -379,43 +389,47 @@ public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.
             @Override
             public void onClick(View view) {
                 final Deal_Of_Day_model mList = modelList.get(position);
-                Bundle args = new Bundle();
+                if (stock < 1) {
+                    //rel_out.setVisibility(View.VISIBLE);
+                    Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
+                } else {
+                    Bundle args = new Bundle();
 //
 
-                //args.putString("product_id",mList.getProduct_id());
+                    //args.putString("product_id",mList.getProduct_id());
 
-                args.putString("cat_id", modelList.get(position).getCategory_id());
-                args.putString("product_id",modelList.get(position).getProduct_id());
-                args.putString("product_image",modelList.get(position).getProduct_image());
+                    args.putString( "cat_id", modelList.get( position ).getCategory_id() );
+                    args.putString( "product_id", modelList.get( position ).getProduct_id() );
+                    args.putString( "product_image", modelList.get( position ).getProduct_image() );
 
-                args.putString("product_name",modelList.get(position).getProduct_name());
-                args.putString("product_description",modelList.get(position).getProduct_description());
-                args.putString("in_stock",modelList.get(position).getIn_stock());
-                args.putString("stock",modelList.get(position).getStock());
+                    args.putString( "product_name", modelList.get( position ).getProduct_name() );
+                    args.putString( "product_description", modelList.get( position ).getProduct_description() );
+                    args.putString( "in_stock", modelList.get( position ).getIn_stock() );
+                    args.putString( "stock", modelList.get( position ).getStock() );
 //                args.putString("product_size",modelList.get(position).getSize());
 //                args.putString("product_color",modelList.get( position).getColor());
-                args.putString( "unit_price",modelList.get( position ).getUnit_price());
-                args.putString("price",modelList.get(position).getPrice());
-                args.putString("mrp",modelList.get(position).getMrp());
-                args.putString("unit_value",modelList.get(position).getUnit_value());
-                args.putString("unit",modelList.get(position).getUnit());
-                args.putString("product_attribute",modelList.get(position).getProduct_attribute());
-                args.putString("rewards",modelList.get(position).getRewards());
-                args.putString("increment",modelList.get(position).getIncreament());
-                args.putString("title",modelList.get(position).getTitle());
+                    args.putString( "unit_price", modelList.get( position ).getUnit_price() );
+                    args.putString( "price", modelList.get( position ).getPrice() );
+                    args.putString( "mrp", modelList.get( position ).getMrp() );
+                    args.putString( "unit_value", modelList.get( position ).getUnit_value() );
+                    args.putString( "unit", modelList.get( position ).getUnit() );
+                    args.putString( "product_attribute", modelList.get( position ).getProduct_attribute() );
+                    args.putString( "rewards", modelList.get( position ).getRewards() );
+                    args.putString( "increment", modelList.get( position ).getIncreament() );
+                    args.putString( "title", modelList.get( position ).getTitle() );
 
-                // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
-                Details_Fragment fm = new Details_Fragment();
-                fm.setArguments(args);
+                    // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
+                    Details_Fragment fm = new Details_Fragment();
+                    fm.setArguments( args );
 //                FragmentManager fragmentManager = .beginTransaction().replace(R.id.contentPanel, fm)
 //                        .addToBackStack(null).commit();
 
-                AppCompatActivity activity=(AppCompatActivity) view.getContext();
-                activity.getFragmentManager().beginTransaction().replace(R.id.contentPanel,fm)
-                        .addToBackStack(null)
-                        .commit();
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    activity.getFragmentManager().beginTransaction().replace( R.id.contentPanel, fm )
+                            .addToBackStack( null )
+                            .commit();
 
-
+                }
             }
         } );
 

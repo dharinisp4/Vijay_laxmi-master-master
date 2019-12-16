@@ -9,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -106,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
    Dialog loadingBar ;
     List<MenuModel> headerList = new ArrayList<>();
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+    Fragment f ;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -115,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         super.attachBaseContext(newBase);
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -417,7 +421,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    @Override
+    public void onBackPressed() {
+        f = getFragmentManager().findFragmentById(R.id.contentPanel);
 
+        if (f instanceof Home_fragment) {
+//            finish();
+//            System.exit(0);
+            android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Beauty Mentor");
+            builder.setIcon( R.drawable.beauty );
+            builder.setMessage("Are you sure want to exit?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    finish();
+                    //  getActivity().finishAffinity();
+
+
+                }
+            })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    });
+            android.app.AlertDialog dialog=builder.create();
+            dialog.show();
+
+        } else {
+            super.onBackPressed();
+        }
+    }
     public void updateHeader() {
         if (sessionManagement.isLoggedIn()) {
             viewpa.setVisibility(View.VISIBLE);

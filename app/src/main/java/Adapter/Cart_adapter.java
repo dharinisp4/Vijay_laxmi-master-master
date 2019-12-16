@@ -42,6 +42,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
     Activity activity;
     String Reward;
     Double price ,reward ;
+    int stock ;
     SharedPreferences preferences;
     String language;
     int qty = 0;
@@ -89,7 +90,7 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             img_name=map.get("attr_img");
         }
 
-
+        stock = Integer.parseInt( map.get( "stock" ) );
 
 
 
@@ -225,41 +226,42 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
             public void onClick(View view) {
 
                 int qty = Integer.parseInt(holder.tv_contetiy.getText().toString());
-                qty = qty + 1;
+                if (qty>=stock)
+                {
+                    Toast.makeText(activity,"Only " +stock +" in stock",Toast.LENGTH_LONG ).show();
+                }
+                else {
+                    qty = qty + 1;
 
-                holder.tv_contetiy.setText(String.valueOf(qty));
+                    holder.tv_contetiy.setText( String.valueOf( qty ) );
 
-            //    holder.tv_reward.setText("" + reward * qty);
-                int id=Integer.parseInt(map.get("cart_id"));
+                    //    holder.tv_reward.setText("" + reward * qty);
+                    int id = Integer.parseInt( map.get( "cart_id" ) );
 
-                ArrayList<HashMap<String, String>> mapP=db_cart.getCartProduct(id);
+                    ArrayList<HashMap<String, String>> mapP = db_cart.getCartProduct( id );
 
-                HashMap<String,String> m=mapP.get(0);
+                    HashMap<String, String> m = mapP.get( 0 );
 
-                double t=Double.parseDouble(m.get("price"));
-                double p=Double.parseDouble(m.get("unit_price"));
-                holder.tv_total.setText("" + p * qty);
-                String pr=String.valueOf(t+p);
-                float qt=Float.valueOf(qty);
+                    double t = Double.parseDouble( m.get( "price" ) );
+                    double p = Double.parseDouble( m.get( "unit_price" ) );
+                    holder.tv_total.setText( "" + p * qty );
+                    String pr = String.valueOf( t + p );
+                    float qt = Float.valueOf( qty );
 
-                String st_atr=map.get("product_attribute").toString();
+                    String st_atr = map.get( "product_attribute" ).toString();
 
-                boolean b=db_cart.updateCartWithQty(map.get("cart_id"),pr,qt);
-               if(b)
-               {
-                   Toast.makeText(activity,"Qty Updated",Toast.LENGTH_LONG).show();
-                   Details_Fragment.numberButton.setNumber( String.valueOf( qty ) );
-               }
-               else
-               {
-                   Toast.makeText(activity,"Qty not Updated",Toast.LENGTH_LONG).show();
-               }
+                    boolean b = db_cart.updateCartWithQty( map.get( "cart_id" ), pr, qt );
+                    if (b) {
+                        Toast.makeText( activity, "Qty Updated", Toast.LENGTH_LONG ).show();
+                        Details_Fragment.numberButton.setNumber( String.valueOf( qty ) );
+                    } else {
+                        Toast.makeText( activity, "Qty not Updated", Toast.LENGTH_LONG ).show();
+                    }
 
-                Cart_fragment.tv_total.setText(activity.getResources().getString(R.string.currency)+" "+db_cart.getTotalAmount());
+                    Cart_fragment.tv_total.setText( activity.getResources().getString( R.string.currency ) + " " + db_cart.getTotalAmount() );
 
 
-                // Toast.makeText(activity,""+map.get("product_attribute").toString(),Toast.LENGTH_LONG).show();
-
+                    // Toast.makeText(activity,""+map.get("product_attribute").toString(),Toast.LENGTH_LONG).show();
 
 
 //             // Toast.makeText(activity,"\npri "+map.get("unit_value")+"\n am "+pr,Toast.LENGTH_LONG ).show();
@@ -299,7 +301,8 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
 //                    Toast.makeText(activity,"Qty Updated",Toast.LENGTH_LONG).show();
 //                    Cart_fragment.tv_total.setText(activity.getResources().getString(R.string.currency)+" "+db_cart.getTotalAmount());
 //                }
-             //  holder.tv_total.setText(""+db_cart.getTotalAmount());
+                    //  holder.tv_total.setText(""+db_cart.getTotalAmount());
+                }
 
             }
         });

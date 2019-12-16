@@ -1,8 +1,6 @@
 package Model;
 
-/**
- * Created by Rajesh Dabhi on 29/6/2017.
- */
+
 
 public class My_Past_order_model {
 
@@ -22,6 +20,25 @@ public class My_Past_order_model {
     String location_id;
     String delivery_charge;
     String payment_method;
+    String receiver_name;
+    String receiver_mobile ;
+    String confirm_date;
+    String delivered_date;
+    public String getReceiver_name() {
+        return receiver_name;
+    }
+
+    public void setReceiver_name(String receiver_name) {
+        this.receiver_name = receiver_name;
+    }
+
+    public String getReceiver_mobile() {
+        return receiver_mobile;
+    }
+
+    public void setReceiver_mobile(String receiver_mobile) {
+        this.receiver_mobile = receiver_mobile;
+    }
 
     public String getSale_id(){
         return sale_id;
@@ -86,5 +103,19 @@ public class My_Past_order_model {
         return payment_method;
     }
 
+    public String getConfirm_date() {
+        return confirm_date;
+    }
 
+    public void setConfirm_date(String confirm_date) {
+        this.confirm_date = confirm_date;
+    }
+
+    public String getDelivered_date() {
+        return delivered_date;
+    }
+
+    public void setDelivered_date(String delivered_date) {
+        this.delivered_date = delivered_date;
+    }
 }

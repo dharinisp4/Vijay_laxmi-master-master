@@ -98,6 +98,7 @@
         android:fontFamily="@font/cabin"
         android:textAlignment="gravity"
         android:paddingBottom="@dimen/space_15"
+        android:textColor="@android:color/black"
         android:backgroundTint="@color/colorPrimary"
         />
     <Button

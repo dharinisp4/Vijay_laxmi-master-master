@@ -45,6 +45,7 @@ SharedPreferences preferences;
         CardView cardView;
         public TextView tv_methid1;
         public String method;
+        public TextView tv_user_mobile , tv_user_add ;
 
 
         public MyViewHolder(View view) {
@@ -58,6 +59,8 @@ SharedPreferences preferences;
             tv_price = (TextView) view.findViewById(R.id.tv_order_price);
             tv_item = (TextView) view.findViewById(R.id.tv_order_item);
             cardView = view.findViewById(R.id.card_view);
+            tv_user_add =view.findViewById( R.id.user_address );
+            tv_user_mobile=view.findViewById( R.id.user_mobile );
 
 
 //            //Payment Method
@@ -147,7 +150,7 @@ SharedPreferences preferences;
 
         holder.tv_methid1.setText(mList.getPayment_method());
         holder.tv_date.setText(mList.getOn_date());
-        holder.tv_tracking_date.setText(mList.getOn_date());
+        holder.tv_tracking_date.setText(mList.getConfirm_date());
 
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         String language=preferences.getString("language","");
@@ -179,11 +182,13 @@ SharedPreferences preferences;
 //        holder.tv_pending_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
         holder.tv_pending_date.setText(mList.getOn_date());
 //        holder.tv_confirm_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_confirm_date.setText(mList.getOn_date());
+        holder.tv_confirm_date.setText(mList.getConfirm_date());
 //        holder.tv_delevered_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_delevered_date.setText(mList.getOn_date());
+        holder.tv_delevered_date.setText(mList.getDelivered_date());
 //        holder.tv_cancel_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_cancel_date.setText(mList.getOn_date());
+    //    holder.tv_cancel_date.setText(mList.getOn_date());
+        holder.tv_user_mobile.setText( mList.getReceiver_mobile() );
+        holder.tv_user_add.setText( mList.getDelivery_address() );
     }
 
 

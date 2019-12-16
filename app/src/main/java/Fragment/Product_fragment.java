@@ -220,9 +220,7 @@ public class Product_fragment extends Fragment {
    updateData();
     }
 
-    /**
-     * Method to make json object request where json response starts wtih
-     */
+
     //Get Shop By Catogary
     private void makeGetCategoryRequest(final String parent_id) {
         String tag_json_obj = "json_category_req";
@@ -302,49 +300,63 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.d("rett"+cat_id , response.toString());
+                Log.d("rett subcat"+cat_id , response.toString());
 
                 try {
+//                    if (response.has( "data" )) {
+//
+//                        gifImageView.setVisibility( View.GONE );
+//                        rv_cat.setVisibility( View.VISIBLE );
+//                    }
+//                    else {
+//                        loadingBar.dismiss();
+//                        gifImageView.setVisibility( View.VISIBLE );
+//                        rv_cat.setVisibility( View.GONE );
+//                    }
 
-                    Boolean status = response.getBoolean("responce");
+                    Boolean status = response.getBoolean( "responce" );
 
-                    if (status) {
-
-                        if(!response.has("data"))
-                        {
-                            loadingBar.dismiss();
-                            gifImageView.setVisibility(View.VISIBLE);
-                            rv_cat.setVisibility(View.GONE);
-                        }
-
+                    if (status == true ) {
 //                        Toast.makeText(getActivity(),""+response,Toast.LENGTH_LONG).show();
 
                         Gson gson = new Gson();
                         Type listType = new TypeToken<List<Product_model>>() {
                         }.getType();
-                        product_modelList = gson.fromJson(response.getString("data"), listType);
+                        product_modelList = gson.fromJson( response.getString( "data" ), listType );
                         loadingBar.dismiss();
-                        adapter_product = new Product_adapter(product_modelList, getActivity());
-                        rv_cat.setAdapter(adapter_product);
+                        adapter_product = new Product_adapter( product_modelList, getActivity() );
+                        rv_cat.setAdapter( adapter_product );
                         adapter_product.notifyDataSetChanged();
+                        gifImageView.setVisibility( View.GONE );
+                        rv_cat.setVisibility( View.VISIBLE );
 
-                        gifImageView.setVisibility(View.GONE);
-                        rv_cat.setVisibility(View.VISIBLE);
-
-                            if (product_modelList.size()<=0) {
+                       if (product_modelList.size() <= 0)
+                       {
 
                                 loadingBar.dismiss();
                                 adapter_product.notifyDataSetChanged();
-                                gifImageView.setVisibility(View.VISIBLE);
-                                rv_cat.setVisibility(View.GONE);
+                                gifImageView.setVisibility( View.VISIBLE );
+                                rv_cat.setVisibility( View.GONE );
 
+                                Toast.makeText( getActivity(), getResources().getString( R.string.no_rcord_found ), Toast.LENGTH_SHORT ).show();
+                       }
+                            else
+                            {
+                                gifImageView.setVisibility( View.GONE);
+                                rv_cat.setVisibility( View.VISIBLE );
 
-                                Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
-                            }
-
+                             }
 
                         }
-                } catch (JSONException e){
+
+                    else
+                    {
+                        loadingBar.dismiss();
+                        gifImageView.setVisibility( View.VISIBLE );
+                        rv_cat.setVisibility( View.GONE );
+                    }
+
+                }catch (JSONException e){
                             loadingBar.dismiss();
                             //   e.printStackTrace();
                             String ex = e.getMessage();
@@ -414,9 +426,16 @@ public class Product_fragment extends Fragment {
                             }
                         } else {
 
+
                           //  makeGetProductRequest(parent_id);
                         }
 
+                    }
+                    else
+                    {
+                        loadingBar.dismiss();
+                        gifImageView.setVisibility( View.VISIBLE );
+                        rv_cat.setVisibility( View.GONE );
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
