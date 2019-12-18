@@ -77,6 +77,8 @@ import util.DatabaseHandler;
 import util.Session_management;
 import util.WishlistHandler;
 
+import static Config.BaseURL.KEY_ID;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ConnectivityReceiver.ConnectivityReceiverListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView mTitle;
     LinearLayout viewpa;
     Toolbar toolbar;
+    String user_id="";
     String language = "";
     LinearLayout My_Order, My_Wishlist, My_Walllet, My_Cart;
     int padding = 0;
@@ -192,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         checkConnection();
 
         sessionManagement = new Session_management(MainActivity.this);
-
+        user_id=sessionManagement.getUserDetails().get(KEY_ID);
        // expandableListView = findViewById(R.id.expandableListView);
        // prepareMenuData();
        // populateExpandableList();
@@ -589,8 +592,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
         totalBudgetCount2 = (TextView) wishcount.findViewById( R.id.actionbar_notifcation );
-        totalBudgetCount2.setText( "" + db_wish.getWishtableCount() );
-        if(db_wish.getWishtableCount()<=0) {
+        totalBudgetCount2.setText( "" + db_wish.getWishtableCount(user_id) );
+        if(db_wish.getWishtableCount(user_id)<=0) {
             totalBudgetCount2.setVisibility( View.GONE );
 
         }
@@ -628,7 +631,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         else if (id==R.id.action_wish)
         {
           // db_wish.clearWishtable();
-            if (db_wish.getWishtableCount() > 0) {
+            if (db_wish.getWishtableCount(user_id) > 0) {
 
            //     Toast.makeText(MainActivity.this,""+db_wish.getWishtableCount(),Toast.LENGTH_LONG).show();
                 Fragment fm = new Wishlist();

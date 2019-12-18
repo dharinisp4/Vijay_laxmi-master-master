@@ -43,12 +43,15 @@ import Config.BaseURL;
 import Model.ProductVariantModel;
 import Model.Product_model;
 import Module.Module;
+import binplus.vijaylaxmi.LoginActivity;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
 import util.DatabaseCartHandler;
 import util.DatabaseHandler;
+import util.Session_management;
 import util.WishlistHandler;
 
+import static Config.BaseURL.KEY_ID;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -56,6 +59,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 
     List<String> image_list;
    // Dialog dialog;
+    String user_id="";
     ListView listView1;
     String atr_id="";
     String atr_product_id="";
@@ -74,7 +78,7 @@ public class Product_adapter extends RecyclerView.Adapter<Product_adapter.MyView
 //    ArrayList<String> list_atr_value;
 //    ArrayList<String> list_atr_name;
 //    ArrayList<String> list_atr_mrp;
-
+ Session_management session_management;
     private List<Product_model> modelList;
     private Context context;
     int status=0;
@@ -122,6 +126,7 @@ SharedPreferences preferences;
             con_product=(ConstraintLayout)view.findViewById(R.id.con_layout_product);
             elegantNumberButton=view.findViewById( R.id.elegantButton );
             image_list=new ArrayList<>();
+            session_management=new Session_management(context);
            // iv_remove.setVisibility(View.GONE);
        //     iv_minus.setOnClickListener(this);
        //     iv_plus.setOnClickListener(this);
@@ -129,7 +134,7 @@ SharedPreferences preferences;
 //            iv_logo.setOnClickListener(this);
             variantList=new ArrayList<>();
             attributeList=new ArrayList<>();
-
+            user_id=session_management.getUserDetails().get(KEY_ID);
 
             wish_before.setOnClickListener(this);
             wish_after.setOnClickListener(this );
@@ -198,35 +203,39 @@ SharedPreferences preferences;
 
 
             else if(id==R.id.wish_before) {
+
+                if(session_management.isLoggedIn()) {
+
+
                     final Product_model mList = modelList.get(position);
-                //    txt_desc.setText(""+);
+                    //    txt_desc.setText(""+);
                     //Toast.makeText(activity,""+mList.getProduct_attribute(),Toast.LENGTH_LONG).show();
-                    wish_after.setVisibility( View.VISIBLE );
-                    wish_before.setVisibility( View.INVISIBLE );
+                    wish_after.setVisibility(View.VISIBLE);
+                    wish_before.setVisibility(View.INVISIBLE);
                     HashMap<String, String> mapProduct = new HashMap<String, String>();
                     mapProduct.put("product_id", mList.getProduct_id());
-                    mapProduct.put("product_image",mList.getProduct_image());
-                    mapProduct.put("cat_id",mList.getCategory_id());
-                    mapProduct.put("product_name",mList.getProduct_name());
+                    mapProduct.put("product_image", mList.getProduct_image());
+                    mapProduct.put("cat_id", mList.getCategory_id());
+                    mapProduct.put("product_name", mList.getProduct_name());
                     mapProduct.put("price", mList.getPrice());
-                    mapProduct.put("product_description",mList.getProduct_description());
+                    mapProduct.put("product_description", mList.getProduct_description());
                     mapProduct.put("rewards", mList.getRewards());
-                    mapProduct.put("in_stock",mList.getIn_stock());
-                    mapProduct.put("unit_value",mList.getUnit_value());
+                    mapProduct.put("in_stock", mList.getIn_stock());
+                    mapProduct.put("unit_value", mList.getUnit_value());
                     mapProduct.put("unit", mList.getUnit());
-                    mapProduct.put("increment",mList.getIncreament());
-                    mapProduct.put("stock",mList.getStock());
-                    mapProduct.put("title",mList.getTitle());
-                    mapProduct.put("mrp",mList.getMrp());
-                    mapProduct.put("product_attribute",modelList.get(position).getProduct_attribute());
-               //    mapProduct.put("product_attribute",mList.getProduct_attribute());
+                    mapProduct.put("increment", mList.getIncreament());
+                    mapProduct.put("stock", mList.getStock());
+                    mapProduct.put("title", mList.getTitle());
+                    mapProduct.put("mrp", mList.getMrp());
+                    mapProduct.put("product_attribute", modelList.get(position).getProduct_attribute());
+                    mapProduct.put("user_id", user_id);
 
-                       // Toast.makeText(context,""+mapProduct,Toast.LENGTH_LONG).show();
+                    // Toast.makeText(context,""+mapProduct,Toast.LENGTH_LONG).show();
 
 
                     try {
 
-                        boolean tr =db_wish.setwishTable(mapProduct);
+                        boolean tr = db_wish.setwishTable(mapProduct);
                         if (tr == true) {
 
                             //   context.setCartCounter("" + holder.db_cart.getCartCount());
@@ -234,27 +243,30 @@ SharedPreferences preferences;
 
                             updateintent();
 
-                        }
-                        else
-                        {
+                        } else {
                             Toast.makeText(context, "Something Went Wrong", Toast.LENGTH_LONG).show();
                         }
 
                     } catch (Exception ex) {
                         ex.printStackTrace();
-                      //  Toast.makeText(context, "" + ex.getMessage(), Toast.LENGTH_LONG).show();
+                        //  Toast.makeText(context, "" + ex.getMessage(), Toast.LENGTH_LONG).show();
                     }
 
 
                     //   Toast.makeText(context,"wish",Toast.LENGTH_LONG).show();
-                              //  AppCompatActivity activity = (AppCompatActivity) view.getContext();
-
+                    //  AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                }
+                else
+                {
+                    Intent intent=new Intent(context, LoginActivity.class);
+                    context.startActivity(intent);
+                }
             }
             else if (id == R.id.wish_after) {
                     final Product_model mList = modelList.get(position);
                 wish_after.setVisibility( View.INVISIBLE );
                 wish_before.setVisibility( View.VISIBLE );
-               db_wish.removeItemFromWishtable(mList.getProduct_id());
+               db_wish.removeItemFromWishtable(mList.getProduct_id(),user_id);
                     updateintent();
                Toast.makeText(context, "Removed from Wishlist", Toast.LENGTH_LONG).show();
                // list.remove(position);
@@ -289,6 +301,8 @@ SharedPreferences preferences;
         int stock =Integer.parseInt(modelList.get(position).getStock());
         if (stock < 1) {
             rel_out.setVisibility(View.VISIBLE);
+            holder.wish_before.setVisibility(View.GONE);
+
         }
         else
         {
@@ -336,7 +350,7 @@ SharedPreferences preferences;
 
 
 
-        if(holder.db_wish.isInWishtable( getid ))
+        if(holder.db_wish.isInWishtable( getid,user_id ))
         {
             holder.wish_after.setVisibility( View.VISIBLE );
             holder.wish_before.setVisibility( View.GONE );

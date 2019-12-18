@@ -540,14 +540,16 @@ public class Home_fragment extends Fragment {
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject jsonObject = (JSONObject) response.get(i);
                                 HashMap<String, String> url_maps = new HashMap<String, String>();
+                                url_maps.put("id", jsonObject.getString("banner_id"));
                                 url_maps.put("slider_title", jsonObject.getString("slider_title"));
                                 url_maps.put("sub_cat", jsonObject.getString("sub_cat"));
                                 url_maps.put("slider_url", jsonObject.getString("slider_url"));
                                 url_maps.put("slider_status", jsonObject.getString("slider_status"));
-                                url_maps.put("slider_image", BaseURL.IMG_SLIDER_URL + jsonObject.getString("slider_image"));
+                                url_maps.put("slider_image", BaseURL.IMG_SLIDER_URL + jsonObject.getString("slider_image").toString());
                                 url_maps.put("product_id",jsonObject.getString("product_id"));
                                 url_maps.put("product_name",jsonObject.getString("product_name"));
                                 url_maps.put("product_description",jsonObject.getString("product_description"));
+                                url_maps.put("product_attribute",jsonObject.getString("product_attribute"));
                                 url_maps.put("product_image",jsonObject.getString("product_image"));
                                 url_maps.put("category_id",jsonObject.getString("category_id"));
                                 url_maps.put("in_stock",jsonObject.getString("in_stock"));
@@ -557,11 +559,7 @@ public class Home_fragment extends Fragment {
                                 url_maps.put("unit",jsonObject.getString("unit"));
                                 url_maps.put("increament",jsonObject.getString("increament"));
                                 url_maps.put("rewards",jsonObject.getString("rewards"));
-                                url_maps.put("seller_id",jsonObject.getString("seller_id"));
                                 url_maps.put("stock",jsonObject.getString("stock"));
-                                url_maps.put("tax",jsonObject.getString("tax"));
-                                url_maps.put("is_new",jsonObject.getString("is_new"));
-                                url_maps.put("brand",jsonObject.getString("brand"));
                                 url_maps.put("title",jsonObject.getString("title"));
 
                                 listarray.add(url_maps);

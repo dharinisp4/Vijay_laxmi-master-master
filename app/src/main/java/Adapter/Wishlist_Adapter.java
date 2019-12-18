@@ -39,15 +39,18 @@ import Model.Wish_model;
 import Module.Module;
 import binplus.vijaylaxmi.R;
 import util.DatabaseCartHandler;
+import util.Session_management;
 import util.WishlistHandler;
 
+import static Config.BaseURL.KEY_ID;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.WishHolder> {
 
     List<String> list_color=new ArrayList<>();
     List<String> list_images=new ArrayList<>();
-
+    String user_id="";
+    Session_management session_management;
     List<ProductVariantModel>  vlst=new ArrayList<>();
     String atr_id="";
     String atr_product_id="";
@@ -308,8 +311,8 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
             @Override
             public void onClick(View view) {
 
-                //String cart_id=db_cart.getCartIDForWishlist(map.get("product_id"),"w");
-                Toast.makeText(activity,""+map.get("increment"),Toast.LENGTH_LONG).show();
+               //String cart_id=db_cart.getCartIDForWishlist(map.get("product_id"),"w");
+                //Toast.makeText(activity,""+map.get("increment"),Toast.LENGTH_LONG).show();
 //                if(cart_id.equals("") || cart_id.isEmpty())
 //                {
 //
@@ -329,8 +332,10 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
             public void onClick(View view) {
 
 
+              //  holder.db_wish.clearWishtable(user_id);
 
-                holder.db_wish.removeItemFromWishtable(map.get("product_id"));
+                String us_id=session_management.getUserDetails().get(KEY_ID);
+                holder.db_wish.removeItemFromWishtable(map.get("product_id"),us_id);
                 list.remove(position);
                 notifyDataSetChanged();
 
@@ -410,6 +415,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
             product_mrp=(TextView)itemView.findViewById( R.id.product_mrp );
             unit_type=(TextView)itemView.findViewById( R.id.unit_type );
             add=itemView.findViewById( R.id.btn_add );
+            session_management=new Session_management(activity);
             iv_icon=(ImageView)itemView.findViewById( R.id.iv_icon );
             delete=(ImageView)itemView.findViewById( R.id.delete );
             cart_after=(ImageView)itemView.findViewById( R.id.cart_after );
@@ -428,6 +434,7 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
 
             attributeList=new ArrayList<>();
             variantList=new ArrayList<>();
+            user_id=session_management.getUserDetails().get(KEY_ID);
         }
     }
 

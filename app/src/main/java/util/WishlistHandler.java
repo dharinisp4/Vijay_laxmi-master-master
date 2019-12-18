@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class WishlistHandler extends SQLiteOpenHelper {
-    private static String DB_NAME = "dbwih";
+    private static String DB_NAME = "dbwilh";
     private static int DB_VERSION = 3;
     private SQLiteDatabase db;
 
@@ -30,6 +30,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
     public static final String COLUMN_REWARDS = "rewards";
     public static final String COLUMN_INCREMENT = "increment";
     public static final String COLUMN_TITLE = "title";
+    public static final String COLUMN_USER_ID = "user_id";
     public WishlistHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -53,6 +54,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
                 + COLUMN_REWARDS + " TEXT NOT NULL, "
                 + COLUMN_INCREMENT + " TEXT NOT NULL, "
                 + COLUMN_TITLE + " TEXT NOT NULL, "
+                + COLUMN_USER_ID + " TEXT NOT NULL, "
                 + COLUMN_DESC + " TEXT NOT NULL "
 
 
@@ -65,7 +67,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
     }
     public boolean setwishTable(HashMap<String, String> map) {
         db = getWritableDatabase();
-        if (isInWishtable(map.get(COLUMN_ID))) {
+        if (isInWishtable(map.get(COLUMN_ID),map.get(COLUMN_USER_ID))) {
             //db.execSQL("update " + WISHTABLE_TABLE + " set " + COLUMN_QTY + " = '" + Qty + "' where " + COLUMN_ID + "=" + map.get(COLUMN_ID));
             return false;
         } else {
@@ -86,14 +88,15 @@ public class WishlistHandler extends SQLiteOpenHelper {
             values.put(COLUMN_REWARDS, map.get(COLUMN_REWARDS));
             values.put(COLUMN_INCREMENT, map.get(COLUMN_INCREMENT));
             values.put(COLUMN_TITLE, map.get(COLUMN_TITLE));
+            values.put(COLUMN_USER_ID, map.get(COLUMN_USER_ID));
             db.insert(WISHTABLE_TABLE, null, values);
             return true;
         }
     }
 
-    public boolean isInWishtable(String id) {
+    public boolean isInWishtable(String id,String user_id) {
         db = getReadableDatabase();
-        String qry = "Select *  from " + WISHTABLE_TABLE + " where " + COLUMN_ID + " = " + id;
+        String qry = "Select *  from " + WISHTABLE_TABLE + " where " + COLUMN_ID + " = " + id + " and " + COLUMN_USER_ID + " = " +  user_id;
         Cursor cursor = db.rawQuery(qry, null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) return true;
@@ -123,9 +126,9 @@ public class WishlistHandler extends SQLiteOpenHelper {
 //        }
 //    }
 
-    public int getWishtableCount() {
+    public int getWishtableCount(String id) {
         db = getReadableDatabase();
-        String qry = "Select *  from " + WISHTABLE_TABLE;
+        String qry = "Select *  from " + WISHTABLE_TABLE + " where " + COLUMN_USER_ID + " = " + id;
         Cursor cursor = db.rawQuery(qry, null);
         return cursor.getCount();
     }
@@ -145,10 +148,10 @@ public class WishlistHandler extends SQLiteOpenHelper {
 //    }
 
 
-    public ArrayList<HashMap<String, String>> getWishtableAll() {
+    public ArrayList<HashMap<String, String>> getWishtableAll(String user_id) {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
         db = getReadableDatabase();
-        String qry = "Select *  from " + WISHTABLE_TABLE;
+        String qry = "Select *  from " + WISHTABLE_TABLE + " where " + COLUMN_USER_ID + " = " + user_id;
         Cursor cursor = db.rawQuery(qry, null);
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
@@ -169,16 +172,17 @@ public class WishlistHandler extends SQLiteOpenHelper {
             map.put(COLUMN_REWARDS, cursor.getString(cursor.getColumnIndex(COLUMN_REWARDS)));
             map.put(COLUMN_INCREMENT, cursor.getString(cursor.getColumnIndex(COLUMN_INCREMENT)));
             map.put(COLUMN_TITLE, cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
+            map.put(COLUMN_USER_ID, cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID)));
             list.add(map);
             cursor.moveToNext();
         }
         return list;
     }
 
-    public ArrayList<HashMap<String, String>> getCartProduct(int product_id) {
+    public ArrayList<HashMap<String, String>> getCartProduct(int product_id,String user_id) {
         ArrayList<HashMap<String, String>> list = new ArrayList<>();
         db = getReadableDatabase();
-        String qry = "Select *  from " + WISHTABLE_TABLE+ " where " + COLUMN_ID + " = " + product_id;
+        String qry = "Select *  from " + WISHTABLE_TABLE + " where " + COLUMN_ID + " = " + product_id + " and " + COLUMN_USER_ID + " = " +  user_id;
         Cursor cursor = db.rawQuery(qry, null);
         cursor.moveToFirst();
         for (int i = 0; i < cursor.getCount(); i++) {
@@ -199,6 +203,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
             map.put(COLUMN_REWARDS, cursor.getString(cursor.getColumnIndex(COLUMN_REWARDS)));
             map.put(COLUMN_INCREMENT, cursor.getString(cursor.getColumnIndex(COLUMN_INCREMENT)));
             map.put(COLUMN_TITLE, cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
+            map.put(COLUMN_USER_ID, cursor.getString(cursor.getColumnIndex(COLUMN_USER_ID)));
 
 
             list.add(map);
@@ -237,14 +242,14 @@ public class WishlistHandler extends SQLiteOpenHelper {
         }
         return concate;
     }
-    public void clearWishtable() {
+    public void clearWishtable(String id) {
         db = getReadableDatabase();
-        db.execSQL("delete from " + WISHTABLE_TABLE);
+        db.execSQL("delete from " + WISHTABLE_TABLE + " where " + COLUMN_USER_ID + " = " + id);
     }
 
-    public void removeItemFromWishtable(String id) {
+    public void removeItemFromWishtable(String id,String user_id) {
         db = getReadableDatabase();
-        db.execSQL("delete from " + WISHTABLE_TABLE + " where " + COLUMN_ID + " = " + id);
+        db.execSQL("delete from " + WISHTABLE_TABLE + "where " + COLUMN_ID + " = " + id + " and " + COLUMN_USER_ID + " = " +  user_id);
     }
 
 

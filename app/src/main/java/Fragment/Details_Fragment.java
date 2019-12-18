@@ -87,6 +87,8 @@ import util.RecyclerTouchListener;
 import util.Session_management;
 import util.WishlistHandler;
 
+import static Config.BaseURL.KEY_ID;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -94,6 +96,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     public static  int col_position=-1;
     public static int position=-1;
     String atr_id="";
+    String user_id;
     public static Button btn_adapter,btn_color;
     String atr_product_id,attribute_name,attribute_value,attribute_mrp,attribute_color,attribute_img;
     int flag=0;
@@ -141,6 +144,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
          var_respons=new JSONObject();
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
+        user_id=sessionManagement.getUserDetails().get(KEY_ID);
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
@@ -426,11 +430,15 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
     }
 });
-        if(db_wish.isInWishtable( product_id ))
+        if(sessionManagement.isLoggedIn())
         {
-            wish_after.setVisibility( View.VISIBLE );
-            wish_before.setVisibility( View.GONE );
+            if(db_wish.isInWishtable( product_id,user_id ))
+            {
+                wish_after.setVisibility( View.VISIBLE );
+                wish_before.setVisibility( View.GONE );
+            }
         }
+
 
 
 
@@ -438,57 +446,58 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             @Override
             public void onClick(View view) {
 
-                wish_after.setVisibility( View.VISIBLE );
-               wish_before.setVisibility( View.INVISIBLE );
+                if(sessionManagement.isLoggedIn()) {
+                    wish_after.setVisibility(View.VISIBLE);
+                    wish_before.setVisibility(View.INVISIBLE);
 
 
+                    String tl = "";
+                    String title = String.valueOf(details_product_title);
+                    if (title.equals("null")) {
+                        tl = "title";
+                    } else {
+                        tl = String.valueOf(details_product_title);
+                    }
 
-                String tl="";
-                String title=String.valueOf(details_product_title);
-                if(title.equals("null"))
-                {
-                    tl="title";
+                    HashMap<String, String> mapProduct = new HashMap<String, String>();
+                    mapProduct.put("product_id", product_id);
+                    mapProduct.put("product_image", product_images);
+                    mapProduct.put("cat_id", cat_id);
+                    mapProduct.put("product_name", details_product_name);
+                    mapProduct.put("price", details_product_price);
+                    mapProduct.put("product_description", details_product_desc);
+                    mapProduct.put("rewards", details_product_rewards);
+                    mapProduct.put("in_stock", details_product_inStock);
+                    mapProduct.put("unit_value", details_product_unit_value);
+                    mapProduct.put("unit", details_product_unit);
+                    mapProduct.put("increment", details_product_increament);
+                    mapProduct.put("stock", details_product_inStock);
+                    mapProduct.put("title", tl);
+                    mapProduct.put("mrp", details_product_mrp);
+                    mapProduct.put("product_attribute", details_product_attribute);
+                    mapProduct.put("user_id", user_id);
+
+                    try {
+
+                        boolean tr = db_wish.setwishTable(mapProduct);
+                        if (tr == true) {
+                            updateWishData();
+                            Toast.makeText(getActivity(), "Added to Wishlist", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+
                 }
                 else
                 {
-                    tl=String.valueOf(details_product_title);
+                    Intent intent=new Intent(getActivity(),LoginActivity.class);
+                    getActivity().startActivity(intent);
                 }
-
-                HashMap<String, String> mapProduct = new HashMap<String, String>();
-                mapProduct.put("product_id", product_id);
-                mapProduct.put("product_image",product_images);
-                mapProduct.put("cat_id",cat_id);
-                mapProduct.put("product_name",details_product_name);
-                mapProduct.put("price", details_product_price);
-                mapProduct.put("product_description",details_product_desc);
-                mapProduct.put("rewards", details_product_rewards);
-                mapProduct.put( "in_stock",details_product_inStock );
-                mapProduct.put("unit_value",details_product_unit_value);
-                mapProduct.put("unit", details_product_unit);
-                mapProduct.put("increment",details_product_increament);
-                mapProduct.put("stock",details_product_inStock);
-                mapProduct.put("title",tl);
-                mapProduct.put("mrp",details_product_mrp);
-                mapProduct.put("product_attribute",details_product_attribute);
-
-                try {
-
-                    boolean tr =db_wish.setwishTable(mapProduct);
-                    if (tr == true) {
-                        updateWishData();
-                        Toast.makeText(getActivity(), "Added to Wishlist"  , Toast.LENGTH_SHORT).show();
-
-                    }
-                    else
-                    {
-                        Toast.makeText(getActivity(), "Something Went Wrong" , Toast.LENGTH_SHORT).show();
-                    }
-
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
-
             }
         } );
 
@@ -497,7 +506,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             public void onClick(View view) {
                 wish_after.setVisibility( View.INVISIBLE );
                 wish_before.setVisibility( View.VISIBLE );
-                db_wish.removeItemFromWishtable(product_id);
+                db_wish.removeItemFromWishtable(product_id,user_id);
                 updateWishData();
                 Toast.makeText(getActivity(), "Removed from Wishlist" , Toast.LENGTH_SHORT).show();
             }
@@ -1323,7 +1332,7 @@ public boolean checkAttributeStatus(String atr)
     }
     private void updateWishData() {
 
-        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount());
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount(user_id));
 
     }
 

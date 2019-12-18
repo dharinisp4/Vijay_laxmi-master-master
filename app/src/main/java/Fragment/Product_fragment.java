@@ -49,8 +49,10 @@ import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
+import util.Session_management;
 import util.WishlistHandler;
 
+import static Config.BaseURL.KEY_ID;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -59,6 +61,8 @@ public class Product_fragment extends Fragment {
     private static String TAG = Product_fragment.class.getSimpleName();
     private RecyclerView rv_cat;
    Dialog loadingBar;
+   String user_id="";
+   Session_management session_management;
    ImageView gifImageView;
    private TabLayout tab_cat;
     private List<Category_model> category_modelList = new ArrayList<>();
@@ -96,6 +100,8 @@ public class Product_fragment extends Fragment {
      //   banner_slider = (SliderLayout) view.findViewById(R.id.relative_banner);
         rv_cat = (RecyclerView) view.findViewById(R.id.rv_subcategory);
        gifImageView=(ImageView) view.findViewById(R.id.gifImageView);
+       session_management=new Session_management(getActivity());
+        user_id=session_management.getUserDetails().get(KEY_ID);
         rv_cat.setLayoutManager(new GridLayoutManager(getActivity() ,2));
         String getcat_id = getArguments().getString("cat_id");
         String id = getArguments().getString("id");
@@ -658,7 +664,7 @@ public class Product_fragment extends Fragment {
     };
 
     private void updateData() {
-        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount());
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount(user_id));
     }
 
 }

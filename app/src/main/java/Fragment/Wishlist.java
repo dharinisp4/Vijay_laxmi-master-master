@@ -24,7 +24,10 @@ import Adapter.Wishlist_Adapter;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
 import util.DatabaseCartHandler;
+import util.Session_management;
 import util.WishlistHandler;
+
+import static Config.BaseURL.KEY_ID;
 
 
 /**
@@ -36,6 +39,8 @@ public class Wishlist extends Fragment {
     private WishlistHandler db_wish;
     private DatabaseCartHandler db_cart;
     RecyclerView rv_wishlist;
+    String user_id="";
+    Session_management session_management;
    Dialog loadingBar;
 
     public Wishlist() {
@@ -63,6 +68,8 @@ public class Wishlist extends Fragment {
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
 
+        session_management=new Session_management(getActivity());
+        user_id=session_management.getUserDetails().get(KEY_ID);
         rv_wishlist = view.findViewById( R.id.rv_wishlist );
         rv_wishlist.setLayoutManager( new LinearLayoutManager( getActivity() ) );
 
@@ -70,7 +77,7 @@ public class Wishlist extends Fragment {
         db_wish = new WishlistHandler( getActivity() );
         db_cart=new DatabaseCartHandler(getActivity());
 
-        ArrayList<HashMap<String, String>> map = db_wish.getWishtableAll();
+        ArrayList<HashMap<String, String>> map = db_wish.getWishtableAll(user_id);
 
 //        Log.d("cart all ",""+db_cart.getCartAll());
 
@@ -98,8 +105,8 @@ public class Wishlist extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 // clear cart data
-                db_wish.clearWishtable();
-                ArrayList<HashMap<String, String>> map = db_wish.getWishtableAll();
+                db_wish.clearWishtable(user_id);
+                ArrayList<HashMap<String, String>> map = db_wish.getWishtableAll(user_id);
                 Wishlist_Adapter adapter = new Wishlist_Adapter(  map,getActivity() );
                 rv_wishlist.setAdapter( adapter );
                 adapter.notifyDataSetChanged();
@@ -145,7 +152,7 @@ public class Wishlist extends Fragment {
     };
 
     private void updateData() {
-        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount());
+        ((MainActivity) getActivity()).setWishCounter("" + db_wish.getWishtableCount(user_id));
     }
     private void updateCartData() {
         ((MainActivity) getActivity()).setCartCounter("" + db_cart.getCartCount());
