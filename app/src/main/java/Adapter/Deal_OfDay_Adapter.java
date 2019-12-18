@@ -389,10 +389,10 @@ public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.
             @Override
             public void onClick(View view) {
                 final Deal_Of_Day_model mList = modelList.get(position);
-                if (stock < 1) {
-                    //rel_out.setVisibility(View.VISIBLE);
-                    Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
-                } else {
+//                if (stock < 1) {
+//                    //rel_out.setVisibility(View.VISIBLE);
+//                    Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
+//                } else {
                     Bundle args = new Bundle();
 //
 
@@ -429,7 +429,7 @@ public class Deal_OfDay_Adapter extends RecyclerView.Adapter<Deal_OfDay_Adapter.
                             .addToBackStack( null )
                             .commit();
 
-                }
+//                }
             }
         } );
 

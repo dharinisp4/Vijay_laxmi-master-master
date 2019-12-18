@@ -100,7 +100,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     public static Button btn_adapter,btn_color;
     String atr_product_id,attribute_name,attribute_value,attribute_mrp,attribute_color,attribute_img;
     int flag=0;
-    RelativeLayout rel;
+    RelativeLayout rel ,rel_out;
     int stock;
     Context context;
     List<Product_model> models;
@@ -159,6 +159,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         details_product_weight=(TextView)view.findViewById(R.id.details_product_weight);
         btn_adapter=(Button) view.findViewById(R.id.btn_adapter);
         btn_color=(Button) view.findViewById(R.id.btn_color);
+        rel_out =view.findViewById( R.id.rel_out );
 
         rel_relative = view.findViewById( R.id.rel_relative_product );
         LinearLayoutManager linearLayoutManager1=new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
@@ -217,6 +218,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
         rel=(RelativeLayout) view.findViewById(R.id.rel);
+        rel_out=view.findViewById( R.id.rel_out );
 
 
        txtDesc.setText(details_product_desc);
@@ -229,6 +231,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
         if(stock<1)
         {
+            rel_out.setVisibility( View.VISIBLE );
         }
         else
         {
@@ -446,59 +449,64 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             @Override
             public void onClick(View view) {
 
-                if(sessionManagement.isLoggedIn()) {
-                    wish_after.setVisibility(View.VISIBLE);
-                    wish_before.setVisibility(View.INVISIBLE);
+                if (sessionManagement.isLoggedIn()) {
+
 
 
                     String tl = "";
-                    String title = String.valueOf(details_product_title);
-                    if (title.equals("null")) {
+                    String title = String.valueOf( details_product_title );
+                    if (title.equals( "null" )) {
                         tl = "title";
                     } else {
-                        tl = String.valueOf(details_product_title);
+                        tl = String.valueOf( details_product_title );
                     }
 
-                    HashMap<String, String> mapProduct = new HashMap<String, String>();
-                    mapProduct.put("product_id", product_id);
-                    mapProduct.put("product_image", product_images);
-                    mapProduct.put("cat_id", cat_id);
-                    mapProduct.put("product_name", details_product_name);
-                    mapProduct.put("price", details_product_price);
-                    mapProduct.put("product_description", details_product_desc);
-                    mapProduct.put("rewards", details_product_rewards);
-                    mapProduct.put("in_stock", details_product_inStock);
-                    mapProduct.put("unit_value", details_product_unit_value);
-                    mapProduct.put("unit", details_product_unit);
-                    mapProduct.put("increment", details_product_increament);
-                    mapProduct.put("stock", details_product_inStock);
-                    mapProduct.put("title", tl);
-                    mapProduct.put("mrp", details_product_mrp);
-                    mapProduct.put("product_attribute", details_product_attribute);
-                    mapProduct.put("user_id", user_id);
+                    if (stock <1) {
+                        Toast.makeText( getActivity(), "out of stock", Toast.LENGTH_LONG ).show();
+                    } else {
+                        wish_after.setVisibility( View.VISIBLE );
+                        wish_before.setVisibility( View.INVISIBLE );
+                        HashMap<String, String> mapProduct = new HashMap<String, String>();
+                        mapProduct.put( "product_id", product_id );
+                        mapProduct.put( "product_image", product_images );
+                        mapProduct.put( "cat_id", cat_id );
+                        mapProduct.put( "product_name", details_product_name );
+                        mapProduct.put( "price", details_product_price );
+                        mapProduct.put( "product_description", details_product_desc );
+                        mapProduct.put( "rewards", details_product_rewards );
+                        mapProduct.put( "in_stock", details_product_inStock );
+                        mapProduct.put( "unit_value", details_product_unit_value );
+                        mapProduct.put( "unit", details_product_unit );
+                        mapProduct.put( "increment", details_product_increament );
+                        mapProduct.put( "stock", details_product_stock );
+                        mapProduct.put( "title", tl );
+                        mapProduct.put( "mrp", details_product_mrp );
+                        mapProduct.put( "product_attribute", details_product_attribute );
+                        mapProduct.put( "user_id", user_id );
 
-                    try {
+                        try {
 
-                        boolean tr = db_wish.setwishTable(mapProduct);
-                        if (tr == true) {
-                            updateWishData();
-                            Toast.makeText(getActivity(), "Added to Wishlist", Toast.LENGTH_SHORT).show();
+                            boolean tr = db_wish.setwishTable( mapProduct );
+                            if (tr == true) {
+                                updateWishData();
+                                Toast.makeText( getActivity(), "Added to Wishlist", Toast.LENGTH_SHORT ).show();
 
-                        } else {
-                            Toast.makeText(getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText( getActivity(), "Something Went Wrong", Toast.LENGTH_SHORT ).show();
+                            }
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
-
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
                     }
-
-                }
+                    }
                 else
-                {
-                    Intent intent=new Intent(getActivity(),LoginActivity.class);
-                    getActivity().startActivity(intent);
+                    {
+                        Intent intent = new Intent( getActivity(), LoginActivity.class );
+                        getActivity().startActivity( intent );
+                    }
                 }
-            }
+
         } );
 
         wish_after.setOnClickListener( new View.OnClickListener() {
@@ -515,78 +523,77 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String tot1 = txtTotal.getText().toString().trim();
-
-                String tot_amount = tot1.substring(1, tot1.length());
-                float qty = 1;
-              String atr = String.valueOf(details_product_attribute);
-                if (atr.equals("[]")) {
-
-
-                           String details_unt=details_product_unit_value+details_product_unit;
-                    Module.setWithoutAttrIntoCart(getActivity(),"0",product_id,product_images,cat_id,details_product_name,details_product_price,
-                            details_product_desc,details_product_rewards,details_product_price,details_unt,details_product_increament,
-                            details_product_inStock,"","",details_product_title,details_product_mrp,details_product_attribute,"p",qty);
-                    txtTotal.setText("\u20B9"+String.valueOf(db_cart.getTotalAmount()));
-                    updateData();
-                    btn_add.setVisibility(View.GONE);
-                    numberButton.setVisibility(View.VISIBLE);
-                    numberButton.setNumber("1");
-
-//                    Toast.makeText(getActivity(),""+db_cart.getCartCount(),Toast.LENGTH_LONG).show();
-
+                if (stock<1)
+                {
+                    Toast.makeText( getActivity(),"out of stock",Toast.LENGTH_LONG ).show();
                 }
                 else {
 
-                    if(flag>0)
-                    {
-                        if (position < 0) {
-                            Toast.makeText(getActivity(), "Please select any weight", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
-                            Module.setIntoCart(getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, attribute_value,
-                                    details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
-                                    details_product_inStock, "", "", details_product_title, attribute_mrp, details_product_attribute, "a", qty);
-                            txtTotal.setText("\u20B9" + String.valueOf(db_cart.getTotalAmount()));
-                            updateData();
-                            btn_add.setVisibility(View.GONE);
-                            numberButton.setVisibility(View.VISIBLE);
-                            numberButton.setNumber("1");
+                    String tot1 = txtTotal.getText().toString().trim();
+
+                    String tot_amount = tot1.substring( 1, tot1.length() );
+                    float qty = 1;
+                    String atr = String.valueOf( details_product_attribute );
+                    if (atr.equals( "[]" )) {
 
 
-                        }
-                    }
-                    else if(flag<=0)
-                    {
-                        if (position < 0) {
-                            Toast.makeText(getActivity(), "Please select any weight", Toast.LENGTH_SHORT).show();
-                        }
-                        if (col_position < 0) {
-                            Toast.makeText(getActivity(), "Please select any color", Toast.LENGTH_SHORT).show();
-                        } else {
-                            String as=  list_color.get(col_position);
-                            String img=list_images.get(col_position);
+                        String details_unt = details_product_unit_value + details_product_unit;
+                        Module.setWithoutAttrIntoCart( getActivity(), "0", product_id, product_images, cat_id, details_product_name, details_product_price,
+                                details_product_desc, details_product_rewards, details_product_price, details_unt, details_product_increament,
+                                details_product_stock, "", "", details_product_title, details_product_mrp, details_product_attribute, "p", qty );
+                        txtTotal.setText( "\u20B9" + String.valueOf( db_cart.getTotalAmount() ) );
+                        updateData();
+                        btn_add.setVisibility( View.GONE );
+                        numberButton.setVisibility( View.VISIBLE );
+                        numberButton.setNumber( "1" );
+
+//                    Toast.makeText(getActivity(),""+db_cart.getCartCount(),Toast.LENGTH_LONG).show();
+
+                    } else {
+
+                        if (flag > 0) {
+                            if (position < 0) {
+                                Toast.makeText( getActivity(), "Please select any weight", Toast.LENGTH_SHORT ).show();
+                            } else {
+                                Module.setIntoCart( getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, attribute_value,
+                                        details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
+                                       details_product_stock, "", "", details_product_title, attribute_mrp, details_product_attribute, "a", qty );
+                                txtTotal.setText( "\u20B9" + String.valueOf( db_cart.getTotalAmount() ) );
+                                updateData();
+                                btn_add.setVisibility( View.GONE );
+                                numberButton.setVisibility( View.VISIBLE );
+                                numberButton.setNumber( "1" );
+
+
+                            }
+                        } else if (flag <= 0) {
+                            if (position < 0) {
+                                Toast.makeText( getActivity(), "Please select any weight", Toast.LENGTH_SHORT ).show();
+                            }
+                            if (col_position < 0) {
+                                Toast.makeText( getActivity(), "Please select any color", Toast.LENGTH_SHORT ).show();
+                            } else {
+                                String as = list_color.get( col_position );
+                                String img = list_images.get( col_position );
 //
 
 
-                            Module.setIntoCart(getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, attribute_value,
-                                    details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
-                                    details_product_inStock, as, img, details_product_title, attribute_mrp, details_product_attribute, "c", qty);
-                            txtTotal.setText("\u20B9" + String.valueOf(db_cart.getTotalAmount()));
+                                Module.setIntoCart( getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, attribute_value,
+                                        details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
+                                        details_product_stock, as, img, details_product_title, attribute_mrp, details_product_attribute, "c", qty );
+                                txtTotal.setText( "\u20B9" + String.valueOf( db_cart.getTotalAmount() ) );
 
-                            updateData();
-                            btn_add.setVisibility(View.GONE);
-                            numberButton.setVisibility(View.VISIBLE);
-                            numberButton.setNumber("1");
+                                updateData();
+                                btn_add.setVisibility( View.GONE );
+                                numberButton.setVisibility( View.VISIBLE );
+                                numberButton.setNumber( "1" );
 
+                            }
                         }
+
                     }
 
                 }
-
-
 
             }
         });
@@ -643,7 +650,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
                          Module.setWithoutAttrIntoCart( getActivity(), "0", product_id, product_images, cat_id, details_product_name, String.valueOf( amt ),
                                  details_product_desc, details_product_rewards, details_product_price, unt, details_product_increament,
-                                 details_product_inStock, "", "", details_product_title, details_product_mrp, details_product_attribute, "p", qty );
+                                 details_product_stock, "", "", details_product_title, details_product_mrp, details_product_attribute, "p", qty );
                          txtTotal.setText( "\u20B9" + String.valueOf( db_cart.getTotalAmount() ) );
 
 
@@ -653,13 +660,13 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                          if (flag == 1) {
                              Module.setIntoCart( getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, String.valueOf( amt ),
                                      details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
-                                     details_product_inStock, "", "", details_product_title, attribute_mrp, details_product_attribute, "a", qty );
+                                     details_product_stock, "", "", details_product_title, attribute_mrp, details_product_attribute, "a", qty );
                          } else {
                              String col = list_color.get( col_position );
                              String img = list_images.get( col_position );
                              Module.setIntoCart( getActivity(), atr_id, product_id, product_images, cat_id, details_product_name, String.valueOf( amt ),
                                      details_product_desc, details_product_rewards, attribute_value, attribute_name, details_product_increament,
-                                     details_product_inStock, col, img, details_product_title, attribute_mrp, details_product_attribute, "c", qty );
+                                     details_product_stock, col, img, details_product_title, attribute_mrp, details_product_attribute, "c", qty );
                          }
                          //       Toast.makeText(context,""+str[0].toString()+"\n"+str[1].toString(),Toast.LENGTH_LONG).show();
 

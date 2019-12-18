@@ -10,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class My_cancel_order_fragment extends Fragment {
     private List<My_Cancel_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
     ProgressDialog progressDialog;
+    ImageView no_orders ;
     public My_cancel_order_fragment() {
     }
 
@@ -63,6 +65,8 @@ public class My_cancel_order_fragment extends Fragment {
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
+
+        no_orders = view.findViewById( R.id.no_order );
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -126,8 +130,16 @@ public class My_cancel_order_fragment extends Fragment {
                 myPendingOrderAdapter.notifyDataSetChanged();
 
                 if (my_order_modelList.isEmpty()) {
+                    no_orders.setVisibility( View.VISIBLE );
+                    rv_mycancel.setVisibility( View.GONE );
                     Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                 }
+                else
+                {
+                    no_orders.setVisibility( View.GONE );
+                    rv_mycancel.setVisibility( View.VISIBLE );
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override

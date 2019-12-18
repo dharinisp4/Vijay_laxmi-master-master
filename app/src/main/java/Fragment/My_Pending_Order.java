@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -54,7 +55,7 @@ public class My_Pending_Order extends Fragment {
     private List<My_Pending_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
     Dialog loadingBar ;
-
+    ImageView no_order ;
     public My_Pending_Order() {
 
     }
@@ -74,6 +75,7 @@ public class My_Pending_Order extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        no_order = view.findViewById( R.id.no_order );
 
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
@@ -169,7 +171,14 @@ public class My_Pending_Order extends Fragment {
                 myPendingOrderAdapter.notifyDataSetChanged();
 
                 if (my_order_modelList.isEmpty()) {
+                    rv_myorder.setVisibility( View.GONE );
+                    no_order.setVisibility( View.VISIBLE );
                     Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    no_order.setVisibility( View.GONE );
+                    rv_myorder.setVisibility( View.VISIBLE );
                 }
             }
         }, new Response.ErrorListener() {

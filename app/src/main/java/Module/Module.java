@@ -28,7 +28,7 @@ public class Module {
 
 
     public static void setIntoCart(Activity activity,String attr_id,String product_id,String product_images,String cat_id,String details_product_name,String details_product_price,String details_product_desc,String details_product_rewards,String details_product_unit_price,String  details_product_unit,
-                                   String details_product_increament,String details_product_inStock,String deatils_atr_color,String deatils_atr_img,String details_product_title,String details_product_mrp,String details_product_attribute,String type,float qty)
+                                   String details_product_increament,String details_product_stock,String deatils_atr_color,String deatils_atr_img,String details_product_title,String details_product_mrp,String details_product_attribute,String type,float qty)
     {
         DatabaseCartHandler db_cart=new DatabaseCartHandler(activity);
         HashMap<String,String> mapProduct=new HashMap<String, String>();
@@ -43,7 +43,7 @@ public class Module {
         mapProduct.put("unit_price",details_product_unit_price );
         mapProduct.put("unit", details_product_unit);
         mapProduct.put("increment",details_product_increament);
-        mapProduct.put("stock",details_product_inStock);
+        mapProduct.put("stock",details_product_stock);
         mapProduct.put("attr_color",deatils_atr_color);
         mapProduct.put("attr_img",deatils_atr_img);
         mapProduct.put("title",details_product_title);
@@ -80,7 +80,7 @@ public class Module {
 
 
     public static void setWithoutAttrIntoCart(Activity activity,String attr_id,String product_id,String product_images,String cat_id,String details_product_name,String details_product_price,String details_product_desc,String details_product_rewards,String details_product_unit_price,String  details_product_unit,
-                                   String details_product_increament,String details_product_inStock,String deatils_atr_color,String deatils_atr_img,String details_product_title,String details_product_mrp,String details_product_attribute,String type,float qty)
+                                   String details_product_increament,String details_product_stock,String deatils_atr_color,String deatils_atr_img,String details_product_title,String details_product_mrp,String details_product_attribute,String type,float qty)
     {
         DatabaseCartHandler db_cart=new DatabaseCartHandler(activity);
         HashMap<String,String> mapProduct=new HashMap<String, String>();
@@ -95,7 +95,7 @@ public class Module {
         mapProduct.put("unit_price",details_product_unit_price );
         mapProduct.put("unit", details_product_unit);
         mapProduct.put("increment",details_product_increament);
-        mapProduct.put("stock",details_product_inStock);
+        mapProduct.put("stock",details_product_stock);
         mapProduct.put("attr_color",deatils_atr_color);
         mapProduct.put("attr_img",deatils_atr_img);
         mapProduct.put("title",details_product_title);

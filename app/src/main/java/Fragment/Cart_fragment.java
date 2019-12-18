@@ -53,7 +53,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView rv_cart;
    public static TextView tv_clear, tv_total, tv_item;
-    private RelativeLayout btn_checkout;
+    private RelativeLayout btn_checkout ,rel_empty_cart;
 
   //  private DatabaseHandler db;
     private DatabaseCartHandler db_cart;
@@ -83,7 +83,7 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
 
-
+        rel_empty_cart =view.findViewById( R.id.rel_empty_cart );
         tv_clear = (TextView) view.findViewById(R.id.tv_cart_clear);
         tv_total = (TextView) view.findViewById(R.id.tv_cart_total);
         tv_item = (TextView) view.findViewById(R.id.tv_cart_item);

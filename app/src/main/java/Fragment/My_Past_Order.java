@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class My_Past_Order extends Fragment {
    Dialog loadingBar ;
     private List<My_Past_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
+    ImageView no_orders ;
 
     public My_Past_Order() {
         // Required empty public constructor
@@ -74,6 +76,7 @@ public class My_Past_Order extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        no_orders = view.findViewById( R.id.no_order );
 
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
@@ -168,7 +171,14 @@ public class My_Past_Order extends Fragment {
                 rv_myorder.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 if (my_order_modelList.isEmpty()) {
-                   // Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                    no_orders.setVisibility( View.VISIBLE );
+                    rv_myorder.setVisibility( View.GONE );
+                    // Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    no_orders.setVisibility( View.VISIBLE );
+                    rv_myorder.setVisibility( View.GONE );
                 }
             }
         }, new Response.ErrorListener() {

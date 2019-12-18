@@ -1,11 +1,13 @@
 package Fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -147,7 +149,27 @@ public class Home_fragment extends Fragment {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    ((MainActivity) getActivity()).finish();
+                    AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Confirmation");
+                    builder.setMessage("Are you sure want to exit?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                            //((MainActivity) getActivity()).finish();
+                            getActivity().finishAffinity();
+
+
+                        }
+                    })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+                    AlertDialog dialog=builder.create();
+                    dialog.show();
                     return true;
                 }
                 return false;

@@ -190,7 +190,7 @@
     <string name="invalide_email_address" translatable="false">Invalid Email Address</string>
     <string name="no_internet" translatable="false">Sorry! Not connected to internet</string>
     <string name="order_no" translatable="false">Order No.:\u0020</string>
-    <string name="pending" translatable="false">Pending</string>
+    <string name="pending" translatable="false">Order Placed</string>
     <string name="confirm" translatable="false">Confirmed</string>
     <string name="delivered" translatable="false">Delivered</string>
     <string name="outfordeliverd" translatable="false">Out for Delivered\nReady to pickup</string>

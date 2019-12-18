@@ -406,10 +406,10 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
             @Override
             public void onClick(View view) {
                 final Top_Selling_model mList = modelList.get(position);
-                if (stock < 1) {
-                    //rel_out.setVisibility(View.VISIBLE);
-                    Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
-                } else {
+//                if (stock < 1) {
+//                    //rel_out.setVisibility(View.VISIBLE);
+//                    Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
+//                } else {
                     Bundle args = new Bundle();
 //                String cl=String.valueOf( mList.getColor());
 //                String sz=String.valueOf(mList.getSize());
@@ -469,7 +469,7 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
                             .addToBackStack( null )
                             .commit();
 
-                }
+//                }
             }
         } );
 //        holder.wish_before.setOnClickListener( new View.OnClickListener() {

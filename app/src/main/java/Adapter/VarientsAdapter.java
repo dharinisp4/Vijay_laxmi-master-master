@@ -53,6 +53,7 @@ public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHo
         }
         else {
             holder.rel_click.setCardBackgroundColor( Color.parseColor( "#ffffff" ) );
+            holder.txt_weight.setTextColor( Color.BLACK );
         }
         holder.rel_click.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -429,8 +429,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         f = getFragmentManager().findFragmentById(R.id.contentPanel);
 
         if (f instanceof Home_fragment) {
-//            finish();
-//            System.exit(0);
+//
             android.app.AlertDialog.Builder builder=new android.app.AlertDialog.Builder(MainActivity.this);
             builder.setTitle("Beauty Mentor");
             builder.setIcon( R.drawable.beauty );

@@ -37,7 +37,7 @@ SharedPreferences preferences;
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_orderno, tv_status, tv_date, tv_time, tv_price, tv_item, relativetextstatus, tv_tracking_date;
+        public TextView tv_orderno, tv_status, tv_date, tv_time, tv_price, tv_item, relativetextstatus, tv_tracking_date ,tv_date_type;
         public TextView tv_pending_date, tv_pending_time, tv_confirm_date, tv_confirm_time, tv_delevered_date, tv_delevered_time, tv_cancel_date, tv_cancel_time;
         public View view1, view2, view3, view4, view5, view6;
         public RelativeLayout relative_background;
@@ -61,7 +61,7 @@ SharedPreferences preferences;
             cardView = view.findViewById(R.id.card_view);
             tv_user_add =view.findViewById( R.id.user_address );
             tv_user_mobile=view.findViewById( R.id.user_mobile );
-
+            tv_date_type=view.findViewById( R.id.date_type );
 
 //            //Payment Method
             tv_methid1 = (TextView) view.findViewById(R.id.method1);
@@ -106,6 +106,7 @@ SharedPreferences preferences;
         My_Past_order_model mList = modelList.get(position);
 
         holder.tv_orderno.setText(mList.getSale_id());
+        holder.tv_date_type.setText( "Delivered On :" );
 
         if (mList.getStatus().equals("0")) {
             holder.tv_status.setText(context.getResources().getString(R.string.pending));

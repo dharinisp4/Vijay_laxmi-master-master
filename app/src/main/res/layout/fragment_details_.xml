@@ -31,6 +31,7 @@
             android:layout_width="match_parent"
 
             android:layout_height="260dp">
+
             <ImageView
                 android:id="@+id/img_product"
                 android:layout_width="match_parent"
@@ -59,6 +60,21 @@
                 android:layout_margin="@dimen/space_10"
                 app:srcCompat="@drawable/wish_after"
                 android:visibility="invisible"/>
+            <RelativeLayout
+                android:id="@+id/rel_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               android:layout_centerInParent="true"
+                android:background="@color/dialog1"
+                android:visibility="gone"
+               >
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="@dimen/space_15"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/out"/>
+            </RelativeLayout>
         </RelativeLayout>
         <View
             android:id="@+id/lined4"
@@ -72,6 +88,7 @@
             android:id="@+id/relative_layout2"
             android:layout_width="match_parent"
             android:layout_height="60dp"
+
             android:layout_below="@+id/lined4"
             android:visibility="gone"
             >
@@ -80,7 +97,7 @@
                 android:id="@+id/recylerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@color/gray"
                 ></android.support.v7.widget.RecyclerView>
 
 

@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class DatabaseCartHandler extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "vadb";
+    private static String DB_NAME = "beautydb";
     private static int DB_VERSION = 3;
     private SQLiteDatabase db;
 

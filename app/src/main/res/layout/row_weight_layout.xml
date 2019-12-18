@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/space_5"
     app:cardElevation="@dimen/space_5"
-    app:cardCornerRadius="30dp">
+    android:layout_margin="@dimen/space_2"
+    app:cardCornerRadius="5dp">
     <RelativeLayout
 
         android:layout_width="match_parent"

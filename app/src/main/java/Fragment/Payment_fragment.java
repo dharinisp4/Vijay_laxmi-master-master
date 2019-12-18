@@ -273,6 +273,8 @@ public class Payment_fragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
+                Toast.makeText( getActivity(),"amount" +total_amount,Toast.LENGTH_LONG ).show();
+
                 if (ConnectivityReceiver.isConnected()) {
 
                    // confirm.setEnabled(false);
@@ -390,7 +392,7 @@ public class Payment_fragment extends Fragment {
                 String t=dateFormat1.format(date);
 
                 gettime=t+" - "+t.toString();
-             //   Toast.makeText(getActivity(),"Time"+t,Toast.LENGTH_LONG).show();
+
               getdate=g;
 
                 //gettime="03:00 PM - 03:30 PM";
@@ -398,9 +400,9 @@ public class Payment_fragment extends Fragment {
                 Log.e(TAG, "from:" +"03:00 PM - 03:30 PM" + "\ndate:" + "2019-7-23" +
                         "\n" + "\nuser_id:" + getuser_id + "\n l" + getlocation_id + getstore_id + "\ndata:" + passArray.toString());
 //Toast.makeText(getActivity(), "from:" + gettime + "\ndate:" + getdate +
-  //      "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id + getstore_id + "\ndata:" + passArray.toString(),Toast.LENGTH_LONG).show();
+//        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id + getstore_id + "\ndata:" + passArray.toString(),Toast.LENGTH_LONG).show();
 
-    makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, getstore_id, passArray);
+    makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, total_amount, passArray);
 
 
             }
@@ -408,7 +410,7 @@ public class Payment_fragment extends Fragment {
     }
 
     private void makeAddOrderRequest(String date, String gettime, String userid, String
-            location, String store_id, JSONArray passArray) {
+            location,String tot_amount, JSONArray passArray) {
 
         loadingBar.show();
         String tag_json_obj = "json_add_order_req";
@@ -418,7 +420,7 @@ public class Payment_fragment extends Fragment {
         params.put("user_id", userid);
         params.put("location", location);
      //   params.put("store_id", store_id);
-        params.put("total_ammount",total_amount);
+        params.put("total_ammount",tot_amount);
         params.put("payment_method", getvalue);
         params.put("data", passArray.toString());
        // Toast.makeText(getActivity(),""+passArray,Toast.LENGTH_LONG).show();
@@ -666,7 +668,7 @@ public class Payment_fragment extends Fragment {
 
 
 
-                attemptOrder();
+              //  attemptOrder();
 
             }
             else

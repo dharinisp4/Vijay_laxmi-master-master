@@ -298,6 +298,7 @@ public class Product_fragment extends Fragment {
     //Get Shop By Catogary Products
     private void makeGetProductRequest(final String cat_id) {
         loadingBar.show();
+
         String tag_json_obj = "json_product_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("cat_id", cat_id);
@@ -308,23 +309,24 @@ public class Product_fragment extends Fragment {
             public void onResponse(JSONObject response) {
                 Log.d("rett subcat"+cat_id , response.toString());
 
+
                 try {
-//                    if (response.has( "data" )) {
-//
-//                        gifImageView.setVisibility( View.GONE );
-//                        rv_cat.setVisibility( View.VISIBLE );
-//                    }
-//                    else {
-//                        loadingBar.dismiss();
-//                        gifImageView.setVisibility( View.VISIBLE );
-//                        rv_cat.setVisibility( View.GONE );
-//                    }
+                    if (response.has( "data" )) {
+
+                        gifImageView.setVisibility( View.GONE );
+                        rv_cat.setVisibility( View.VISIBLE );
+                    }
+                    else {
+                        loadingBar.dismiss();
+                        gifImageView.setVisibility( View.VISIBLE );
+                        rv_cat.setVisibility( View.GONE );
+                    }
 
                     Boolean status = response.getBoolean( "responce" );
 
                     if (status == true ) {
 //                        Toast.makeText(getActivity(),""+response,Toast.LENGTH_LONG).show();
-
+                        product_modelList.clear();
                         Gson gson = new Gson();
                         Type listType = new TypeToken<List<Product_model>>() {
                         }.getType();
@@ -333,6 +335,7 @@ public class Product_fragment extends Fragment {
                         adapter_product = new Product_adapter( product_modelList, getActivity() );
                         rv_cat.setAdapter( adapter_product );
                         adapter_product.notifyDataSetChanged();
+
                         gifImageView.setVisibility( View.GONE );
                         rv_cat.setVisibility( View.VISIBLE );
 
@@ -343,7 +346,6 @@ public class Product_fragment extends Fragment {
                                 adapter_product.notifyDataSetChanged();
                                 gifImageView.setVisibility( View.VISIBLE );
                                 rv_cat.setVisibility( View.GONE );
-
                                 Toast.makeText( getActivity(), getResources().getString( R.string.no_rcord_found ), Toast.LENGTH_SHORT ).show();
                        }
                             else
@@ -357,6 +359,7 @@ public class Product_fragment extends Fragment {
 
                     else
                     {
+
                         loadingBar.dismiss();
                         gifImageView.setVisibility( View.VISIBLE );
                         rv_cat.setVisibility( View.GONE );
@@ -370,6 +373,7 @@ public class Product_fragment extends Fragment {
                             //  Toast.makeText(getActivity(),""+ex,Toast.LENGTH_LONG).show();
 
                         }
+
 
             }
         }, new Response.ErrorListener() {

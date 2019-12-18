@@ -40,7 +40,7 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_orderno, tv_status, tv_date, tv_time, tv_price, tv_item, relativetextstatus, tv_tracking_date;
+        public TextView tv_orderno, tv_status, tv_date, tv_time, tv_price, tv_item, relativetextstatus, tv_tracking_date , tv_date_type;
         public TextView tv_pending_date, tv_pending_time, tv_confirm_date, tv_confirm_time, tv_delevered_date, tv_delevered_time, tv_cancel_date, tv_cancel_time;
         public View view1, view2, view3, view4, view5, view6;
         public RelativeLayout relative_background;
@@ -64,7 +64,7 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
             tv_item = (TextView) view.findViewById(R.id.tv_order_item);
             reciever_add=view.findViewById( R.id.user_address );
             reciever_mobile=view.findViewById( R.id.user_mobile );
-
+            tv_date_type = view.findViewById( R.id.date_type );
             cardView = view.findViewById(R.id.card_view);
 
             linearLayout=view.findViewById(R.id.l2);
@@ -112,6 +112,7 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
         My_Pending_order_model mList = modelList.get(position);
 
         holder.tv_orderno.setText(mList.getSale_id());
+        holder.tv_date_type.setText( "Placed On :" );
 
         if (mList.getStatus().equals("0")) {
             holder.tv_status.setText(context.getResources().getString(R.string.pending));

@@ -159,10 +159,10 @@ SharedPreferences preferences;
 
                 if(id==R.id.rel_click) {
                     double stock = Double.parseDouble(modelList.get(position).getStock());
-                    if (stock < 1) {
-   //rel_out.setVisibility(View.VISIBLE);
-   Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
-                    } else {
+//                    if (stock < 1) {
+//   //rel_out.setVisibility(View.VISIBLE);
+//   Toast.makeText(context,"Out Of Stock",Toast.LENGTH_LONG).show();
+//                    } else {
 
                         //  Toast .makeText(context ,"attribute " + "\n" +modelList.get(position).getProduct_attribute(),Toast.LENGTH_LONG).show();
                         Details_Fragment details_fragment = new Details_Fragment();
@@ -197,7 +197,7 @@ SharedPreferences preferences;
 
                                 .addToBackStack(null).commit();
 
-                    }
+//                    }
                 }
 
 
