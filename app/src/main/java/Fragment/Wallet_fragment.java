@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
 import binplus.vijaylaxmi.RechargeWallet;
@@ -36,7 +38,7 @@ import util.Session_management;
 public class Wallet_fragment extends Fragment {
 
     private static String TAG = Wallet_fragment.class.getSimpleName();
-
+ Module module;
     TextView Wallet_Ammount;
 Dialog loadingBar ;
 
@@ -62,6 +64,7 @@ Dialog loadingBar ;
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        module=new Module();
         sessionManagement = new Session_management(getActivity());
         //   String getwallet = sessionManagement.getUserDetails().get(BaseURL.KEY_WALLET_Ammount);
         Wallet_Ammount = (TextView) view.findViewById(R.id.wallet_ammount);
@@ -108,7 +111,11 @@ Dialog loadingBar ;
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         }) {
 

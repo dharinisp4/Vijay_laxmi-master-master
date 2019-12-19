@@ -49,6 +49,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
     private EditText et_phone, et_name,  et_address;
     private AutoCompleteTextView et_pin;
+    Module module;
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_pin, tv_address, tv_socity, btn_socity;
     private String getsocity = "";
@@ -85,6 +86,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
 
+        module=new Module();
         sessionManagement = new Session_management(getActivity());
         image_home=(ImageView)view.findViewById(R.id.image_home);
         image_office=(ImageView)view.findViewById(R.id.image_office);
@@ -384,8 +386,14 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                loadingBar.dismiss();
+              String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
+
+
             }
         });
 
@@ -438,8 +446,12 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

@@ -137,7 +137,7 @@
                             android:visibility="gone"
                             android:id="@+id/rel_weight"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp">
+                            android:layout_height="60dp">
 
                             <android.support.v7.widget.RecyclerView
                                 android:id="@+id/rv_weight"
@@ -660,6 +660,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                                 <ImageView
+                                    android:visibility="gone"
                                     android:layout_marginLeft="@dimen/space_20"
                                     android:layout_marginRight="@dimen/space_20"
                                     android:layout_marginBottom="@dimen/space_20"

@@ -45,6 +45,7 @@ RegisterActivity extends AppCompatActivity {
 
     private static String TAG = RegisterActivity.class.getSimpleName();
    String number="";
+   Module module;
     private EditText et_phone, et_name, et_password, et_email,et_cpass,et_saloon_name,et_city,et_address,et_propretier,et_staff,et_years ,et_turnover;
     private RelativeLayout btn_register;
     private AutoCompleteTextView et_pin;
@@ -82,7 +83,7 @@ RegisterActivity extends AppCompatActivity {
         loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+        module=new Module();
         number=getIntent().getStringExtra("number");
         et_phone = (EditText) findViewById(R.id.et_reg_phone);
         et_name = (EditText) findViewById(R.id.et_reg_name);
@@ -412,8 +413,11 @@ RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( RegisterActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( RegisterActivity.this,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

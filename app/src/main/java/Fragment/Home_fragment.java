@@ -83,6 +83,7 @@ public class Home_fragment extends Fragment {
     private RecyclerView new_products_recycler, rv_top_selling, rv_headre_icons ,rv_brands_recycler ,rv_deal_of_day ;
     private List<Category_model> category_modelList = new ArrayList<>();
     private Home_adapter adapter;
+    Module module;
 
     private boolean isSubcat = false;
     LinearLayout Search_layout;
@@ -139,7 +140,7 @@ public class Home_fragment extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+         module=new Module();
         setHasOptionsMenu(true);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
         ((MainActivity) getActivity()).updateHeader();
@@ -541,9 +542,11 @@ public class Home_fragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });
@@ -641,10 +644,11 @@ public class Home_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-                }
-            }
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }            }
         });
         AppController.getInstance().addToRequestQueue(req);
 
@@ -751,8 +755,11 @@ public class Home_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -802,8 +809,11 @@ public class Home_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -863,8 +873,11 @@ public class Home_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -911,8 +924,11 @@ public class Home_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -960,8 +976,11 @@ public class Home_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -1008,8 +1027,11 @@ public class Home_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

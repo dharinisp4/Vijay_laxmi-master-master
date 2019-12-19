@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Support_info_model;
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.R;
 
@@ -39,6 +40,7 @@ public class Terms_and_Condition_fragment extends Fragment {
 
     private TextView tv_info;
     Dialog loadingBar ;
+    Module module;
 
     public Terms_and_Condition_fragment() {
         // Required empty public constructor
@@ -62,6 +64,7 @@ public class Terms_and_Condition_fragment extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        module=new Module();
 //        tv_info = (TextView) view.findViewById(R.id.tv_info);
 //
 //        String geturl = getArguments().getString("url");
@@ -126,8 +129,10 @@ public class Terms_and_Condition_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });

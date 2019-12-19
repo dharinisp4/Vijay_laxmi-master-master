@@ -62,6 +62,7 @@ import static com.android.volley.VolleyLog.TAG;
 
 public class Payment_fragment extends Fragment {
     //RelativeLayout confirm;
+    Module module;
     Button confirm;
     private DatabaseCartHandler db_cart;
     private Session_management sessionManagement;
@@ -117,7 +118,7 @@ public class Payment_fragment extends Fragment {
         loadingBar.setCanceledOnTouchOutside(false);
 
         Prefrence_TotalAmmount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
-
+        module=new Module();
         radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
@@ -273,7 +274,7 @@ public class Payment_fragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                Toast.makeText( getActivity(),"amount" +total_amount,Toast.LENGTH_LONG ).show();
+               // Toast.makeText( getActivity(),"amount" +total_amount,Toast.LENGTH_LONG ).show();
 
                 if (ConnectivityReceiver.isConnected()) {
 
@@ -349,8 +350,11 @@ public class Payment_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_wallet_tag);
@@ -464,8 +468,11 @@ public class Payment_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -495,8 +502,11 @@ public class Payment_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -560,7 +570,11 @@ public class Payment_fragment extends Fragment {
 
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println("Error [" + error + "]");
+                    String msg=module.VolleyErrorMessage(error);
+                    if(!(msg.isEmpty() || msg.equals("")))
+                    {
+                        Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                    }
                 }
             }) {
 

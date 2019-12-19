@@ -36,6 +36,7 @@ import Adapter.My_Cancel_Order_adapter;
 import Config.BaseURL;
 import Model.My_Cancel_order_model;
 
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.MyOrderDetail;
@@ -51,7 +52,7 @@ import util.Session_management;
 public class My_cancel_order_fragment extends Fragment {
 
     private RecyclerView rv_mycancel;
-
+      Module module;
     private List<My_Cancel_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
     ProgressDialog progressDialog;
@@ -68,7 +69,7 @@ public class My_cancel_order_fragment extends Fragment {
         progressDialog=new ProgressDialog(getActivity());
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage("Loading...");
-
+        module=new Module();
         no_orders = view.findViewById( R.id.no_order );
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
@@ -117,7 +118,8 @@ public class My_cancel_order_fragment extends Fragment {
             public void onItemClick(View view, int position) {
                 String sale_id = my_order_modelList.get(position).getSale_id();
                 String date = my_order_modelList.get(position).getOn_date();
-                String time = my_order_modelList.get(position).getDelivery_time_from() + "-" + my_order_modelList.get(position).getDelivery_time_to();
+//                String time = my_order_modelList.get(position).getDelivery_time_from() + "-" + my_order_modelList.get(position).getDelivery_time_to();
+                String time = my_order_modelList.get(position).getDelivery_time_from();
                 String total = my_order_modelList.get(position).getTotal_amount();
                 String status = my_order_modelList.get(position).getStatus();
                 String deli_charge = my_order_modelList.get(position).getDelivery_charge();
@@ -180,8 +182,10 @@ public class My_cancel_order_fragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });

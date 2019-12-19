@@ -49,6 +49,7 @@ public class Help_Fragment extends Fragment {
     EditText et_name , et_phone , et_email , et_message ;
     Session_management sessionManagement;
     Button submit ;
+    Module module;
 
 
     @Override
@@ -64,6 +65,7 @@ public class Help_Fragment extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        module=new Module();
         ((MainActivity) getActivity()).setTitle("Help");
         sessionManagement = new Session_management(getActivity());
         Button submit = view.findViewById( R.id.submit_button );
@@ -177,8 +179,11 @@ public class Help_Fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

@@ -39,6 +39,7 @@ import util.CustomVolleyJsonRequest;
 
 public class ForgotActivity extends AppCompatActivity implements View.OnClickListener {
 
+    Module module;
     private static String TAG = ForgotActivity.class.getSimpleName();
     private static final long START_TIME_IN_MILLI=120000;
     boolean mmTimerRunning;
@@ -74,7 +75,7 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
         // Call the function callInstamojo to start payment here
-
+       module=new Module();
         type=getIntent().getStringExtra("type");
         lin_verify_otp=(LinearLayout)findViewById(R.id.lin_verify_otp);
         lin_send_otp=(LinearLayout)findViewById(R.id.lin_send_otp);
@@ -281,8 +282,11 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( ForgotActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( ForgotActivity.this,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -341,8 +345,11 @@ public class ForgotActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( ForgotActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( ForgotActivity.this,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

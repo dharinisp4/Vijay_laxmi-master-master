@@ -57,6 +57,7 @@ public class Shop_Now_fragment extends Fragment {
     String getcat_title;
     Dialog loadingBar;
     ImageView no_product;
+    Module module;
 
 
 
@@ -79,7 +80,7 @@ public class Shop_Now_fragment extends Fragment {
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
         setHasOptionsMenu(true);
-
+       module=new Module();
         no_product=(ImageView)view.findViewById(R.id.no_product);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.shop_now));
 
@@ -203,8 +204,11 @@ public class Shop_Now_fragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

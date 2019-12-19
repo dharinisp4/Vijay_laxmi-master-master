@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import java.util.HashMap;
 
 import Adapter.Cart_adapter;
 import Config.BaseURL;
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.LoginActivity;
 import binplus.vijaylaxmi.MainActivity;
@@ -51,10 +53,11 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
 
     private static String TAG = Cart_fragment.class.getSimpleName();
 
-    private RecyclerView rv_cart;
+    public static RecyclerView rv_cart;
+    public static LinearLayout linear_amt;
    public static TextView tv_clear, tv_total, tv_item;
-    private RelativeLayout btn_checkout ,rel_empty_cart;
-
+    public static RelativeLayout btn_checkout ,rel_empty_cart;
+   Module module;
   //  private DatabaseHandler db;
     private DatabaseCartHandler db_cart;
     private Session_management sessionManagement;
@@ -79,11 +82,12 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+        module=new Module();
         sessionManagement = new Session_management(getActivity());
         sessionManagement.cleardatetime();
 
         rel_empty_cart =view.findViewById( R.id.rel_empty_cart );
+        linear_amt =view.findViewById( R.id.linear_amt );
         tv_clear = (TextView) view.findViewById(R.id.tv_cart_clear);
         tv_total = (TextView) view.findViewById(R.id.tv_cart_total);
         tv_item = (TextView) view.findViewById(R.id.tv_cart_item);
@@ -98,7 +102,13 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
         ArrayList<HashMap<String, String>> map = db_cart.getCartAll();
 //        final HashMap<String, String> map1 = map.get(0);
 //       Log.d("cart all ",""+map1);
-
+        if(map.size()<=0)
+        {
+            rv_cart.setVisibility(View.GONE);
+            rel_empty_cart.setVisibility(View.VISIBLE);
+            tv_clear.setVisibility(View.GONE);
+            linear_amt.setVisibility(View.GONE);
+        }
         Cart_adapter adapter = new Cart_adapter(getActivity(), map);
         rv_cart.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -166,15 +176,12 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
                 Cart_adapter adapter = new Cart_adapter(getActivity(), map);
                 rv_cart.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-
+                rv_cart.setVisibility(View.GONE);
+                rel_empty_cart.setVisibility(View.VISIBLE);
+                tv_clear.setVisibility(View.GONE);
+                linear_amt.setVisibility(View.GONE);
                 updateData();
 
-
-                Fragment fm = new Empty_cart_fragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-
-                        .addToBackStack(null).commit();
                 dialogInterface.dismiss();
             }
         });
@@ -257,9 +264,11 @@ public class Cart_fragment extends Fragment implements View.OnClickListener {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(getActivity(), "Connection Time out", Toast.LENGTH_SHORT).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });

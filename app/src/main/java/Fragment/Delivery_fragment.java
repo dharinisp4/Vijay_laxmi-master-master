@@ -72,7 +72,7 @@ public class Delivery_fragment extends Fragment implements View.OnClickListener 
     private EditText et_address;
     private RelativeLayout btn_checkout, tv_add_adress;
     private RecyclerView rv_address;
-
+    Module module;
     private DeliveryAddressAdapter adapter;
     private List<Delivery_address_model> delivery_address_modelList = new ArrayList<>();
 
@@ -112,8 +112,8 @@ String language;
         loadingBar.setCanceledOnTouchOutside(false);
         store_id = SharedPref.getString(getActivity(), BaseURL.STORE_ID);
         preferences = getActivity().getSharedPreferences("lan", MODE_PRIVATE);
-
-        tv_date = (TextView) view.findViewById(R.id.tv_deli_date);
+       module=new Module() ;
+       tv_date = (TextView) view.findViewById(R.id.tv_deli_date);
         tv_time = (TextView) view.findViewById(R.id.tv_deli_fromtime);
         tv_add_adress = (RelativeLayout) view.findViewById(R.id.tv_deli_add_address);
         tv_total = (TextView) view.findViewById(R.id.tv_deli_total);
@@ -398,8 +398,12 @@ String language;
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

@@ -24,6 +24,7 @@ import Config.BaseURL;
 import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.ForgotActivity;
+import binplus.vijaylaxmi.MyOrderDetail;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 
@@ -37,6 +38,7 @@ public class MyFirebaseRegister {
     Activity _context;
     public SharedPreferences settings;
     ConnectivityReceiver cd;
+    Module module;
 
     public MyFirebaseRegister(Activity context) {
         this._context = context;
@@ -46,6 +48,7 @@ public class MyFirebaseRegister {
     }
     public void RegisterUser(String user_id){
         // [START subscribe_topics]
+        module=new Module();
         String token = FirebaseInstanceId.getInstance().getToken();
         FirebaseMessaging.getInstance().subscribeToTopic("grocery");
         // [END subscribe_topics]
@@ -101,9 +104,11 @@ public class MyFirebaseRegister {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( _context,""+ errormsg,Toast.LENGTH_LONG ).show();
-                //hidepDialog();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( _context,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
         // Adding request to request queue

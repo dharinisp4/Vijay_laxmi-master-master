@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -33,6 +34,7 @@ import java.util.Map;
 import Config.BaseURL;
 import Model.Delivery_address_model;
 import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.MyOrderDetail;
 import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
@@ -43,9 +45,11 @@ import  Fragment .*;
 public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddressAdapter.ViewHolder> {
     private static String TAG = DeliveryAddressAdapter.class.getSimpleName();
 
+    Module module;
     private List<Delivery_address_model> modelList;
     Activity activity;
     Context context;
+    Dialog loadingBar;
 
     private static RadioButton lastChecked = null;
     private static int lastCheckedPos = 0;
@@ -158,9 +162,12 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
         TextView buttonDelete, btn_edit;
         public ViewHolder(View itemView) {
             super( itemView );
+            module=new Module();
             buttonDelete = (TextView) itemView.findViewById( R.id.delete);
             btn_edit = (TextView) itemView.findViewById(R.id.edit);
-
+            loadingBar=new Dialog(activity,android.R.style.Theme_Translucent_NoTitleBar);
+            loadingBar.setContentView( R.layout.progressbar );
+            loadingBar.setCanceledOnTouchOutside(false);
             tv_address = (TextView) itemView.findViewById(R.id.tv_adres_address);
             tv_name = (TextView) itemView.findViewById(R.id.tv_adres_username);
             tv_phone = (TextView) itemView.findViewById(R.id.tv_adres_phone);
@@ -249,8 +256,9 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
     public boolean ischeckd() {
         return ischecked;
     }
-    private void makeDeleteAddressRequest(String location_id,final int position) {
+    private void makeDeleteAddressRequest(final String location_id, final int position) {
 
+        loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_delete_address_req";
 
@@ -264,6 +272,7 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
 
+                loadingBar.dismiss();
                 try {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
@@ -286,8 +295,12 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( context,""+ errormsg,Toast.LENGTH_LONG ).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( context,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

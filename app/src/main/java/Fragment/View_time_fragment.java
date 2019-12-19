@@ -45,7 +45,7 @@ public class View_time_fragment extends Fragment {
     private static String TAG = View_time_fragment.class.getSimpleName();
 
     private RecyclerView rv_time;
-
+   Module module;
     private List<String> time_list = new ArrayList<>();
     private List<Category_model> category_modelList = new ArrayList<>();
     private Home_adapter adapter;
@@ -71,7 +71,7 @@ public class View_time_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_time_list, container, false);
-
+       module=new Module();
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.delivery_time));
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
@@ -153,8 +153,11 @@ public class View_time_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

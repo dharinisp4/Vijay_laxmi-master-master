@@ -48,6 +48,7 @@ public class Socity_fragment extends Fragment {
     private static String TAG = Socity_fragment.class.getSimpleName();
 
     private EditText et_search;
+    Module module;
     private RecyclerView rv_socity;
 
     private List<Socity_model> socity_modelList = new ArrayList<>();
@@ -69,7 +70,7 @@ Dialog loadingBar ;
         View view = inflater.inflate(R.layout.fragment_socity, container, false);
 
         //String getpincode = getArguments().getString("pincode");
-
+      module=new Module();
         et_search = (EditText) view.findViewById(R.id.et_socity_search);
         rv_socity = (RecyclerView) view.findViewById(R.id.rv_socity);
         rv_socity.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -162,8 +163,11 @@ Dialog loadingBar ;
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

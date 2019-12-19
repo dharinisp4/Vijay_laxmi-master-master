@@ -153,6 +153,8 @@
             <EditText
                 android:id="@+id/et_add_adres_home"
                 android:layout_width="match_parent"
+                android:gravity="top"
+                android:hint="Enter Address"
                 android:layout_height="100dp"
                 android:layout_marginTop="@dimen/space_4"
                 android:layout_marginBottom="@dimen/space_5"

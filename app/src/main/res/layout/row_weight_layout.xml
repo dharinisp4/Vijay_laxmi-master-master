@@ -6,10 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/space_5"
     app:cardElevation="@dimen/space_5"
+
     android:layout_margin="@dimen/space_2"
     app:cardCornerRadius="5dp">
     <RelativeLayout
+        android:background="@drawable/weight_back_xml"
 
+        android:layout_margin="@dimen/space_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

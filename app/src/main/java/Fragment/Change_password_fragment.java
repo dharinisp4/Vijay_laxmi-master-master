@@ -47,7 +47,7 @@ import util.Session_management;
 public class Change_password_fragment extends Fragment {
 
     private static String TAG = Change_password_fragment.class.getSimpleName();
-
+    Module module;
     private TextView tv_new_pass, tv_old_pass, tv_con_pass;
     private EditText et_new_pass, et_old_pass, et_con_pass;
     private RelativeLayout btn_change_pass;
@@ -76,7 +76,7 @@ public class Change_password_fragment extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+        module=new Module();
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.change_password));
 
         sessionManagement = new Session_management(getActivity());
@@ -217,8 +217,12 @@ public class Change_password_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

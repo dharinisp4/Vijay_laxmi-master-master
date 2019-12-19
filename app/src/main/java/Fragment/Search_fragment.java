@@ -216,8 +216,11 @@ public class Search_fragment extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     loadingBar.dismiss();
-                    String errormsg = Module.VolleyErrorMessage(error);
-                    Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                    String msg=module.VolleyErrorMessage(error);
+                    if(!(msg.isEmpty() || msg.equals("")))
+                    {
+                        Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                    }
                 }
             });
 

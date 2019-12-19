@@ -100,7 +100,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     public static Button btn_adapter,btn_color;
     String atr_product_id,attribute_name,attribute_value,attribute_mrp,attribute_color,attribute_img;
     int flag=0;
-    RelativeLayout rel ,rel_out;
+    RelativeLayout rel_out;
     int stock;
     Context context;
     List<Product_model> models;
@@ -217,7 +217,6 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
         txtTotal=(TextView)view.findViewById(R.id.product_total);
         numberButton=(ElegantNumberButton)view.findViewById(R.id.product_qty);
-        rel=(RelativeLayout) view.findViewById(R.id.rel);
         rel_out=view.findViewById( R.id.rel_out );
 
 
@@ -270,7 +269,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         else
         {
             details_product_weight.setVisibility(View.GONE);
-            rel_color.setVisibility(View.VISIBLE);
+           // rel_color.setVisibility(View.VISIBLE);
             rel_weight.setVisibility(View.VISIBLE);
             makeGetAttributeRequest(product_id);
 
@@ -282,7 +281,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
    if(flag==1)
    {
-       rel.setVisibility(View.GONE);
+       rel_color.setVisibility(View.GONE);
 
    }
    else
@@ -361,13 +360,16 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                         if(str_col.isEmpty() || str_col.equals(null))
                         {
                             // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_SHORT).show();
-                            rv_color.setVisibility(View.GONE);
+                            rel_color.setVisibility(View.GONE);
+                            //rv_color.setVisibility(View.GONE);
                             colorAdapter.notifyDataSetChanged();
                         }
                         else
                         {
+                            rel_color.setVisibility(View.VISIBLE);
+
                             list_color.clear();
-                            rv_color.setVisibility(View.VISIBLE);
+                          //  rv_color.setVisibility(View.VISIBLE);
                             JSONArray col_array=new JSONArray(str_col);
                             for(int j=0; j<col_array.length();j++)
                             {
@@ -400,7 +402,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 catch (Exception ex)
                 {
                     ex.printStackTrace();
-                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"err_color :-  "+ex.getMessage(),Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -570,7 +572,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                             if (position < 0) {
                                 Toast.makeText( getActivity(), "Please select any weight", Toast.LENGTH_SHORT ).show();
                             }
-                            if (col_position < 0) {
+                            else if (col_position < 0) {
                                 Toast.makeText( getActivity(), "Please select any color", Toast.LENGTH_SHORT ).show();
                             } else {
                                 String as = list_color.get( col_position );
@@ -890,8 +892,11 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -974,8 +979,11 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             @Override
             public void onErrorResponse(VolleyError error) {
              //   Toast.makeText(getContext().getApplicationContext(),"Error"+error.getMessage(),Toast.LENGTH_SHORT).show();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -1081,6 +1089,8 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                         if(str_col.isEmpty() || str_col.equals(null))
                         {
                             flag=1;
+                            rel_color.setVisibility(View.GONE);
+
                            // Toast.makeText(getActivity(),"empty ",Toast.LENGTH_SHORT).show();
                         }
                         else
@@ -1128,7 +1138,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 }
                 catch (Exception ex)
                 {
-                    Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"err2"+ex.getMessage(),Toast.LENGTH_SHORT).show();
                 }
               //  Toast.makeText(getActivity(),""+response,Toast.LENGTH_SHORT).show();
             }
@@ -1137,8 +1147,11 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             public void onErrorResponse(VolleyError error) {
 
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
@@ -1204,8 +1217,12 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
 
             }
         });
@@ -1300,15 +1317,18 @@ public boolean checkAttributeStatus(String atr)
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Toast.makeText(getActivity(),
-                                    "Error: " + e.getMessage(),
+                                    "Error3: " + e.getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_SHORT ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

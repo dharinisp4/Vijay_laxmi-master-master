@@ -55,6 +55,7 @@ import util.Session_management;
  */
 
 public class My_order_detail_fragment extends Fragment {
+    Module module;
 
     private static String TAG = My_order_detail_fragment.class.getSimpleName();
 
@@ -87,6 +88,7 @@ public class My_order_detail_fragment extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        module=new Module();
         tv_date = (TextView) view.findViewById(R.id.tv_order_Detail_date);
         tv_time = (TextView) view.findViewById(R.id.tv_order_Detail_time);
         tv_delivery_charge = (TextView) view.findViewById(R.id.tv_order_Detail_deli_charge);
@@ -171,6 +173,7 @@ public class My_order_detail_fragment extends Fragment {
      */
     private void makeGetOrderDetailRequest(String sale_id) {
 
+        loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_order_detail_req";
 
@@ -183,6 +186,7 @@ public class My_order_detail_fragment extends Fragment {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d("saleeee", response.toString());
+                loadingBar.dismiss();
 
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<My_order_detail_model>>() {
@@ -202,8 +206,12 @@ public class My_order_detail_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -252,8 +260,11 @@ public class My_order_detail_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

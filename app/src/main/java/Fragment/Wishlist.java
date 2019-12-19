@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class Wishlist extends Fragment {
     private static String TAG = Shop_Now_fragment.class.getSimpleName();
     private Bundle savedInstanceState;
     private WishlistHandler db_wish;
-    public static ImageView no_prod_image;
+    public static LinearLayout no_prod_image;
     private DatabaseCartHandler db_cart;
     public static RecyclerView rv_wishlist;
     String user_id="";
@@ -119,8 +120,9 @@ public class Wishlist extends Fragment {
                 Wishlist_Adapter adapter = new Wishlist_Adapter(  map,getActivity() );
                 rv_wishlist.setAdapter( adapter );
                 adapter.notifyDataSetChanged();
-
-                //updateData();
+                rv_wishlist.setVisibility(View.GONE);
+                no_prod_image.setVisibility(View.VISIBLE);
+                updateData();
 
                 dialogInterface.dismiss();
             }

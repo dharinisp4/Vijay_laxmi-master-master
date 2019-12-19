@@ -48,6 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Config.BaseURL;
+import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
@@ -67,6 +68,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class Edit_profile_fragment extends Fragment implements View.OnClickListener {
 
+    Module module;
     private static String TAG = Edit_profile_fragment.class.getSimpleName();
     private EditText et_phone, et_name, et_email, et_house;
     private RelativeLayout btn_update;
@@ -110,7 +112,7 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+        module=new Module();
         sessionManagement = new Session_management(getActivity());
 
         et_phone = (EditText) view.findViewById(R.id.et_pro_phone);
@@ -369,7 +371,11 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                Toast.makeText(getActivity(),""+error.getMessage(),Toast.LENGTH_LONG).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);

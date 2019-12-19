@@ -60,6 +60,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class Product_fragment extends Fragment {
     private static String TAG = Product_fragment.class.getSimpleName();
     private RecyclerView rv_cat;
+    Module module;
    Dialog loadingBar;
    String user_id="";
    Session_management session_management;
@@ -92,6 +93,7 @@ public class Product_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
 
+        module=new Module();
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
@@ -278,13 +280,10 @@ public class Product_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                if(errormsg.isEmpty() || errormsg.equals(null))
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
                 {
-
-                }
-                else {
-                    Toast.makeText( getActivity(),"er5"+ errormsg,Toast.LENGTH_LONG ).show();
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
 
 
@@ -380,15 +379,11 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                if(errormsg.isEmpty() || errormsg.equals(null))
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
                 {
-
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
-                else {
-                    Toast.makeText( getActivity(),"er4"+ errormsg,Toast.LENGTH_LONG ).show();
-                }
-
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
@@ -454,13 +449,10 @@ public class Product_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                if(errormsg.isEmpty() || errormsg.equals(null))
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
                 {
-
-                }
-                else {
-                    Toast.makeText( getActivity(),"er3"+ errormsg,Toast.LENGTH_LONG ).show();
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });
@@ -510,13 +502,10 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                if(errormsg.isEmpty() || errormsg.equals(null))
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
                 {
-
-                }
-                else {
-                    Toast.makeText( getActivity(),"er2"+ errormsg,Toast.LENGTH_LONG ).show();
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });
@@ -564,13 +553,10 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                if(errormsg.isEmpty() || errormsg.equals(null))
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
                 {
-
-                }
-                else {
-                    Toast.makeText( getActivity(),"er1"+ errormsg,Toast.LENGTH_LONG ).show();
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });

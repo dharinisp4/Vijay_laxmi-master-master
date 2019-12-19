@@ -390,16 +390,12 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                 list.remove(position);
                 notifyDataSetChanged();
 
-                if(db_cart.getCartCount()<1)
+                if(list.size()<=0)
                 {
-                    Empty_cart_fragment details_fragment = new Empty_cart_fragment();
-                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
-
-                    Fragment fm = new Empty_cart_fragment();
-                    FragmentManager fragmentManager = activity.getFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.contentPanel, details_fragment)
-
-                            .addToBackStack(null).commit();
+                   Cart_fragment.rv_cart.setVisibility(View.GONE);
+                   Cart_fragment.rel_empty_cart.setVisibility(View.VISIBLE);
+                    Cart_fragment.tv_clear.setVisibility(View.GONE);
+                    Cart_fragment.linear_amt.setVisibility(View.GONE);
                 }
                 updateintent();
             }

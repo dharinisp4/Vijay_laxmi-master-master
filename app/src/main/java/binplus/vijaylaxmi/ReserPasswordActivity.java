@@ -41,6 +41,7 @@ public class ReserPasswordActivity extends Activity  {
    EditText et_password,et_con_pass;
    RelativeLayout btn_reset;
    String number="";
+   Module module;
     @Override
     protected void attachBaseContext(Context newBase) {
 
@@ -54,7 +55,7 @@ public class ReserPasswordActivity extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
-
+         module=new Module();
         loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
@@ -139,8 +140,11 @@ public class ReserPasswordActivity extends Activity  {
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( ReserPasswordActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( ReserPasswordActivity.this,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

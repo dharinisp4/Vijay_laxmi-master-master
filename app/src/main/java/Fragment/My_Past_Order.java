@@ -46,6 +46,7 @@ import util.Session_management;
 
 public class My_Past_Order extends Fragment {
 
+    Module module;
     //  private static String TAG = Fragment.My_Past_Order.class.getSimpleName();
 
     private RecyclerView rv_myorder;
@@ -71,7 +72,7 @@ public class My_Past_Order extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_past_order, container, false);
-
+   module=new Module();
         // ((My_Order_activity) getActivity()).setTitle(getResources().getString(R.string.my_order));
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
@@ -124,7 +125,8 @@ public class My_Past_Order extends Fragment {
             public void onItemClick(View view, int position) {
                 String sale_id = my_order_modelList.get(position).getSale_id();
                 String date = my_order_modelList.get(position).getOn_date();
-                String time = my_order_modelList.get(position).getDelivery_time_from() + "-" + my_order_modelList.get(position).getDelivery_time_to();
+//                String time = my_order_modelList.get(position).getDelivery_time_from() + "-" + my_order_modelList.get(position).getDelivery_time_to();
+                String time = my_order_modelList.get(position).getDelivery_time_from();
                 String total = my_order_modelList.get(position).getTotal_amount();
                 String status = my_order_modelList.get(position).getStatus();
                 String deli_charge = my_order_modelList.get(position).getDelivery_charge();
@@ -154,6 +156,7 @@ public class My_Past_Order extends Fragment {
      */
     private void makeGetOrderRequest(String userid) {
         // Tag used to cancel the request
+        loadingBar.show();
         String tag_json_obj = "json_socity_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", userid);
@@ -163,6 +166,7 @@ public class My_Past_Order extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
+                loadingBar.dismiss();
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<My_Past_order_model>>() {
                 }.getType();
@@ -181,8 +185,12 @@ public class My_Past_Order extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
 
             }
         });

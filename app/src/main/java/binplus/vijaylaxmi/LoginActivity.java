@@ -36,6 +36,7 @@ import util.Session_management;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    Module module;
     private static String TAG = LoginActivity.class.getSimpleName();
     private RelativeLayout btn_continue, btn_register;
     private EditText et_password, et_email;
@@ -57,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+        module=new Module();
         et_password = (EditText) findViewById(R.id.et_login_pass);
         et_email = (EditText) findViewById(R.id.et_login_email);
         tv_password = (TextView) findViewById(R.id.tv_login_password);
@@ -202,8 +203,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( LoginActivity.this,""+ errormsg,Toast.LENGTH_LONG ).show();
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( LoginActivity.this,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

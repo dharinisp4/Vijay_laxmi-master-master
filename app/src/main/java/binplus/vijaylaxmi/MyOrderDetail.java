@@ -53,6 +53,7 @@ import util.Session_management;
 
 public class MyOrderDetail extends AppCompatActivity {
     private static String TAG = My_order_detail_fragment.class.getSimpleName();
+    Module module;
     Dialog dialog;
     EditText et_remark;
     Button btn_yes,btn_no;
@@ -88,7 +89,7 @@ Dialog loadingBar ;
 
         dialog.setContentView(R.layout.dialog_cancel_order_layout);
         dialog.setCanceledOnTouchOutside(false);
-
+        module=new Module();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -269,8 +270,11 @@ Dialog loadingBar ;
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( MyOrderDetail.this,""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( MyOrderDetail.this,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 
@@ -326,8 +330,11 @@ Dialog loadingBar ;
             @Override
             public void onErrorResponse(VolleyError error) {
                 loadingBar.dismiss();
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( MyOrderDetail.this,""+ errormsg,Toast.LENGTH_LONG ).show();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( MyOrderDetail.this,""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         });
 

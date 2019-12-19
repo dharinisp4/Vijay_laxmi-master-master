@@ -4,18 +4,37 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import Model.Support_info_model;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
+import util.ConnectivityReceiver;
+
+import static binplus.vijaylaxmi.AppController.TAG;
 
 public class About_us_fragment extends Fragment {
 
-//    private static String TAG = About_us_fragment.class.getSimpleName();
+    private static String TAG = About_us_fragment.class.getSimpleName();
 //
-//    private TextView tv_info;
+    private TextView txt_info;
 Dialog loadingBar ;
     public About_us_fragment() {
         // Required empty public constructor
@@ -37,7 +56,7 @@ Dialog loadingBar ;
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-//        tv_info = (TextView) view.findViewById(R.id.tv_info);
+        txt_info = (TextView) view.findViewById(R.id.txt_info);
 //
 //        String geturl = getArguments().getString("url");
 //        //   String title = getArguments().getString("title");
@@ -45,71 +64,18 @@ Dialog loadingBar ;
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.nav_about));
 //
 //        // check internet connection
-//       if (ConnectivityReceiver.isConnected()) {
-//           makeGetInfoRequest(geturl);
-//        } else {
-//            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-//        }
+       if (ConnectivityReceiver.isConnected()) {
+           makeGetInfoRequest();
+        } else {
+            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+        }
 
         return view;
     }
 
-    /**
-     * Method to make json object request where json response starts wtih
-     */
-//    private void makeGetInfoRequest(String url) {
-//
-//        // Tag used to cancel the request
-//        String tag_json_obj = "json_info_req";
-//
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-//                url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                Log.d(TAG, response.toString());
-//
-//                try {
-//                    // Parsing json array response
-//                    // loop through each json object
-//
-//                    boolean status = response.getBoolean("responce");
-//                    if (status) {
-//
-//                        List<Support_info_model> support_info_modelList = new ArrayList<>();
-//
-//                        Gson gson = new Gson();
-//                        Type listType = new TypeToken<List<Support_info_model>>() {
-//                        }.getType();
-//
-//                        support_info_modelList = gson.fromJson(response.getString("data"), listType);
-//
-//                        String desc = support_info_modelList.get(0).getPg_descri();
-//                        String title = support_info_modelList.get(0).getPg_title();
-//
-//                        tv_info.setText(Html.fromHtml(desc));
-//
-//                    }
-//
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                    Toast.makeText(getActivity(),
-//                            "Error: " + e.getMessage(),
-//                            Toast.LENGTH_LONG).show();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                VolleyLog.d(TAG, "Error: " + error.getMessage());
-//                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-//                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//
-//        // Adding request to request queue
-//        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
-//    }
+    private void makeGetInfoRequest() {
+    }
+
 
 }
 

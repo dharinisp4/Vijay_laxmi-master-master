@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,6 +30,7 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Config.SharedPref;
+import Module.Module;
 import binplus.vijaylaxmi.GifImageView;
 import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.networkconnectivity.NetworkConnection;
@@ -41,6 +43,7 @@ import util.Session_management;
 
 public class Reward_fragment extends Fragment {
     private GifImageView gifImageView;
+    Module module;
     private static String TAG = Reward_fragment.class.getSimpleName();
     RelativeLayout Reedeem_Points;
     TextView Rewards_Points;
@@ -65,6 +68,7 @@ public class Reward_fragment extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        module=new Module();
 
         String getrewards = sessionManagement.getUserDetails().get(BaseURL.KEY_REWARDS_POINTS);
         Rewards_Points = (TextView) view.findViewById(R.id.reward_points);
@@ -124,7 +128,11 @@ public class Reward_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
             }
         }) {
 
@@ -162,6 +170,11 @@ public class Reward_fragment extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     System.out.println("Error [" + error + "]");
+                    String msg=module.VolleyErrorMessage(error);
+                    if(!(msg.isEmpty() || msg.equals("")))
+                    {
+                        Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                    }
                 }
             }) {
 

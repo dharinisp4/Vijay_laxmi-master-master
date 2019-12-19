@@ -48,6 +48,7 @@ import util.Session_management;
 
 public class My_Pending_Order extends Fragment {
 
+    Module module;
     private static String TAG = My_Pending_Order.class.getSimpleName();
 
     private RecyclerView rv_myorder;
@@ -76,7 +77,7 @@ public class My_Pending_Order extends Fragment {
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
         no_order = view.findViewById( R.id.no_order );
-
+   module=new Module();
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -122,7 +123,8 @@ public class My_Pending_Order extends Fragment {
                 Bundle args = new Bundle();
                 String sale_id = my_order_modelList.get(position).getSale_id();
                 String date = my_order_modelList.get(position).getOn_date();
-                String time = my_order_modelList.get(position).getDelivery_time_from() + "-" + my_order_modelList.get(position).getDelivery_time_to();
+//                String time = my_order_modelList.get(position).getDelivery_time_from() + "-" + my_order_modelList.get(position).getDelivery_time_to();
+                String time = my_order_modelList.get(position).getDelivery_time_from();
                 String total = my_order_modelList.get(position).getTotal_amount();
                 String status = my_order_modelList.get(position).getStatus();
                 String deli_charge = my_order_modelList.get(position).getDelivery_charge();
@@ -149,6 +151,7 @@ public class My_Pending_Order extends Fragment {
      * Method to make json array request where json response starts wtih
      */
     private void makeGetOrderRequest(String userid) {
+        loadingBar.show();
         String tag_json_obj = "json_socity_req";
 
         Map<String, String> params = new HashMap<String, String>();
@@ -159,6 +162,7 @@ public class My_Pending_Order extends Fragment {
 
             @Override
             public void onResponse(JSONArray response) {
+                loadingBar.dismiss();
                 Log.d(TAG, response.toString());
 
                 Gson gson = new Gson();
@@ -184,9 +188,12 @@ public class My_Pending_Order extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errormsg = Module.VolleyErrorMessage(error);
-                Toast.makeText( getActivity(),""+ errormsg,Toast.LENGTH_LONG ).show();
-            }
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                } }
         });
 
         // Adding request to request queue

@@ -190,7 +190,7 @@ public class Module {
 
         }
 
-    public static  String VolleyErrorMessage(VolleyError error)
+    public String VolleyErrorMessage(VolleyError error)
     {
         String str_error ="";
         if (error instanceof TimeoutError) {
