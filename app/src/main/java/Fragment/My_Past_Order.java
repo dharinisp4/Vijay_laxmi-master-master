@@ -156,7 +156,6 @@ public class My_Past_Order extends Fragment {
      */
     private void makeGetOrderRequest(String userid) {
         // Tag used to cancel the request
-        loadingBar.show();
         String tag_json_obj = "json_socity_req";
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", userid);

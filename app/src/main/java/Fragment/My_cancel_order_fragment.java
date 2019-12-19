@@ -1,7 +1,7 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,11 +39,9 @@ import Model.My_Cancel_order_model;
 import Module.Module;
 import binplus.vijaylaxmi.AppController;
 import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.MyOrderDetail;
 import binplus.vijaylaxmi.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
-import util.RecyclerTouchListener;
 import util.Session_management;
 
 /**
@@ -52,10 +50,12 @@ import util.Session_management;
 public class My_cancel_order_fragment extends Fragment {
 
     private RecyclerView rv_mycancel;
-      Module module;
+
     private List<My_Cancel_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
-    ProgressDialog progressDialog;
+   Dialog loadingBar ;
+    Module module;
+
     ImageView no_orders ;
     public My_cancel_order_fragment() {
     }
@@ -66,11 +66,11 @@ public class My_cancel_order_fragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_my_cancel_order, container, false);
-        progressDialog=new ProgressDialog(getActivity());
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setMessage("Loading...");
-        module=new Module();
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar.setContentView( R.layout.progressbar );
+        loadingBar.setCanceledOnTouchOutside(false);
         no_orders = view.findViewById( R.id.no_order );
+        module = new Module();
         // handle the touch event if true
         view.setFocusableInTouchMode(true);
         view.requestFocus();
@@ -107,45 +107,13 @@ public class My_cancel_order_fragment extends Fragment {
             ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
         }
 
-
-        // recyclerview item click listener
-        rv_mycancel.addOnItemTouchListener(new
-
-                RecyclerTouchListener(getActivity(), rv_mycancel, new RecyclerTouchListener.OnItemClickListener()
-
-        {
-            @Override
-            public void onItemClick(View view, int position) {
-                String sale_id = my_order_modelList.get(position).getSale_id();
-                String date = my_order_modelList.get(position).getOn_date();
-//                String time = my_order_modelList.get(position).getDelivery_time_from() + "-" + my_order_modelList.get(position).getDelivery_time_to();
-                String time = my_order_modelList.get(position).getDelivery_time_from();
-                String total = my_order_modelList.get(position).getTotal_amount();
-                String status = my_order_modelList.get(position).getStatus();
-                String deli_charge = my_order_modelList.get(position).getDelivery_charge();
-                Intent intent=new Intent(getContext(), MyOrderDetail.class);
-                intent.putExtra("sale_id", sale_id);
-                intent.putExtra("date", date);
-                intent.putExtra("time", time);
-                intent.putExtra("total", total);
-                intent.putExtra("status", status);
-                intent.putExtra("deli_charge", deli_charge);
-                startActivity(intent);
-
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-
-            }
-        }));
         return view;
     }
 
 
     private void makeGetOrderRequest(String userid) {
         String tag_json_obj = "json_socity_req";
-        progressDialog.show();
+        loadingBar.show();
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", userid);
 
@@ -155,7 +123,7 @@ public class My_cancel_order_fragment extends Fragment {
             @Override
             public void onResponse(JSONArray response) {
                 Log.d(TAG, response.toString());
-                progressDialog.dismiss();
+               loadingBar.dismiss();
                 Gson gson = new Gson();
                 Type listType = new TypeToken<List<My_Cancel_order_model>>() {
                 }.getType();
@@ -165,10 +133,10 @@ public class My_cancel_order_fragment extends Fragment {
                 rv_mycancel.setAdapter(myPendingOrderAdapter);
                 myPendingOrderAdapter.notifyDataSetChanged();
 
-                if (my_order_modelList.isEmpty()) {
-                    no_orders.setVisibility( View.VISIBLE );
-                    rv_mycancel.setVisibility( View.GONE );
-                    Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
+                if(response.length()<=0)
+                {
+                    no_orders.setVisibility(View.VISIBLE);
+                    rv_mycancel.setVisibility(View.GONE);
                 }
                 else
                 {
@@ -180,12 +148,10 @@ public class My_cancel_order_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progressDialog.dismiss();
+               loadingBar.dismiss();
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
-                String msg=module.VolleyErrorMessage(error);
-                if(!(msg.isEmpty() || msg.equals("")))
-                {
-                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Toast.makeText(getActivity(), getResources().getString(R.string.connection_time_out), Toast.LENGTH_SHORT).show();
                 }
             }
         });

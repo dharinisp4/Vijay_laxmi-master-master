@@ -156,6 +156,7 @@ public class My_Pending_Order extends Fragment {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", userid);
+        loadingBar.show();
 
         CustomVolleyJsonArrayRequest jsonObjReq = new CustomVolleyJsonArrayRequest(Request.Method.POST,
                 BaseURL.GET_ORDER_URL, params, new Response.Listener<JSONArray>() {
@@ -184,6 +185,7 @@ public class My_Pending_Order extends Fragment {
                     no_order.setVisibility( View.GONE );
                     rv_myorder.setVisibility( View.VISIBLE );
                 }
+                loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
