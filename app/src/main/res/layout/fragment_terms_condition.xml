@@ -35,21 +35,7 @@
                 android:text="Terms And Conditions"
                 android:fontFamily="cursive"/>
             <TextView
-                android:layout_marginLeft="@dimen/space_10"
-                android:layout_marginRight="@dimen/space_10"
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textAlignment="gravity"
-                android:layout_gravity="left"
-                android:padding="@dimen/space_5"
-
-                android:text="USE OF THIS APP"
-                android:fontFamily="cursive"/>
-            <TextView
+                android:id="@+id/txt_terms"
                 android:layout_marginLeft="@dimen/space_10"
                 android:layout_marginRight="@dimen/space_10"
                 android:layout_marginTop="5dp"
@@ -64,78 +50,9 @@
                 android:layout_gravity="left"
                 android:padding="@dimen/space_5"
 
-                android:text="@string/terms1"
-                android:fontFamily="cursive"/>
-            <TextView
-                android:layout_marginLeft="@dimen/space_10"
-                android:layout_marginRight="@dimen/space_10"
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-
-
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textAlignment="gravity"
-                android:layout_gravity="left"
-                android:padding="@dimen/space_5"
-
-                android:text="PRIVACY PRACTICES"
-                android:fontFamily="cursive"/>
-            <TextView
-                android:layout_marginLeft="@dimen/space_10"
-                android:layout_marginRight="@dimen/space_10"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-
-
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textAlignment="gravity"
-                android:layout_gravity="left"
-                android:padding="@dimen/space_5"
-
-                android:text="@string/terms2"
-                android:fontFamily="cursive"/>
-            <TextView
-                android:layout_marginLeft="@dimen/space_10"
-                android:layout_marginRight="@dimen/space_10"
-                android:layout_marginTop="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-
-
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textAlignment="gravity"
-                android:layout_gravity="left"
-                android:padding="@dimen/space_5"
-
-                android:text=" LIMITED LICENSE"
-                android:fontFamily="cursive"/>
-            <TextView
-                android:layout_marginLeft="@dimen/space_10"
-                android:layout_marginRight="@dimen/space_10"
-                android:layout_marginTop="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-
-
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:textAlignment="gravity"
-                android:layout_gravity="left"
-                android:padding="@dimen/space_5"
-
-                android:text="@string/terms3"
+                android:text=""
                 android:fontFamily="cursive"/>
         </LinearLayout>
-
 
 <!--        <TextView-->
 <!--            android:id="@+id/tv_info"-->

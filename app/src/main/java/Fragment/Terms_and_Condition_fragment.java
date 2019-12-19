@@ -22,17 +22,23 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import Config.BaseURL;
 import Model.Support_info_model;
 import Module.Module;
 import binplus.vijaylaxmi.AppController;
+import binplus.vijaylaxmi.MainActivity;
 import binplus.vijaylaxmi.R;
+import util.ConnectivityReceiver;
+import util.CustomVolleyJsonRequest;
 
 public class Terms_and_Condition_fragment extends Fragment {
 
@@ -65,19 +71,19 @@ public class Terms_and_Condition_fragment extends Fragment {
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
         module=new Module();
-//        tv_info = (TextView) view.findViewById(R.id.tv_info);
+        tv_info = (TextView) view.findViewById(R.id.txt_terms);
 //
 //        String geturl = getArguments().getString("url");
 //        //   String title = getArguments().getString("title");
 //
-//        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.condition));
-//
-//        // check internet connection
-//        if (ConnectivityReceiver.isConnected()) {
-//            makeGetInfoRequest(geturl);
-//        } else {
-//            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-//        }
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.condition));
+
+        // check internet connection
+        if (ConnectivityReceiver.isConnected()) {
+            makeGetInfoRequest();
+        } else {
+            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+        }
 
         return view;
     }
@@ -85,50 +91,41 @@ public class Terms_and_Condition_fragment extends Fragment {
     /**
      * Method to make json object request where json response starts wtih
      */
-    private void makeGetInfoRequest(String url) {
+    private void makeGetInfoRequest() {
+        loadingBar.show();
 
-        // Tag used to cancel the request
-        String tag_json_obj = "json_info_req";
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url, null, new Response.Listener<JSONObject>() {
+        String json_tag="json_request_about";
+        HashMap<String,String> map=new HashMap<>();
+
+        CustomVolleyJsonRequest customVolleyJsonRequest=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_TERMS_URL, map, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
-
-                try {
-                    // Parsing json array response
-                    // loop through each json object
-
-                    boolean status = response.getBoolean("responce");
-                    if (status) {
-
-                        List<Support_info_model> support_info_modelList = new ArrayList<>();
-
-                        Gson gson = new Gson();
-                        Type listType = new TypeToken<List<Support_info_model>>() {
-                        }.getType();
-
-                        support_info_modelList = gson.fromJson(response.getString("data"), listType);
-
-                        String desc = support_info_modelList.get(0).getPg_descri();
-                        String title = support_info_modelList.get(0).getPg_title();
-
-                        tv_info.setText(Html.fromHtml(desc));
-
+                loadingBar.dismiss();
+                try
+                {
+                    boolean resp=response.getBoolean("responce");
+                    if(resp)
+                    {
+                        JSONArray array=response.getJSONArray("data");
+                        for(int i=0; i<array.length();i++)
+                        {
+                            JSONObject object=array.getJSONObject(i);
+                            String support=object.getString("pg_descri");
+                            tv_info.setText(Html.fromHtml(support));
+                        }
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),
-                            "Error: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
                 }
+                catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                loadingBar.dismiss();
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
@@ -136,9 +133,7 @@ public class Terms_and_Condition_fragment extends Fragment {
                 }
             }
         });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_tag);
     }
 
 }

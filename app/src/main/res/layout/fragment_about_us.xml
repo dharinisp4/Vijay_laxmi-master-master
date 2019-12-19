@@ -46,7 +46,7 @@
             android:layout_gravity="left"
             android:padding="@dimen/space_5"
 
-            android:text="@string/about1"
+            android:text=""
             android:fontFamily="cursive"/>
 
     </LinearLayout>
