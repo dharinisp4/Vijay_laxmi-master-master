@@ -170,16 +170,13 @@ public class My_Past_Order extends Fragment {
                 My_Past_Order_adapter adapter = new My_Past_Order_adapter(my_order_modelList);
                 rv_myorder.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-                if (my_order_modelList.isEmpty()) {
-                    no_orders.setVisibility( View.VISIBLE );
-                    rv_myorder.setVisibility( View.GONE );
-                    // Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
-                }
-                else
+                if(response.length()<=0)
                 {
-                    no_orders.setVisibility( View.VISIBLE );
-                    rv_myorder.setVisibility( View.GONE );
+                    no_orders.setVisibility(View.VISIBLE);
+                    rv_myorder.setVisibility(View.GONE);
                 }
+                //Toast.makeText(getActivity(), ""+response.length(), Toast.LENGTH_SHORT).show();
+
             }
         }, new Response.ErrorListener() {
             @Override

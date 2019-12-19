@@ -249,7 +249,7 @@ public class WishlistHandler extends SQLiteOpenHelper {
 
     public void removeItemFromWishtable(String id,String user_id) {
         db = getReadableDatabase();
-        db.execSQL("delete from " + WISHTABLE_TABLE + "where " + COLUMN_ID + " = " + id + " and " + COLUMN_USER_ID + " = " +  user_id);
+        db.execSQL("delete from " + WISHTABLE_TABLE + " where " + COLUMN_ID + " = " + id + " and " + COLUMN_USER_ID + " = " +  user_id);
     }
 
 

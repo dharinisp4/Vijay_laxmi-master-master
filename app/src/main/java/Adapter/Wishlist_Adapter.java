@@ -33,6 +33,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Fragment.Details_Fragment;
+import Fragment.Wishlist;
 import Model.ProductVariantModel;
 import Model.Product_model;
 import Model.Wish_model;
@@ -43,6 +44,7 @@ import util.Session_management;
 import util.WishlistHandler;
 
 import static Config.BaseURL.KEY_ID;
+import static Fragment.Wishlist.no_prod_image;
 import static android.content.Context.MODE_PRIVATE;
 
 public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.WishHolder> {
@@ -337,8 +339,13 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
                 String us_id=session_management.getUserDetails().get(KEY_ID);
                 holder.db_wish.removeItemFromWishtable(map.get("product_id"),us_id);
                 list.remove(position);
-                notifyDataSetChanged();
 
+                notifyDataSetChanged();
+                if(list.size()<=0)
+                {
+                    no_prod_image.setVisibility(View.VISIBLE);
+                    Wishlist.rv_wishlist.setVisibility(View.GONE);
+                }
                 // db_cart.getCartAll()
                 updateintent();
             }

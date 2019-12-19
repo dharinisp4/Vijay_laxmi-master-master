@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,8 +38,9 @@ public class Wishlist extends Fragment {
     private static String TAG = Shop_Now_fragment.class.getSimpleName();
     private Bundle savedInstanceState;
     private WishlistHandler db_wish;
+    public static ImageView no_prod_image;
     private DatabaseCartHandler db_cart;
-    RecyclerView rv_wishlist;
+    public static RecyclerView rv_wishlist;
     String user_id="";
     Session_management session_management;
    Dialog loadingBar;
@@ -67,7 +69,7 @@ public class Wishlist extends Fragment {
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+        no_prod_image = view.findViewById( R.id.no_prod_image );
         session_management=new Session_management(getActivity());
         user_id=session_management.getUserDetails().get(KEY_ID);
         rv_wishlist = view.findViewById( R.id.rv_wishlist );
@@ -80,7 +82,14 @@ public class Wishlist extends Fragment {
         ArrayList<HashMap<String, String>> map = db_wish.getWishtableAll(user_id);
 
 //        Log.d("cart all ",""+db_cart.getCartAll());
-
+        if(map.size()<=0)
+        {
+            if(map.size()<=0)
+            {
+                rv_wishlist.setVisibility(View.GONE);
+                no_prod_image.setVisibility(View.VISIBLE);
+            }
+        }
         Wishlist_Adapter adapter = new Wishlist_Adapter( map,getActivity() );
         rv_wishlist.setAdapter( adapter );
         adapter.notifyDataSetChanged();

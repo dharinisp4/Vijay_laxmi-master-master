@@ -115,7 +115,6 @@ public class My_Cancel_Order_adapter extends RecyclerView.Adapter<My_Cancel_Orde
         My_Cancel_order_model mList = modelList.get(position);
 
         holder.tv_orderno.setText(mList.getSale_id());
-
         if (mList.getStatus().equals("0")) {
             holder.tv_status.setText(context.getResources().getString(R.string.pending));
             holder.relativetextstatus.setText(context.getResources().getString(R.string.pending));
@@ -156,7 +155,7 @@ holder.linearLayout.setVisibility(View.GONE);
             holder.tv_methid1.setText("Wallet");
         }
         holder.tv_date.setText(mList.getOn_date());
-        holder.tv_tracking_date.setText(mList.getOn_date());
+        holder.tv_tracking_date.setText(mList.getOut_date());
 
         preferences = context.getSharedPreferences("lan", MODE_PRIVATE);
         String language=preferences.getString("language","");

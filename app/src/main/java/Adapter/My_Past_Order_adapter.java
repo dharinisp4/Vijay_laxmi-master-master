@@ -61,7 +61,7 @@ SharedPreferences preferences;
             cardView = view.findViewById(R.id.card_view);
             tv_user_add =view.findViewById( R.id.user_address );
             tv_user_mobile=view.findViewById( R.id.user_mobile );
-            tv_date_type=view.findViewById( R.id.date_type );
+            tv_date_type=view.findViewById( R.id.txt_date_type );
 
 //            //Payment Method
             tv_methid1 = (TextView) view.findViewById(R.id.method1);
@@ -106,7 +106,6 @@ SharedPreferences preferences;
         My_Past_order_model mList = modelList.get(position);
 
         holder.tv_orderno.setText(mList.getSale_id());
-        holder.tv_date_type.setText( "Delivered On :" );
 
         if (mList.getStatus().equals("0")) {
             holder.tv_status.setText(context.getResources().getString(R.string.pending));
@@ -134,17 +133,21 @@ SharedPreferences preferences;
             holder.relativetextstatus.setText(context.getResources().getString(R.string.outfordeliverd));
             holder.tv_status.setTextColor(context.getResources().getColor(R.color.pink));
         }else if (mList.getStatus().equals("4")) {
-            holder.view1.setBackgroundColor(context.getResources().getColor(R.color.pink));
-            holder.relative_background.setBackgroundColor(context.getResources().getColor(R.color.color_2));
-            holder.view2.setBackgroundColor(context.getResources().getColor(R.color.pink));
-            holder.view3.setBackgroundColor(context.getResources().getColor(R.color.pink));
-            holder.view4.setBackgroundColor(context.getResources().getColor(R.color.pink));
-            holder.view5.setBackgroundColor(context.getResources().getColor(R.color.pink));
-            holder.view6.setBackgroundColor(context.getResources().getColor(R.color.pink));
-            holder.Confirm.setImageResource(R.color.color_2);
-            holder.Out_For_Deliverde.setImageResource(R.color.color_2);
-            holder.Delivered.setImageResource(R.color.color_2);
+            holder.tv_date_type.setText("Delivered\n On:");
+            holder.view1.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.relative_background.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.view2.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.view3.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.view4.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.view5.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.view6.setBackgroundColor(context.getResources().getColor(R.color.green));
+            holder.Confirm.setImageResource(R.color.green);
+            holder.Out_For_Deliverde.setImageResource(R.color.green);
+            holder.Delivered.setImageResource(R.color.green);
             holder.tv_status.setText(context.getResources().getString(R.string.delivered));
+            holder.tv_confirm_date.setVisibility(View.VISIBLE);
+            holder.tv_delevered_date.setVisibility(View.VISIBLE);
+            holder.tv_cancel_date.setVisibility(View.VISIBLE);
             holder.relativetextstatus.setText(context.getResources().getString(R.string.delivered));
             holder.tv_status.setTextColor(context.getResources().getColor(R.color.white));
         }
@@ -165,14 +168,16 @@ SharedPreferences preferences;
             timeto=timeto.replace("pm","م");
             timeto=timeto.replace("am","ص");
 
-            String time=timefrom + "-" + timeto;
+//            String time=timefrom + "-" + timeto;
+            String time=timefrom;
 
             holder.tv_time.setText(time);
         }else {
 
             String timefrom=mList.getDelivery_time_from();
             String timeto=mList.getDelivery_time_to();
-            String time=timefrom + "-" + timeto;
+//            String time=timefrom + "-" + timeto;
+            String time=timefrom;
 
             holder.tv_time.setText(time);
 
@@ -185,9 +190,9 @@ SharedPreferences preferences;
 //        holder.tv_confirm_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
         holder.tv_confirm_date.setText(mList.getConfirm_date());
 //        holder.tv_delevered_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-        holder.tv_delevered_date.setText(mList.getDelivered_date());
+        holder.tv_delevered_date.setText(mList.getOut_date());
 //        holder.tv_cancel_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
-    //    holder.tv_cancel_date.setText(mList.getOn_date());
+        holder.tv_cancel_date.setText(mList.getDelivery_date());
         holder.tv_user_mobile.setText( mList.getReceiver_mobile() );
         holder.tv_user_add.setText( mList.getDelivery_address() );
     }

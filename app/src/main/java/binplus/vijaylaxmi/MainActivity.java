@@ -706,6 +706,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_shop_now) {
             fm = new Shop_Now_fragment();
         } else if (id == R.id.nav_my_profile) {
+
             if (sessionManagement.isLoggedIn()) {
                  fm = new Edit_profile_fragment();
                 FragmentManager fragmentManager = getFragmentManager();

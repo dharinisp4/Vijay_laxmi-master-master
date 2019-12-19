@@ -22,7 +22,24 @@ public class My_Cancel_order_model {
     String receiver_name;
     String receiver_mobile ;
     String confirm_date;
-    String delivered_date;
+    String delivery_date;
+    String out_date;
+
+    public String getDelivery_date() {
+        return delivery_date;
+    }
+
+    public void setDelivery_date(String delivery_date) {
+        this.delivery_date = delivery_date;
+    }
+
+    public String getOut_date() {
+        return out_date;
+    }
+
+    public void setOut_date(String out_date) {
+        this.out_date = out_date;
+    }
 
     public String getSale_id(){
         return sale_id;
@@ -111,11 +128,5 @@ public class My_Cancel_order_model {
         this.confirm_date = confirm_date;
     }
 
-    public String getDelivered_date() {
-        return delivered_date;
-    }
 
-    public void setDelivered_date(String delivered_date) {
-        this.delivered_date = delivered_date;
-    }
 }

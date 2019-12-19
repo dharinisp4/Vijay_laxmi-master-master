@@ -14,6 +14,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -50,7 +53,9 @@ import util.Session_management;
 
 public class MyOrderDetail extends AppCompatActivity {
     private static String TAG = My_order_detail_fragment.class.getSimpleName();
-
+    Dialog dialog;
+    EditText et_remark;
+    Button btn_yes,btn_no;
     private TextView tv_date, tv_time, tv_total, tv_delivery_charge;
     private RelativeLayout btn_cancle;
     private RecyclerView rv_detail_order;
@@ -78,6 +83,11 @@ Dialog loadingBar ;
         loadingBar=new Dialog(this,android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        dialog=new Dialog(MyOrderDetail.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        dialog.setContentView(R.layout.dialog_cancel_order_layout);
+        dialog.setCanceledOnTouchOutside(false);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -143,7 +153,50 @@ Dialog loadingBar ;
             public void onClick(View view) {
 
 
-                showDeleteDialog();
+                btn_no=(Button)dialog.findViewById(R.id.btn_no);
+                btn_yes=(Button)dialog.findViewById(R.id.btn_yes);
+                et_remark=(EditText) dialog.findViewById(R.id.et_remark);
+                dialog.show();
+
+                btn_yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Session_management sessionManagement = new Session_management(MyOrderDetail.this);
+                        String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
+
+                        String remark=et_remark.getText().toString();
+                        if(remark.isEmpty())
+                        {
+                            et_remark.setError("Please provide a reason");
+                            et_remark.requestFocus();
+                        }
+                        else if(remark.length()<20)
+                        {
+                            et_remark.setError("Too short");
+                            et_remark.requestFocus();
+
+                        }
+                        else
+                        {
+                            if (ConnectivityReceiver.isConnected()) {
+                                makeDeleteOrderRequest(sale_id, user_id,remark);
+
+                            }
+
+                        }
+                        // check internet connection
+                    }
+                });
+
+                btn_no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        dialog.dismiss();
+                    }
+                });
+
 
                 //finish();
             }
@@ -170,7 +223,7 @@ Dialog loadingBar ;
 
                 // check internet connection
                 if (ConnectivityReceiver.isConnected()) {
-                    makeDeleteOrderRequest(sale_id, user_id);
+                    //makeDeleteOrderRequest(sale_id, user_id);
                 }
 
                 dialogInterface.dismiss();
@@ -229,14 +282,16 @@ Dialog loadingBar ;
     /**
      * Method to make json object request where json response starts wtih
      */
-    private void makeDeleteOrderRequest(String sale_id, String user_id) {
+    private void makeDeleteOrderRequest(String sale_id, String user_id,String remark) {
 
+        loadingBar.show();
         // Tag used to cancel the request
         String tag_json_obj = "json_delete_order_req";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("sale_id", sale_id);
         params.put("user_id", user_id);
+        params.put("remark", remark);
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.DELETE_ORDER_URL, params, new Response.Listener<JSONObject>() {
@@ -245,11 +300,13 @@ Dialog loadingBar ;
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
 
+                loadingBar.dismiss();
                 try {
                     Boolean status = response.getBoolean("responce");
                     if (status) {
 
                         String msg = response.getString("message");
+                        dialog.dismiss();
                         Toast.makeText(MyOrderDetail.this, "" + msg, Toast.LENGTH_SHORT).show();
                         Intent intent=new Intent(MyOrderDetail.this,MainActivity.class);
                         startActivity(intent);
@@ -268,6 +325,7 @@ Dialog loadingBar ;
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
                 String errormsg = Module.VolleyErrorMessage(error);
                 Toast.makeText( MyOrderDetail.this,""+ errormsg,Toast.LENGTH_LONG ).show();
             }
