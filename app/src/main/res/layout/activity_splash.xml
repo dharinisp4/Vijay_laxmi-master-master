@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context="binplus.vijaylaxmi.SplashActivity">
-<!--    <ImageView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:background="@drawable/aaaaa"-->
-<!--        -->
-<!--          />-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/beauty_mentor_welcome"
+
+          />
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -19,11 +19,11 @@
     android:layout_marginTop="250dp"
     android:gravity="center_horizontal"
     android:layout_centerInParent="true" >
-    <ImageView
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:src="@drawable/beautymentorfull"
-        />
+<!--    <ImageView-->
+<!--        android:layout_width="350dp"-->
+<!--        android:layout_height="350dp"-->
+<!--        android:src="@drawable/beautymentorfull"-->
+<!--        />-->
 <!--    <TextView-->
 <!--        android:id="@+id/vijay"-->
 <!--        android:layout_width="match_parent"-->

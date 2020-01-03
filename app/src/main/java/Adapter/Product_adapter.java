@@ -320,7 +320,13 @@ SharedPreferences preferences;
                 holder.discount.setVisibility(View.VISIBLE);
                 int discount = getDiscount(mList.getPrice(),mList.getMrp());
               //  holder.discount.setText( mList.getPrice()+ "&"+mList.getMrp() );
-                holder.discount.setText(Math.round(discount)+"%" + "off");
+                if (discount>0) {
+                    holder.discount.setText( Math.round( discount ) + "%" + "off" );
+                }
+                else
+                {
+                    holder.discount.setVisibility( View.GONE );
+                }
             }
             else
                 holder.discount.setVisibility(View.GONE);
@@ -337,7 +343,13 @@ SharedPreferences preferences;
                 holder.discount.setVisibility(View.VISIBLE);
               int discount = getDiscount(variantModels.get(0).getAttribute_value(),variantModels.get(0).getAttribute_mrp());
               //  holder.discount.setText( mList.getPrice()+ "&"+mList.getMrp() );
-               holder.discount.setText(Math.round(discount)+"%" + "off");
+                if (discount>0) {
+                    holder.discount.setText( Math.round( discount ) + "%" + "off" );
+                }
+                else
+                {
+                    holder.discount.setVisibility( View.GONE );
+                }
             }
             else
                 holder.discount.setVisibility(View.GONE);

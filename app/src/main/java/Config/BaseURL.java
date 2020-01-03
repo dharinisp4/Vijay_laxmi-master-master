@@ -5,7 +5,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BaseURL {
-    static final String APP_NAME = "Smart Soch  ";
+    static final String APP_NAME = "Beauty Mentor";
     public static final String PREFS_NAME = "GroceryLoginPrefs";
     public static final String PREFS_NAME2 = "GroceryLoginPrefs2";
     public static final String IS_LOGIN = "isLogin";
@@ -49,7 +49,8 @@ public class BaseURL {
 
     //https://www.vijaylaxmi.net/admin/index.php/api/get_products
     //public static String BASE_URL = "https://www.vijaylaxmi.net/";
-    public static String BASE_URL = "https://www.vijaylaxmi.net/admin/";
+  //  public static String BASE_URL = "https://www.vijaylaxmi.net/admin/";
+    public static String BASE_URL = "https://beautymentor.in/admin/";
 
     public static String IMG_SLIDER_URL = BASE_URL + "uploads/sliders/";
     public static String IMG_CATEGORY_URL = BASE_URL + "uploads/category/";

@@ -23,7 +23,7 @@
         android:tint="@color/colorPrimary"/>
 
     <TextView
-        android:layout_width="348dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/space_16"
@@ -36,8 +36,7 @@
         android:textColor="@color/pink"
         android:textSize="@dimen/text_size_large"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="326dp" />
+        />
 
     <TextView
         android:layout_width="348dp"
