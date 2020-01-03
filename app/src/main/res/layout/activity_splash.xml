@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/beauty_mentor_welcome"
 
+
           />
 <LinearLayout
     android:layout_width="match_parent"
