@@ -1,14 +1,9 @@
 package Adapter;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Paint;
-import android.os.Bundle;
-import Fragment.*;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.Fragment.*;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
@@ -31,7 +26,7 @@ import Config.BaseURL;
 import Fragment.Cart_fragment;
 import Fragment.Details_Fragment;
 import Module.Module;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 import util.DatabaseCartHandler;
 
 import static android.content.Context.MODE_PRIVATE;

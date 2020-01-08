@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 
 
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 /**
  * A simple {@link Fragment} subclass.

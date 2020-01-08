@@ -17,12 +17,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,9 +30,8 @@ import java.util.Map;
 
 import Config.BaseURL;
 import Model.Delivery_address_model;
-import binplus.vijaylaxmi.AppController;
-import binplus.vijaylaxmi.MyOrderDetail;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.AppController;
+import beautymentor.in.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
@@ -165,7 +161,7 @@ public class DeliveryAddressAdapter extends RecyclerView.Adapter<DeliveryAddress
             module=new Module();
             buttonDelete = (TextView) itemView.findViewById( R.id.delete);
             btn_edit = (TextView) itemView.findViewById(R.id.edit);
-            loadingBar=new Dialog(activity,android.R.style.Theme_Translucent_NoTitleBar);
+            loadingBar=new Dialog(context,android.R.style.Theme_Translucent_NoTitleBar);
             loadingBar.setContentView( R.layout.progressbar );
             loadingBar.setCanceledOnTouchOutside(false);
             tv_address = (TextView) itemView.findViewById(R.id.tv_adres_address);

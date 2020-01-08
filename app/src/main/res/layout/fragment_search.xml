@@ -50,6 +50,7 @@
                         android:layout_marginTop="@dimen/space_4"
                         android:background="@drawable/xml_textbox_bg"
                         android:ems="10"
+                        android:hint="Enter Product Name"
                         android:completionThreshold="1"
                         android:fontFamily="@font/cabin"
                         android:inputType="text"

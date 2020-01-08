@@ -3,7 +3,6 @@ package Fragment;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -17,12 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -41,10 +37,9 @@ import Config.BaseURL;
 import Model.My_order_detail_model;
 
 import Module.Module;
-import binplus.vijaylaxmi.AppController;
-import binplus.vijaylaxmi.LoginActivity;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.AppController;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
 import util.CustomVolleyJsonRequest;

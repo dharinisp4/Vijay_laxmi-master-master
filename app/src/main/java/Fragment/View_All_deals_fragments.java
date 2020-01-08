@@ -1,7 +1,6 @@
 package Fragment;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.View_All_Deal_Of_Day_model;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 import util.ConnectivityReceiver;
 
 public class View_All_deals_fragments extends Fragment {

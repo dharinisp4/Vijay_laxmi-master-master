@@ -2,7 +2,6 @@ package Fragment;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,11 +30,11 @@ import java.util.Map;
 import Config.BaseURL;
 import Config.SharedPref;
 import Module.Module;
-import binplus.vijaylaxmi.GifImageView;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.networkconnectivity.NetworkConnection;
-import binplus.vijaylaxmi.networkconnectivity.NetworkError;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.GifImageView;
+import beautymentor.in.MainActivity;
+import beautymentor.in.networkconnectivity.NetworkConnection;
+import beautymentor.in.networkconnectivity.NetworkError;
+import beautymentor.in.R;
 import util.ConnectivityReceiver;
 import util.Session_management;
 

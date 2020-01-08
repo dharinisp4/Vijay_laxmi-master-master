@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import Model.ProductVariantModel;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 public class ProductVariantAdapter extends BaseAdapter {
 

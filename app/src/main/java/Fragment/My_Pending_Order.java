@@ -1,7 +1,6 @@
 package Fragment;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,12 +15,9 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -37,10 +33,10 @@ import Adapter.My_Pending_Order_adapter;
 import Config.BaseURL;
 import Model.My_Pending_order_model;
 import Module.Module;
-import binplus.vijaylaxmi.AppController;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.MyOrderDetail;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.AppController;
+import beautymentor.in.MainActivity;
+import beautymentor.in.MyOrderDetail;
+import beautymentor.in.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
 import util.RecyclerTouchListener;

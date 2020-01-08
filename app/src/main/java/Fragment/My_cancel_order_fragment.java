@@ -1,7 +1,6 @@
 package Fragment;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,9 +36,9 @@ import Config.BaseURL;
 import Model.My_Cancel_order_model;
 
 import Module.Module;
-import binplus.vijaylaxmi.AppController;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.AppController;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
 import util.Session_management;

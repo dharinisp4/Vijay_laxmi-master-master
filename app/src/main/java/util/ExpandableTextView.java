@@ -23,7 +23,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 
 public class ExpandableTextView extends LinearLayout implements View.OnClickListener {

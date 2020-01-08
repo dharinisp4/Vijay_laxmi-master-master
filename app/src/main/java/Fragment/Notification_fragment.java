@@ -2,14 +2,13 @@ package Fragment;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 
 public class Notification_fragment extends Fragment {
 

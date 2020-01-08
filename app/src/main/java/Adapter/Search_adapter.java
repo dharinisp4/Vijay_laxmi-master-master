@@ -30,8 +30,8 @@ import java.util.List;
 import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Product_model;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 import util.DatabaseCartHandler;
 
 /**

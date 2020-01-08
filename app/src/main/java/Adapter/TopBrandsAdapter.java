@@ -16,7 +16,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.Category_model;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

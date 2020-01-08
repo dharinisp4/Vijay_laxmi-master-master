@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 
 import Config.BaseURL;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 public class Product_images_Adapter extends BaseAdapter {
     Context context;

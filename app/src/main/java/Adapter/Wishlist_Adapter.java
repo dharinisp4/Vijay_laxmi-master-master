@@ -1,12 +1,12 @@
 package Adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -26,7 +25,6 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,10 +33,9 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Fragment.Wishlist;
 import Model.ProductVariantModel;
-import Model.Product_model;
 import Model.Wish_model;
 import Module.Module;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 import util.DatabaseCartHandler;
 import util.Session_management;
 import util.WishlistHandler;
@@ -336,18 +333,47 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
 
               //  holder.db_wish.clearWishtable(user_id);
 
-                String us_id=session_management.getUserDetails().get(KEY_ID);
-                holder.db_wish.removeItemFromWishtable(map.get("product_id"),us_id);
-                list.remove(position);
+                AlertDialog.Builder builder=new AlertDialog.Builder(activity);
+                builder.setMessage(activity.getResources().getString(R.string.wish_del))
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                String us_id=session_management.getUserDetails().get(KEY_ID);
+                                holder.db_wish.removeItemFromWishtable(map.get("product_id"),us_id);
+                                list.remove(position);
+                                notifyDataSetChanged();
 
-                notifyDataSetChanged();
-                if(list.size()<=0)
-                {
-                    no_prod_image.setVisibility(View.VISIBLE);
-                    Wishlist.rv_wishlist.setVisibility(View.GONE);
-                }
-                // db_cart.getCartAll()
-                updateintent();
+                                if(list.size()<=0)
+                                {
+                                    no_prod_image.setVisibility(View.VISIBLE);
+                                    Wishlist.rv_wishlist.setVisibility(View.GONE);
+                                }
+
+                                // db_cart.getCartAll()
+                                updateintent();
+                            }
+                        });
+                AlertDialog dialog=builder.create();
+                dialog.show();
+
+//                String us_id=session_management.getUserDetails().get(KEY_ID);
+//                holder.db_wish.removeItemFromWishtable(map.get("product_id"),us_id);
+//                list.remove(position);
+//
+//                notifyDataSetChanged();
+//                if(list.size()<=0)
+//                {
+//                    no_prod_image.setVisibility(View.VISIBLE);
+//                    Wishlist.rv_wishlist.setVisibility(View.GONE);
+//                }
+//                // db_cart.getCartAll()
+//                updateintent();
             }
         });
 

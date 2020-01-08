@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -19,7 +18,7 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Interface.RecyclerViewClickListener;
 import de.hdodenhof.circleimageview.CircleImageView;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 import util.DatabaseCartHandler;
 
 import static Fragment.Details_Fragment.btn;
@@ -77,6 +76,8 @@ public class AttrColorAdapter extends RecyclerView.Adapter<AttrColorAdapter.View
 
                 //Toast.makeText(activity,"atr "+atr_id,Toast.LENGTH_LONG).show();
 //
+                btn.setVisibility(View.VISIBLE);
+                Details_Fragment.product_img_slider.setVisibility(View.GONE);
                 Glide.with(activity)
                         .load(BaseURL.IMG_PRODUCT_URL +list_img.get(position).toString())
                         .fitCenter()

@@ -19,7 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -36,7 +35,7 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Deal_Of_Day_model;
 import Model.ProductVariantModel;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 import util.DatabaseCartHandler;
 import util.WishlistHandler;
 

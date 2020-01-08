@@ -2,10 +2,8 @@ package Fragment;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,28 +13,19 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import Config.BaseURL;
-import Model.Support_info_model;
 import Module.Module;
-import binplus.vijaylaxmi.AppController;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.AppController;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
-
-import static binplus.vijaylaxmi.AppController.TAG;
 
 public class About_us_fragment extends Fragment {
 

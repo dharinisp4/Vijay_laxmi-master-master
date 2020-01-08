@@ -2,7 +2,6 @@ package Fragment;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,9 +24,9 @@ import org.json.JSONObject;
 import Config.BaseURL;
 import Config.SharedPref;
 import Module.Module;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
-import binplus.vijaylaxmi.RechargeWallet;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
+import beautymentor.in.RechargeWallet;
 import util.ConnectivityReceiver;
 import util.Session_management;
 

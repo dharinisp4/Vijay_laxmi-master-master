@@ -34,7 +34,7 @@ import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.Deal_Of_Day_model;
 import Model.ProductVariantModel;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 import util.DatabaseCartHandler;
 import util.WishlistHandler;
 

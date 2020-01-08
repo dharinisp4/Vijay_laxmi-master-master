@@ -57,7 +57,7 @@
         android:orientation="vertical">
 
 
-        <binplus.vijaylaxmi.GifImageView
+        <beautymentor.in.GifImageView
             android:id="@+id/gif_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

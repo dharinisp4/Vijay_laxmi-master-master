@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import Model.ProductVariantModel;
-import binplus.vijaylaxmi.MainActivity;
+import beautymentor.in.MainActivity;
 import util.DatabaseCartHandler;
 
 public class Module {

@@ -384,7 +384,7 @@
                     android:text="Click here"
                     android:fontFamily="@font/cabin"
                     android:textColor="@color/white"
-                    android:layout_marginBottom="@dimen/space_5"
+                    android:layout_marginBottom="15dp"
 
                     />
 

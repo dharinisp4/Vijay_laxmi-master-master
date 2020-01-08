@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="binplus.vijaylaxmi">
+    package="beautymentor.in">
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:supportsRtl="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name="binplus.vijaylaxmi.AppController"
+        android:name="beautymentor.in.AppController"
         android:allowBackup="true"
         android:hardwareAccelerated="false"
         android:icon="@drawable/beautymentor"
@@ -15,10 +31,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:node="replace">
-
-
+        <activity android:name="beautymentor.in.No_intenet_Activity"></activity>
         <activity
-            android:name="binplus.vijaylaxmi.SplashActivity"
+            android:name="beautymentor.in.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,43 +42,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="binplus.vijaylaxmi.MainActivity"
+            android:name="beautymentor.in.MainActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar" />
-<!--        <activity android:name="binplus.vijaylaxmi.NetworkError" />-->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- <activity android:name="binplus.vijaylaxmi.NetworkError" /> -->
         <activity
-            android:name="binplus.vijaylaxmi.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name="binplus.vijaylaxmi.RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="binplus.vijaylaxmi.SelectStore" /> <!-- Firebase Notifications -->
-        <activity android:name="binplus.vijaylaxmi.SelectCity" />
-        <activity
-            android:name="binplus.vijaylaxmi.ForgotActivity"
+            android:name="beautymentor.in.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="binplus.vijaylaxmi.ReserPasswordActivity"
+            android:name="beautymentor.in.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="beautymentor.in.SelectStore" /> <!-- Firebase Notifications -->
+        <activity android:name="beautymentor.in.SelectCity" />
+        <activity
+            android:name="beautymentor.in.ForgotActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name="beautymentor.in.ReserPasswordActivity"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- ./Firebase Notifications -->
-        <activity android:name="binplus.vijaylaxmi.My_Order_activity" />
-
-        <activity android:name="binplus.vijaylaxmi.MyOrderDetail" />
-        <activity android:name="binplus.vijaylaxmi.RechargeWallet" />
-        <activity android:name="binplus.vijaylaxmi.ThanksOrder" />
-        <activity android:name="binplus.vijaylaxmi.OrderFail" />
+        <activity android:name="beautymentor.in.My_Order_activity" />
+        <activity android:name="beautymentor.in.MyOrderDetail" />
+        <activity android:name="beautymentor.in.RechargeWallet" />
+        <activity android:name="beautymentor.in.ThanksOrder" />
+        <activity android:name="beautymentor.in.OrderFail" />
         <activity
             android:name="com.paytm.pgsdk.PaytmPGActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name="binplus.vijaylaxmi.Paytm" />
-        <activity android:name="binplus.vijaylaxmi.networkconnectivity.NoInternetConnection" />
+        <activity android:name="beautymentor.in.Paytm" />
+        <activity android:name="beautymentor.in.networkconnectivity.NoInternetConnection" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_live_ILgsfZCZoFIKMb" />
@@ -94,22 +106,5 @@
             </intent-filter>
         </service>
     </application>
-
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:resizeable="true"
-        android:smallScreens="true"
-        android:supportsRtl="true" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

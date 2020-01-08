@@ -17,7 +17,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import Model.My_Pending_order_model;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

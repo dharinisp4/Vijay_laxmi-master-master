@@ -2,7 +2,6 @@ package Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.Home_Icon_model;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

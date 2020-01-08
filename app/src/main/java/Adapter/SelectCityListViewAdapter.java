@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 public class SelectCityListViewAdapter extends BaseAdapter {
     Context context;

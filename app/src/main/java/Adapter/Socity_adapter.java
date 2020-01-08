@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.Socity_model;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 /**
  * Created by Rajesh Dabhi on 29/6/2017.

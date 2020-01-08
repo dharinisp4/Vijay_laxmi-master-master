@@ -1,7 +1,6 @@
 package Fragment;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.app.Fragment;
 
@@ -17,9 +16,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.My_Order_activity;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.MainActivity;
+import beautymentor.in.My_Order_activity;
+import beautymentor.in.R;
 
 import static android.content.Context.MODE_PRIVATE;
 

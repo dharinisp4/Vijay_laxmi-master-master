@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:background="#f2f0f4"
+                android:background="@color/white"
                 android:gravity="center">
 
                 <TextView
@@ -46,7 +46,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ffffff"
+                android:background="@color/all"
                 android:layout_marginLeft="@dimen/space_10"
                 android:layout_marginRight="@dimen/space_10"
                 >
@@ -65,7 +65,7 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/all"
+
                         android:scrollbars="none"
                         />
 

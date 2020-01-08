@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import Model.MenuModel;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context context;

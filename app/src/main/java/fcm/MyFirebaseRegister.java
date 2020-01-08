@@ -22,9 +22,7 @@ import Config.BaseURL;
 
 
 import Module.Module;
-import binplus.vijaylaxmi.AppController;
-import binplus.vijaylaxmi.ForgotActivity;
-import binplus.vijaylaxmi.MyOrderDetail;
+import beautymentor.in.AppController;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 

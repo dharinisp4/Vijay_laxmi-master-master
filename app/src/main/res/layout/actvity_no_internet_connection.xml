@@ -10,8 +10,11 @@
         android:id="@+id/no_internet_connection"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:backgroundTint="@color/white"
+        android:background="@color/white"
         android:src="@drawable/no_connection"
         android:layout_gravity="center"
+        android:scaleType="fitXY"
         android:gravity="center" />
 
 

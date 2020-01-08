@@ -5,11 +5,11 @@ import android.app.Dialog;
 import android.app.Fragment;
 
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -68,13 +68,15 @@ import Model.Deal_Of_Day_model;
 import Model.Home_Icon_model;
 import Model.Top_Selling_model;
 import Module.Module;
-import binplus.vijaylaxmi.AppController;
-import binplus.vijaylaxmi.CustomSlider;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.AppController;
+import beautymentor.in.CustomSlider;
+import beautymentor.in.LoginActivity;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
+import util.Session_management;
 
 
 public class Home_fragment extends Fragment {
@@ -84,7 +86,9 @@ public class Home_fragment extends Fragment {
     private List<Category_model> category_modelList = new ArrayList<>();
     private Home_adapter adapter;
     Module module;
-
+    int version_code=0;
+    public  static String app_link="";
+    Session_management session_management;
     private boolean isSubcat = false;
     LinearLayout Search_layout;
     String getid;
@@ -142,6 +146,7 @@ public class Home_fragment extends Fragment {
         loadingBar.setCanceledOnTouchOutside(false);
          module=new Module();
         setHasOptionsMenu(true);
+        session_management=new Session_management(getActivity());
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
         ((MainActivity) getActivity()).updateHeader();
         view.setFocusableInTouchMode(true);
@@ -178,20 +183,9 @@ public class Home_fragment extends Fragment {
         });
         //Check Internet Connection
         if (ConnectivityReceiver.isConnected()) {
-            makeGetSliderRequest();
-            make_menu_items();
-            makeGetCategoryRequest();
-
-            makeGetBannerSliderRequest();
-            makeGetFeaturedSlider();
-
-
-          new_products();
-            make_deal_od_the_day();
-            make_top_selling();
-            makeGetBrandsRequest();
-
+            getAppSettingData();
         }
+
 
         View_all_deals = (Button) view.findViewById(R.id.view_all_deals);
         //View_all_TopSell = (Button) view.findViewById(R.id.view_all_topselling);
@@ -239,8 +233,8 @@ public class Home_fragment extends Fragment {
         //DealOf the Day
         rv_deal_of_day = (RecyclerView) view.findViewById(R.id.rv_deal);
         //  GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getActivity(), 2);
-      rv_deal_of_day.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
-       // rv_deal_of_day.setLayoutManager(new lLayoutManager(getActivity(),2));
+        rv_deal_of_day.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        // rv_deal_of_day.setLayoutManager(new lLayoutManager(getActivity(),2));
         rv_deal_of_day.setItemAnimator(new DefaultItemAnimator());
         rv_deal_of_day.setNestedScrollingEnabled(false);
         rv_deal_of_day.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(2), true));
@@ -296,11 +290,21 @@ public class Home_fragment extends Fragment {
         footer.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fm = new Help_Fragment();
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                        .addToBackStack(null).commit();
-            }
+
+                if(!session_management.isLoggedIn())
+                {
+                    Intent intent=new Intent(getActivity(), LoginActivity.class);
+                    getActivity().startActivity(intent);
+                }
+                else
+                {
+                    Fragment fm = new Help_Fragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                            .addToBackStack(null).commit();
+
+                }
+                      }
 
         } );
 
@@ -613,8 +617,6 @@ public class Home_fragment extends Fragment {
                                         args.putString( "product_description", name.get( "product_description ") );
                                         args.putString( "in_stock",name.get( "in_stock" ) );
                                         args.putString( "stock",name.get( "stock" ) );
-//                args.putString("product_size",modelList.get(position).getSize());
-//                args.putString("product_color",modelList.get( position).getColor());
                                         args.putString( "unit_price", name.get( "unit_price" ) );
                                         args.putString( "price",name.get( "price" ));
                                         args.putString( "mrp", name.get( "mrp" ) );
@@ -996,8 +998,6 @@ public class Home_fragment extends Fragment {
         Map<String, String> params = new HashMap<String, String>();
         params.put("parent", "");
         isSubcat = true;
-       /* if (parent_id != null && parent_id != "") {
-        }*/
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.GET_CATEGORY_URL, params, new Response.Listener<JSONObject>() {
@@ -1150,4 +1150,113 @@ public class Home_fragment extends Fragment {
 //        callIntent.setData(Uri.parse("tel:" + "919889887711"));
 //        startActivity(callIntent);
 //    }
+
+    public void getAppSettingData()
+    {
+        loadingBar.show();
+        String json_tag="json_app_tag";
+        HashMap<String,String> map=new HashMap<>();
+
+        CustomVolleyJsonRequest request=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_VERSTION_DATA, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingBar.dismiss();
+                try
+                {
+                    boolean sts=response.getBoolean("responce");
+
+                    if(sts)
+                    {
+                        JSONObject object=response.getJSONObject("data");
+                        version_code=Integer.parseInt(object.getString("app_version"));
+                        app_link=object.getString("data");
+
+                        if(getUpdaterInfo())
+                        {
+                            makeGetSliderRequest();
+                            make_menu_items();
+                            makeGetCategoryRequest();
+                            makeGetBannerSliderRequest();
+                            // makeGetFeaturedSlider();
+                            new_products();
+                            make_deal_od_the_day();
+                            make_top_selling();
+                            // makeGetBrandsRequest();
+
+                        }
+                        else
+                        {
+
+                            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                            builder.setCancelable(false);
+                            builder.setMessage("The new version of app is available please update to get access.");
+                            builder.setPositiveButton("Update now", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    String url = app_link;
+                                    Intent in = new Intent(Intent.ACTION_VIEW);
+                                    in.setData(Uri.parse(url));
+                                    startActivity(in);
+                                    getActivity().finish();
+                                    //Toast.makeText(getActivity(),"updating",Toast.LENGTH_SHORT).show();
+                                }
+                            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    dialogInterface.dismiss();
+                                    getActivity().finishAffinity();
+                                }
+                            });
+                            AlertDialog dialog=builder.create();
+                            dialog.show();
+                        }
+
+
+                    }
+                    else
+                    {
+                        Toast.makeText(getActivity(),""+response.getString("error"),Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText(getActivity(),""+msg,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(request,json_tag);
+    }
+
+    public boolean getUpdaterInfo()
+    {
+        boolean st=false;
+        try
+        {
+            PackageInfo packageInfo=getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(),0);
+            int ver_code=packageInfo.versionCode;
+            if(ver_code == version_code)
+            {
+                st=true;
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        return st;
+    }
+
+
 }

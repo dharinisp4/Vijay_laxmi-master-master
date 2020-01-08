@@ -16,7 +16,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.ShopNow_model;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -49,7 +49,7 @@ public class Shop_Now_adapter extends RecyclerView.Adapter<Shop_Now_adapter.MyVi
     @Override
     public Shop_Now_adapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_headre_catogaries, parent, false);
+                .inflate(R.layout.row_all_catogaries, parent, false);
 
         context = parent.getContext();
 

@@ -21,7 +21,7 @@ import java.util.List;
 
 import Config.BaseURL;
 import Model.My_order_detail_model;
-import binplus.vijaylaxmi.R;
+import beautymentor.in.R;
 
 /**
  * Created by Rajesh Dabhi on 30/6/2017.

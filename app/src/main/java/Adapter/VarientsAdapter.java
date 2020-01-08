@@ -9,17 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import java.util.List;
 
-import Config.BaseURL;
 import Fragment.Details_Fragment;
 import Model.ProductVariantModel;
-import binplus.vijaylaxmi.R;
-
-import static Fragment.Details_Fragment.btn;
+import beautymentor.in.R;
 
 public class VarientsAdapter extends RecyclerView.Adapter<VarientsAdapter.ViewHolder> {
     Context context;

@@ -1,23 +1,17 @@
 package Fragment;
 
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
-
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -39,17 +33,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton;
+import com.daimajia.slider.library.SliderLayout;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 //import com.skyhope.showmoretextview.ShowMoreTextView;
@@ -57,7 +47,6 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Attr;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -66,8 +55,6 @@ import java.util.List;
 import java.util.Map;
 
 import Adapter.AttrColorAdapter;
-import Adapter.Produccts_images_adapter;
-import Adapter.ProductVariantAdapter;
 import Adapter.RelatedProductAdapter;
 import Adapter.VarientsAdapter;
 import Config.BaseURL;
@@ -75,15 +62,13 @@ import Model.ProductVariantModel;
 import Model.Product_model;
 import Model.RelatedProductModel;
 import Module.Module;
-import binplus.vijaylaxmi.AppController;
-import binplus.vijaylaxmi.LoginActivity;
-import binplus.vijaylaxmi.MainActivity;
-import binplus.vijaylaxmi.R;
-import binplus.vijaylaxmi.ThanksOrder;
-import util.ConnectivityReceiver;
+import beautymentor.in.AppController;
+import beautymentor.in.CustomSlider;
+import beautymentor.in.LoginActivity;
+import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
-import util.RecyclerTouchListener;
 import util.Session_management;
 import util.WishlistHandler;
 
@@ -132,7 +117,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     JSONObject var_respons=null;
    public static RelativeLayout rel_relative ;
    String qty_in_cart ;
-
+   public static SliderLayout product_img_slider;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -148,6 +133,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+        product_img_slider = (SliderLayout) view.findViewById(R.id.product_img_slider);
 
         models= (List<Product_model>) getArguments().getSerializable("product_model");
         rv_cat = (RecyclerView) view.findViewById(R.id.top_selling_recycler);
@@ -739,41 +725,39 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 //
 //        if(details_product_attribute.equals("[]"))
 //        {
-            try
-            {
-                image_list.clear();
-                JSONArray array=new JSONArray(product_images);
-                //Toast.makeText(this,""+product_images,Toast.LENGTH_SHORT).show();
-                if(product_images.equals(null))
-                {
-                    Toast.makeText(getActivity(),"There is no image for this product",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    for(int i=0; i<=array.length()-1;i++)
-                    {
-                        image_list.add(array.get(i).toString());
-
-                    }
+        try {
+            image_list.clear();
+            JSONArray array = new JSONArray(product_images);
+            //Toast.makeText(this,""+product_images,Toast.LENGTH_LONG).show();
+            if (product_images.equals(null)) {
+                Toast.makeText(getActivity(), "There is no image for this product", Toast.LENGTH_LONG).show();
+            } else {
+                for (int i = 0; i <= array.length() - 1; i++) {
+                    image_list.add(array.get(i).toString());
 
                 }
 
-                //   Toast.makeText(getActivity(),""+image_list.get(0).toString(),Toast.LENGTH_SHORT).show();
-                Glide.with(getActivity())
-                        .load(BaseURL.IMG_PRODUCT_URL +image_list.get(0) )
-                        .fitCenter()
-                        .placeholder(R.drawable.icon)
-                        .crossFade()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .dontAnimate()
-                        .into(btn);
+                for(int i=0; i<image_list.size();i++)
+                {
+                    CustomSlider textSliderView = new CustomSlider(getActivity());
+                    // initialize a SliderLayout
+                    textSliderView
+                            .image(BaseURL.IMG_PRODUCT_URL +image_list.get(i).toString())
+                            .setScaleType(CustomSlider.ScaleType.CenterInside);
+                    product_img_slider.addSlider(textSliderView);
+                }
 
 
+
+
+                product_img_slider.setDuration(10000);
             }
-            catch (Exception ex)
-            {
-                // Toast.makeText(Product_Frag_details.this,""+ex.getMessage(),Toast.LENGTH_SHORT).show();
-            }
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(getActivity(),""+ex.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
 //
 //        }
 //        else
