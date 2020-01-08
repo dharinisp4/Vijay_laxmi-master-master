@@ -184,7 +184,7 @@ SharedPreferences preferences;
         }
 
         holder.tv_price.setText(context.getResources().getString(R.string.currency) + mList.getTotal_amount());
-        holder.tv_item.setText(context.getResources().getString(R.string.tv_cart_item) + mList.getTotal_items());
+        holder.tv_item.setText( mList.getTotal_items());
 //        holder.tv_pending_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());
         holder.tv_pending_date.setText(mList.getOn_date());
 //        holder.tv_confirm_time.setText(mList.getDelivery_time_from() + "-" + mList.getDelivery_time_to());

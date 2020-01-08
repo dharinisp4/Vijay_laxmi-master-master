@@ -3,7 +3,10 @@ package Fragment;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -662,6 +665,12 @@ public class Payment_fragment extends Fragment {
     }*/
 
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        getActivity().registerReceiver( mCart, new IntentFilter( "Grocery_cart" ) );
+//    }
+
     private void checked() {
         if (checkBox_Wallet.isChecked()) {
 
@@ -757,6 +766,24 @@ public class Payment_fragment extends Fragment {
         }*/
 
 
+
+    }
+     private BroadcastReceiver mCart = new BroadcastReceiver() {
+         @Override
+         public void onReceive(Context context, Intent intent) {
+             String type = intent.getStringExtra("type");
+
+             if (type.contentEquals("update")) {
+                 updateData();
+             }
+         }
+
+
+    };
+
+    private void updateData() {
+
+        ((MainActivity) getActivity()).setCartCounter("" + db_cart.getCartCount());
 
     }
 

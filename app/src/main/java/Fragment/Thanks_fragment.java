@@ -1,11 +1,14 @@
 package Fragment;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.app.Fragment;
 
 import android.app.FragmentManager;
 
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Html;
@@ -19,12 +22,11 @@ import android.widget.TextView;
 import beautymentor.in.MainActivity;
 import beautymentor.in.My_Order_activity;
 import beautymentor.in.R;
+import util.DatabaseCartHandler;
 
 import static android.content.Context.MODE_PRIVATE;
 
-/**
- * Created by Rajesh Dabhi on 29/6/2017.
- */
+
 
 public class Thanks_fragment extends Fragment implements View.OnClickListener {
 
@@ -32,6 +34,7 @@ public class Thanks_fragment extends Fragment implements View.OnClickListener {
     RelativeLayout btn_home, btn_order;
 Dialog loadingBar ;
     SharedPreferences preferences;
+    DatabaseCartHandler db_cart ;
 
     String language;
     public Thanks_fragment() {
@@ -57,6 +60,8 @@ Dialog loadingBar ;
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
+
+        db_cart = new DatabaseCartHandler( getActivity() );
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener(new View.OnKeyListener() {
@@ -91,6 +96,8 @@ Dialog loadingBar ;
         return view;
     }
 
+
+
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -105,6 +112,24 @@ Dialog loadingBar ;
             getActivity().startActivity(myIntent);
         }
 
+
+    }
+    private BroadcastReceiver mCart = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String type = intent.getStringExtra("type");
+
+            if (type.contentEquals("update")) {
+                updateData();
+            }
+        }
+
+
+    };
+
+    private void updateData() {
+
+        ((MainActivity) getActivity()).setCartCounter("" + db_cart.getCartCount());
 
     }
 

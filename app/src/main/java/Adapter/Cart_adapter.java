@@ -29,6 +29,11 @@ import Module.Module;
 import beautymentor.in.R;
 import util.DatabaseCartHandler;
 
+import static Fragment.Cart_fragment.btn_checkout;
+import static Fragment.Cart_fragment.linear_amt;
+import static Fragment.Cart_fragment.rel_empty_cart;
+import static Fragment.Cart_fragment.rv_cart;
+import static Fragment.Cart_fragment.tv_clear;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -212,6 +217,14 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
                     list.remove(position);
                     notifyDataSetChanged();
                     updateintent();
+
+                    if (list.size()<= 0)
+                    {
+                        rv_cart.setVisibility(View.GONE);
+                        rel_empty_cart.setVisibility(View.VISIBLE);
+                        tv_clear.setVisibility(View.GONE);
+                        linear_amt.setVisibility(View.GONE);
+                    }
                 }
             }
         });
@@ -387,10 +400,11 @@ public class Cart_adapter extends RecyclerView.Adapter<Cart_adapter.ProductHolde
 
                 if(list.size()<=0)
                 {
-                   Cart_fragment.rv_cart.setVisibility(View.GONE);
-                   Cart_fragment.rel_empty_cart.setVisibility(View.VISIBLE);
-                    Cart_fragment.tv_clear.setVisibility(View.GONE);
-                    Cart_fragment.linear_amt.setVisibility(View.GONE);
+                   rv_cart.setVisibility(View.GONE);
+                   rel_empty_cart.setVisibility(View.VISIBLE);
+                    tv_clear.setVisibility(View.GONE);
+                    linear_amt.setVisibility(View.GONE);
+                    btn_checkout.setVisibility( View.GONE );
                 }
                 updateintent();
             }
