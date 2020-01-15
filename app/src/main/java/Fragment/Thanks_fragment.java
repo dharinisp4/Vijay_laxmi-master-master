@@ -133,4 +133,19 @@ Dialog loadingBar ;
 
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // unregister reciver
+        getActivity().unregisterReceiver(mCart);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // register reciver
+        getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+    }
 }

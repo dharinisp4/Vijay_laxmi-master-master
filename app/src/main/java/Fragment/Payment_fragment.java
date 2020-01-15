@@ -439,6 +439,7 @@ public class Payment_fragment extends Fragment {
                         String msg = response.getString("data");
                        // String msg_arb=response.getString("data_arb");
                         db_cart.clearCart();
+                        updateData();
                         loadingBar.dismiss();
                         Bundle args = new Bundle();
                         Fragment fm = new Thanks_fragment();
@@ -768,7 +769,25 @@ public class Payment_fragment extends Fragment {
 
 
     }
-     private BroadcastReceiver mCart = new BroadcastReceiver() {
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        // unregister reciver
+        getActivity().unregisterReceiver(mCart);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // register reciver
+        getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+    }
+
+
+
+    private BroadcastReceiver mCart = new BroadcastReceiver() {
          @Override
          public void onReceive(Context context, Intent intent) {
              String type = intent.getStringExtra("type");
