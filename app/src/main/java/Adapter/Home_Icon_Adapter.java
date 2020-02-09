@@ -21,29 +21,28 @@ import beautymentor.in.R;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by Rajesh Dabhi on 22/6/2017.
+ * Developed by Binplus Technologies pvt. ltd.  on 09,February,2020
  */
-
 public class Home_Icon_Adapter extends RecyclerView.Adapter<Home_Icon_Adapter.MyViewHolder> {
 
-    private List<Home_Icon_model> modelList;
-    private Context context;
-    String language;
-    SharedPreferences preferences;
+private List<Home_Icon_model> modelList;
+private Context context;
+        String language;
+        SharedPreferences preferences;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-        public ImageView image;
+public class MyViewHolder extends RecyclerView.ViewHolder {
+    public TextView title;
+    public ImageView image;
 
-        public MyViewHolder(View view) {
-            super(view);
-            title = (TextView) view.findViewById(R.id.service_text);
-            image = (ImageView) view.findViewById(R.id.service_image);
-           // card = (CardView) view.findViewById(R.id.card);
+    public MyViewHolder(View view) {
+        super(view);
+        title = (TextView) view.findViewById(R.id.service_text);
+        image = (ImageView) view.findViewById(R.id.service_image);
+        // card = (CardView) view.findViewById(R.id.card);
 
 
-        }
     }
+}
 
     public Home_Icon_Adapter(List<Home_Icon_model> modelList) {
         this.modelList = modelList;
@@ -58,6 +57,8 @@ public class Home_Icon_Adapter extends RecyclerView.Adapter<Home_Icon_Adapter.My
 
         return new Home_Icon_Adapter.MyViewHolder(itemView);
     }
+
+
 
     @Override
     public void onBindViewHolder(Home_Icon_Adapter.MyViewHolder holder, int position) {
