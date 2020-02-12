@@ -112,7 +112,7 @@
             </LinearLayout>
 
 
-            <AutoCompleteTextView
+            <EditText
                 android:id="@+id/et_add_adres_pin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,6 +120,7 @@
                 android:layout_marginBottom="@dimen/space_5"
                 android:background="@drawable/xml_textbox_bg"
                 android:ems="10"
+                android:maxLength="6"
                 android:inputType="number"
                 android:textColor="#000"
                 android:textColorHint="#000"

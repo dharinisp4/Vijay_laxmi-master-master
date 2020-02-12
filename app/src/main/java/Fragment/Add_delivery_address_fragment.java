@@ -43,7 +43,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private static String TAG = Add_delivery_address_fragment.class.getSimpleName();
 
     private EditText et_phone, et_name,  et_address;
-    private AutoCompleteTextView et_pin;
+    private EditText et_pin;
     Module module;
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_pin, tv_address, tv_socity, btn_socity;
@@ -92,7 +92,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         tv_phone = (TextView) view.findViewById(R.id.tv_add_adres_phone);
         tv_name = (TextView) view.findViewById(R.id.tv_add_adres_name);
         tv_pin = (TextView) view.findViewById(R.id.tv_add_adres_pin);
-        et_pin = (AutoCompleteTextView) view.findViewById(R.id.et_add_adres_pin);
+        et_pin = (EditText) view.findViewById(R.id.et_add_adres_pin);
         et_address = (EditText) view.findViewById(R.id.et_add_adres_home);
         tv_address =(TextView)view.findViewById( R.id.tv_add );
         //tv_socity = (TextView) view.findViewById(R.id.tv_add_adres_socity);
@@ -102,16 +102,16 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         String getsocity_name = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_NAME);
         //String getsocity_id = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_ID);
         String getsocity_id = "1";
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line,pincodes);
-//        et_pin.setThreshold( 1 );
-        et_pin.setAdapter( arrayAdapter );
-        et_pin.setOnTouchListener( new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                et_pin.showDropDown();
-                return false;
-            }
-        } );
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line,pincodes);
+////        et_pin.setThreshold( 1 );
+//        et_pin.setAdapter( arrayAdapter );
+//        et_pin.setOnTouchListener( new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                et_pin.showDropDown();
+//                return false;
+//            }
+//        } );
 
 
         Bundle args = getArguments();
@@ -304,28 +304,28 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 if (ConnectivityReceiver.isConnected()) {
                     if (isEdit) {
                         String pin=et_pin.getText().toString();
-                       boolean ch_pin= checkPinCode(pincodes,pin);
-                       if(ch_pin)
-                       {
+//                       boolean ch_pin= checkPinCode(pincodes,pin);
+//                       if(ch_pin)
+//                       {
                            makeEditAddressRequest(getlocation_id, getpin,getsocity, getadd, getname, getphone,address_type);
-                       }
-                       else
-                       {
-                              Toast.makeText(getActivity(),"We don't deliver this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
-                       }
+//                       }
+//                       else
+//                       {
+//                              Toast.makeText(getActivity(),"We don't deliver this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
+//                       }
 
                     } else {
 
                         String pin=et_pin.getText().toString();
-                        boolean ch_pin= checkPinCode(pincodes,pin);
-                        if(ch_pin)
-                        {
+//                        boolean ch_pin= checkPinCode(pincodes,pin);
+//                        if(ch_pin)
+//                        {
                             makeAddAddressRequest(user_id, getpin, getsocity,getadd, getname, getphone,address_type);
-                        }
-                        else
-                        {
-                            Toast.makeText(getActivity(),"We don't deliver this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
-                        }
+//                        }
+//                        else
+//                        {
+//                            Toast.makeText(getActivity(),"We don't deliver this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
+//                        }
 
 
                     }
