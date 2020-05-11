@@ -17,6 +17,15 @@
             android:title="@string/nav_home" />
     </group>
     <group
+        android:id="@+id/group_video"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_videos"
+            android:icon="@drawable/icons8_play_button_16px"
+            android:iconTint="@color/white"
+            android:title="Videos" />
+    </group>
+    <group
         android:id="@+id/group_my_profile"
         android:checkableBehavior="single">
         <item

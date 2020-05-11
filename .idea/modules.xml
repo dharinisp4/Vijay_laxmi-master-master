@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml" filepath="$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml" group="Vijay_laxmi-master-master/FORTSDKv1.5" />
       <module fileurl="file://$PROJECT_DIR$/Vijay_laxmi-master-master.iml" filepath="$PROJECT_DIR$/Vijay_laxmi-master-master.iml" group="Vijay_laxmi-master-master" />
+      <module fileurl="file://$PROJECT_DIR$/FORTSDKv1.5/Vijay_laxmi-master-master-FORTSDKv1.5.iml" filepath="$PROJECT_DIR$/FORTSDKv1.5/Vijay_laxmi-master-master-FORTSDKv1.5.iml" group="Vijay_laxmi-master-master/FORTSDKv1.5" />
+      <module fileurl="file://$PROJECT_DIR$/app/Vijay_laxmi-master-master-app.iml" filepath="$PROJECT_DIR$/app/Vijay_laxmi-master-master-app.iml" group="Vijay_laxmi-master-master/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Vijay_laxmi-master-master/app" />
     </modules>
   </component>

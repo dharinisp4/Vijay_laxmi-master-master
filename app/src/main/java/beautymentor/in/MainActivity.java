@@ -618,13 +618,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             return true;
         }
-//        else if (id == R.id.action_notify)
-//        {
-//            Fragment fm = new Notification_fragment();
-//            FragmentManager fragmentManager = getFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-//                    .addToBackStack(null).commit();
-//        }
+
         else if (id==R.id.action_wish)
         {
           // db_wish.clearWishtable();
@@ -716,6 +710,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(i);
                 overridePendingTransition(0, 0);
             }
+        }
+        else if (id == R.id.nav_videos)
+        {
+            fm = new AllVideos();
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+                    .addToBackStack(null).commit();
         }
         /*else if(id == R.id.nav_my_wishlist)
 

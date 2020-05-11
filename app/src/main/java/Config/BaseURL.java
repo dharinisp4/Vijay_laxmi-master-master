@@ -29,6 +29,11 @@ public class BaseURL {
     public static final String KEY_TIME = "time";
     public static final String KEY_CNT = "img_count";
 
+
+    public static final String YOUTUBE_API_KEY = "AIzaSyBs5gIc4-LfpniGfs4zz6B4GDJkGMjvouE";
+
+
+
     //Store Selection
 
     public static final String KEY_STORE_COUNT = "STORE_COUNT";
@@ -55,6 +60,7 @@ public class BaseURL {
     public static String IMG_SLIDER_URL = BASE_URL + "uploads/sliders/";
     public static String IMG_CATEGORY_URL = BASE_URL + "uploads/category/";
     public static String IMG_PRODUCT_URL = BASE_URL + "uploads/products/";
+    public static String IMG_VIDEOS_URL = BASE_URL + "uploads/videos/";
     public static String GET_VERSTION_DATA = BASE_URL + "index.php/api/getVersionData";
     public static String IMG_PROFILE_URL = BASE_URL + "uploads/profile/";
     public static String GET_SLIDER_URL = BASE_URL + "index.php/api/get_sliders";
@@ -85,6 +91,7 @@ public class BaseURL {
 
 
     public static String GET_PRODUCT_URL = BASE_URL + "index.php/api/get_products";
+    public static String GET_VIDEOS_URL = BASE_URL + "index.php/api/get_videos";
 
     public static String GET_ATTR_URL = BASE_URL + "index.php/api/get_attribute";
 

@@ -6,7 +6,7 @@ android {
     // buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "beautymentor.in"
-        minSdkVersion 20
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 4
         versionName "1.2"
@@ -62,7 +62,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.8.5'
     implementation 'com.daimajia.swipelayout:library:1.2.0@aar'
     testImplementation 'junit:junit:4.12'
-
+    compile files('libs/YouTubeAndroidPlayerApi.jar')
     implementation 'org.apache.commons:commons-lang3:3.4'
     implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
     implementation 'com.thoughtbot:expandablerecyclerview:1.0'

@@ -65,6 +65,7 @@
         <activity android:name="beautymentor.in.RechargeWallet" />
         <activity android:name="beautymentor.in.ThanksOrder" />
         <activity android:name="beautymentor.in.OrderFail" />
+        <activity android:name="beautymentor.in.YoutubeActivity" />
         <activity
             android:name="com.paytm.pgsdk.PaytmPGActivity"
             android:screenOrientation="portrait"

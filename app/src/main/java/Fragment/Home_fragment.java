@@ -30,9 +30,11 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -43,6 +45,9 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
+import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -78,6 +83,9 @@ import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
 import util.Session_management;
 
+import static Config.BaseURL.BASE_URL;
+import static Config.BaseURL.YOUTUBE_API_KEY;
+
 
 public class Home_fragment extends Fragment {
     private static String TAG = Home_fragment.class.getSimpleName();
@@ -95,6 +103,8 @@ public class Home_fragment extends Fragment {
     String getcat_title;
     ScrollView scrollView;
    Button footer ;
+  YouTubeThumbnailView videoView;
+  RelativeLayout rel_video;
     SharedPreferences sharedpreferences;
 
     //Home Icons
@@ -184,7 +194,9 @@ public class Home_fragment extends Fragment {
         //Check Internet Connection
         if (ConnectivityReceiver.isConnected()) {
             getAppSettingData();
+
         }
+
 
 
         View_all_deals = (Button) view.findViewById(R.id.view_all_deals);
@@ -308,45 +320,6 @@ public class Home_fragment extends Fragment {
 
         } );
 
-//        //Call And Whatsapp
-//        iv_Call = (ImageView) view.findViewById(R.id.iv_call);
-//        iv_Whatspp = (ImageView) view.findViewById(R.id.iv_whatsapp);
-//        iv_reviews = (ImageView) view.findViewById(R.id.reviews);
-//        iv_share_via = (ImageView) view.findViewById(R.id.share_via);
-//
-//        iv_Call.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//             Intent intent = new Intent( Intent.ACTION_DIAL );
-//             String number = "7617855680";
-//             intent.setData( Uri.parse("tel:" +number) );
-//             startActivity( intent );
-//            }
-//        });
-//        iv_Whatspp.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String smsNumber = "9889887711";
-//                Intent sendIntent = new Intent("android.intent.action.MAIN");
-//                sendIntent.setComponent(new ComponentName("com.whatsapp","com.whatsapp.Conversation"));
-//                sendIntent.putExtra("jid",     PhoneNumberUtils.stripSeparators(smsNumber)+"@s.whatsapp.net");//phone number without "+" prefix
-//                startActivity(sendIntent);
-//
-//            }
-//        });
-//        iv_reviews.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                reviewOnApp();
-//            }
-//        });
-//        iv_share_via.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                shareApp();
-//
-//            }
-//        });
 
 
         //Recycler View Shop By Catogary
@@ -1181,6 +1154,7 @@ public class Home_fragment extends Fragment {
                             new_products();
                             make_deal_od_the_day();
                             make_top_selling();
+
                             // makeGetBrandsRequest();
 
                         }
@@ -1259,4 +1233,8 @@ public class Home_fragment extends Fragment {
     }
 
 
+
 }
+
+
+
