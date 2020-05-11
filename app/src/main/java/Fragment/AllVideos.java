@@ -74,6 +74,8 @@ public class AllVideos extends Fragment {
         rel_no_items = view.findViewById(R.id.rel_no_items);
 
         swipeRefreshLayout = view.findViewById(R.id.swipe_layout);
+        swipeRefreshLayout.setRefreshing(false);
+
 
         sessionManagment = new Session_management(getActivity());
 
