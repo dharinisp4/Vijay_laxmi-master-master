@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml" filepath="$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Vijay_laxmi-master-master.iml" filepath="$PROJECT_DIR$/Vijay_laxmi-master-master.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml" filepath="$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml" group="Vijay_laxmi-master-master/FORTSDKv1.5" />
+      <module fileurl="file://$PROJECT_DIR$/Vijay_laxmi-master-master.iml" filepath="$PROJECT_DIR$/Vijay_laxmi-master-master.iml" group="Vijay_laxmi-master-master" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Vijay_laxmi-master-master/app" />
     </modules>
   </component>
 </project>
