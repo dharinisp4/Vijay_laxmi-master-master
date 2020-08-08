@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -51,13 +52,14 @@ public class AllVideos extends Fragment {
     RelativeLayout rel_no_items;
     String u_id = "", u_name = "";
 
-    ProgressDialog loadingBar;
+    Dialog loadingBar;
 
     Module module;
     ArrayList<VideoModel> video_list;
     String user_type;
 
     Session_management sessionManagment;
+    boolean is_refreshing=false;
     private final static String expression = "(?<=watch\\?v=|/videos/|embed\\/|youtu.be\\/|\\/v\\/|\\/e\\/|watch\\?v%3D|watch\\?feature=player_embedded&v=|%2Fvideos%2F|embed%\u200C\u200B2F|youtu.be%2F|%2Fv%2F)[^#\\&\\?\\n]*";
 
     public AllVideos() {
@@ -79,7 +81,7 @@ public class AllVideos extends Fragment {
 
         sessionManagment = new Session_management(getActivity());
 
-        loadingBar = new ProgressDialog(getActivity());
+        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView(R.layout.progressbar);
         loadingBar.setCanceledOnTouchOutside(false);
         module = new Module();
@@ -98,6 +100,7 @@ public class AllVideos extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                is_refreshing=true;
                 getVideos();
             }
         });
@@ -116,6 +119,10 @@ public class AllVideos extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 loadingBar.dismiss();
+                if(is_refreshing)
+                {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
                 Log.e("getVideo",response.toString());
                 try {
                     JSONArray v_arr = response.getJSONArray("data");
