@@ -106,10 +106,6 @@ public class AllVideos extends Fragment {
         });
         return view;
     }
-
-
-
-
     public void getVideos ()
     {
         loadingBar.show();

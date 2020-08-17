@@ -156,10 +156,12 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
             int discount=getDiscount(p,m);
             //Toast.makeText(getActivity(),""+atr,Toast.LENGTH_LONG).show();
             if (discount>0) {
+                holder.product_mrp.setVisibility(View.VISIBLE);
                 holder.product_discount.setText( "" + Math.round( discount ) + "% OFF" );
             }
             else
             {
+                holder.product_mrp.setVisibility(View.GONE);
                 holder.product_discount.setVisibility( View.GONE );
             }
 
@@ -203,10 +205,12 @@ public class RelatedProductAdapter extends RecyclerView.Adapter<RelatedProductAd
                 holder.dialog_unit_type.setText("\u20B9"+attribute_value+"/"+attribute_name);
                 //  holder.txtTotal.setText("\u20B9"+String.valueOf(list_atr_value.get(0).toString()));
                 if (atr_dis>0) {
+                    holder.product_mrp.setVisibility(View.VISIBLE);
                     holder.product_discount.setText( "" + Math.round( atr_dis ) + "% OFF" );
                 }
                 else
                 {
+                    holder.product_mrp.setVisibility(View.GONE);
                     holder.product_discount.setVisibility( View.GONE );
                 }
             } catch (JSONException e) {

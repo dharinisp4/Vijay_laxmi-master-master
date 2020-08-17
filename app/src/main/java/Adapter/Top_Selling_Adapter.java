@@ -176,7 +176,19 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
             holder.product_mrp.setText(context.getResources().getString(R.string.currency)+mList.getMrp());
             holder.txtrate.setVisibility(View.VISIBLE);
             price=Double.parseDouble(p);
-            holder.txtrate.setText(mList.getUnit_value()+" "+mList.getUnit());
+            Double dmrp=Double.parseDouble(mList.getMrp());
+            if(dmrp<=price)
+            {
+               if(holder.product_mrp.getVisibility()==View.VISIBLE)
+                   holder.product_mrp.setVisibility(View.GONE);
+            }
+            else
+            {
+                if(holder.product_mrp.getVisibility()==View.GONE)
+                    holder.product_mrp.setVisibility(View.VISIBLE);
+            }
+
+                holder.txtrate.setText(mList.getUnit_value()+" "+mList.getUnit());
             holder.product_desc.setText( mList.getProduct_description() );
             double discount=getDiscount(p,m);
             //Toast.makeText(getActivity(),""+atr,Toast.LENGTH_LONG).show();
@@ -227,10 +239,12 @@ public class Top_Selling_Adapter extends RecyclerView.Adapter<Top_Selling_Adapte
                 holder.dialog_unit_type.setText("\u20B9"+attribute_value+"/"+attribute_name);
                 //  holder.txtTotal.setText("\u20B9"+String.valueOf(list_atr_value.get(0).toString()));
                 if(atr_dis>0) {
+                    holder.product_mrp.setVisibility(View.VISIBLE);
                     holder.product_discount.setText( "" + Math.round( atr_dis) + "% OFF" );
                 }
                 else
                 {
+                    holder.product_mrp.setVisibility(View.GONE);
                     holder.product_discount.setVisibility( View.GONE );
                 }
             } catch (JSONException e) {

@@ -233,10 +233,13 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
             Double discount = Double.valueOf(getDiscount(details_product_price,details_product_mrp));
             if (mrp > price)
             {
-
+                txtMrp.setVisibility(View.VISIBLE);
                 txtPer.setText(String.valueOf(Math.round(discount)+"%"+"off"));
             }
-            else  txtPer.setVisibility(View.GONE);
+            else{
+                txtPer.setVisibility(View.GONE);
+                txtMrp.setVisibility(View.GONE);
+            }
 
             String id=db_cart.getCartId(product_id,"","");
             if(id.isEmpty()|| id.equals(""))
@@ -308,10 +311,14 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                 Double discount = Double.valueOf(getDiscount(model.getAttribute_value(),model.getAttribute_mrp()));
                 if (mrp > price)
                 {
-
+                    txtPer.setVisibility(View.VISIBLE);
+                    txtMrp.setVisibility(View.VISIBLE);
                     txtPer.setText(String.valueOf(Math.round(discount)+"%"+"off"));
                 }
-                else  txtPer.setVisibility(View.GONE);
+                else {
+                    txtPer.setVisibility(View.GONE);
+                    txtMrp.setVisibility(View.GONE);
+                }
 
 
                 try
@@ -1168,6 +1175,14 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                         }.getType();
                         product_modelList = gson.fromJson(response.getString("data"), listType);
                         loadingBar.dismiss();
+                        if(product_modelList.size()>0){
+                            product_modelList.remove(getRemovalIndex(product_modelList,product_id));
+                        }
+
+                        if(product_modelList.size()<=0)
+                        {
+                            rel_relative.setVisibility( View.GONE );
+                        }
                         adapter_product = new RelatedProductAdapter( getActivity(),product_modelList,product_id);
                         rv_cat.setAdapter(adapter_product);
                         adapter_product.notifyDataSetChanged();
@@ -1180,7 +1195,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
 
                                 //  Toast.makeText(getActivity(), getResources().getString(R.string.no_rcord_found), Toast.LENGTH_SHORT).show();
                             }
-                            else if(product_modelList.size()==1)
+                            else if(product_modelList.size()<=0)
                             {
                                 rel_relative.setVisibility( View.GONE );
                             }
@@ -1189,8 +1204,9 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
                     }
                 } catch (JSONException e) {
                     loadingBar.dismiss();
-                    //   e.printStackTrace();
-                    String ex=e.getMessage();
+//                    if(e.getMessage().toString().equalsIgnoreCase("No Value for "))
+                       e.printStackTrace();
+//                    String ex=e.getMessage();
 
 
 
@@ -1449,5 +1465,17 @@ public boolean checkAttributeStatus(String atr)
     };
 
 
+    public int getRemovalIndex(List<RelatedProductModel> list,String p_id)
+    {
+        int inx=-1;
+        for(int i=0; i<list.size();i++){
+            RelatedProductModel model=list.get(i);
+            if(model.getProduct_id().toString().equals(p_id)){
+                inx=i;
+                break;
+            }
+        }
+        return inx;
+    }
 }
 

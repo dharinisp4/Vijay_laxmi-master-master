@@ -123,7 +123,7 @@ public class Home_fragment extends Fragment {
     //Top Selling Products
     private Top_Selling_Adapter top_selling_adapter;
     private List<Top_Selling_model> top_selling_models = new ArrayList<>();
-
+    TextView tv_top_selling;
 
 
 
@@ -155,6 +155,7 @@ public class Home_fragment extends Fragment {
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
          module=new Module();
+        tv_top_selling=view.findViewById(R.id.tv_top_selling);
         setHasOptionsMenu(true);
         session_management=new Session_management(getActivity());
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
@@ -892,7 +893,11 @@ public class Home_fragment extends Fragment {
                         }
                     }
                 } catch (JSONException e) {
+
                     e.printStackTrace();
+                    if(e.getMessage().equalsIgnoreCase("No value for top_selling_product")){
+                        tv_top_selling.setVisibility(View.GONE);
+                    }
                 }
             }
         }, new Response.ErrorListener() {

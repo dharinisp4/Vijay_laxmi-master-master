@@ -178,9 +178,18 @@ public class Wishlist_Adapter extends RecyclerView.Adapter<Wishlist_Adapter.Wish
             String p=String.valueOf(map.get("price"));
             String m=String.valueOf(map.get("mrp"));
             int discount=getDiscount(p,m);
-            //Toast.makeText(getActivity(),""+atr,Toast.LENGTH_LONG).show();
-            holder.discount.setText(""+discount+"% OFF"+id);
-
+            double dprice=Double.parseDouble(p);
+            double dmrp=Double.parseDouble(m);
+            if(dmrp>dprice)
+            {
+                holder.product_mrp.setVisibility(View.VISIBLE);
+                holder.discount.setVisibility(View.VISIBLE);
+                holder.discount.setText(""+discount+"% OFF"+id);
+            }
+            else{
+                holder.product_mrp.setVisibility(View.GONE);
+                holder.discount.setVisibility(View.GONE);
+            }
             holder.txtrate.setText(map.get("unit_value")+" "+map.get("unit"));
 
         }

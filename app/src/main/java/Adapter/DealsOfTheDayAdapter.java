@@ -117,6 +117,23 @@ public class DealsOfTheDayAdapter extends RecyclerView.Adapter<DealsOfTheDayAdap
             String m=String.valueOf(mList.getMrp());
             holder.product_price.setText(context.getResources().getString(R.string.currency)+ mList.getMrp());
             holder.product_offer_price.setText(context.getResources().getString(R.string.currency)+mList.getPrice());
+            Double dmrp=Double.parseDouble(mList.getMrp());
+            Double price=Double.parseDouble(mList.getPrice());
+            if(dmrp<=price)
+            {
+                if(holder.product_price.getVisibility()==View.VISIBLE){
+                    holder.product_price.setVisibility(View.GONE);
+                }
+
+            }
+            else
+            {
+
+                if(holder.product_price.getVisibility()==View.GONE){
+                    holder.product_price.setVisibility(View.VISIBLE);
+                }
+
+            }
             holder.txtrate.setVisibility(View.VISIBLE);
             holder.txtrate.setText(mList.getUnit_value()+" "+mList.getUnit());
             int discount=getDiscount(p,m);

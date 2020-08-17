@@ -7,6 +7,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -313,23 +315,31 @@ SharedPreferences preferences;
         {
             holder.tv_price.setText("\u20B9" +mList.getPrice());
             holder.product_mrp.setText("\u20B9"+mList.getMrp());
+
             Double price = Double.valueOf(mList.getPrice());
             Double mrp = Double.valueOf(mList.getMrp());
             if (mrp > price)
             {
                 holder.discount.setVisibility(View.VISIBLE);
+                holder.product_mrp.setVisibility(View.VISIBLE);
                 int discount = getDiscount(mList.getPrice(),mList.getMrp());
               //  holder.discount.setText( mList.getPrice()+ "&"+mList.getMrp() );
                 if (discount>0) {
+                    holder.product_mrp.setVisibility(View.VISIBLE);
                     holder.discount.setText( Math.round( discount ) + "%" + "off" );
                 }
                 else
                 {
+                    holder.product_mrp.setVisibility(View.GONE);
                     holder.discount.setVisibility( View.GONE );
                 }
             }
             else
+            {
                 holder.discount.setVisibility(View.GONE);
+                holder.product_mrp.setVisibility(View.GONE);
+            }
+
         }
         else
         {
@@ -340,6 +350,7 @@ SharedPreferences preferences;
             Double mrp = Double.valueOf(variantModels.get(0).getAttribute_mrp());
             if (mrp > price)
             {
+                holder.product_mrp.setVisibility(View.VISIBLE);
                 holder.discount.setVisibility(View.VISIBLE);
               int discount = getDiscount(variantModels.get(0).getAttribute_value(),variantModels.get(0).getAttribute_mrp());
               //  holder.discount.setText( mList.getPrice()+ "&"+mList.getMrp() );
@@ -351,8 +362,11 @@ SharedPreferences preferences;
                     holder.discount.setVisibility( View.GONE );
                 }
             }
-            else
+            else{
                 holder.discount.setVisibility(View.GONE);
+                holder.product_mrp.setVisibility(View.GONE);
+            }
+
           //  holder.product_mrp.setText(variantModels.get(0).getAttribute_image().get(0).toString());
 
         }

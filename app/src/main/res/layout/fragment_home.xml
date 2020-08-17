@@ -239,7 +239,6 @@
                 android:layout_marginRight="8dp"
                 android:background="@color/all"
                 android:scrollbars="none"
-                android:layout_marginBottom="10dp"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -248,9 +247,10 @@
 
 
             <TextView
+                android:id="@+id/tv_top_selling"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+
                 android:paddingLeft="@dimen/space_20"
                 android:textSize="@dimen/space_20"
                 android:textStyle="bold"
@@ -262,9 +262,7 @@
                         android:id="@+id/best_selling_recycler"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                       android:layout_marginTop="10dp"
                         android:layout_marginLeft="8dp"
-
                         android:layout_marginRight="8dp"
                         android:background="@color/all"
                         android:scrollbars="none"
@@ -361,7 +359,6 @@
                     android:id="@+id/bottombutton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_10"
                     android:padding="@dimen/space_5"
                     android:textSize="15dp"
                     android:layout_centerHorizontal="true"
