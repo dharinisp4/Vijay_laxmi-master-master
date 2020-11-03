@@ -423,7 +423,6 @@ SharedPreferences preferences;
                             .load(BaseURL.IMG_PRODUCT_URL +image_list.get(0) )
                             // .centerCrop()
                             .placeholder(R.drawable.icon)
-                            .crossFade()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .dontAnimate()
                             .into(holder.iv_logo);
@@ -958,7 +957,7 @@ SharedPreferences preferences;
                 .load(BaseURL.IMG_PRODUCT_URL + image)
                 .centerCrop()
                 .placeholder(R.drawable.icon)
-                .crossFade()
+
                 .into(iv_image);
 
         iv_image_cancle.setOnClickListener(new View.OnClickListener() {

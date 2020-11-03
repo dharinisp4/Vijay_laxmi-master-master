@@ -1,6 +1,7 @@
 package Module;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import java.util.List;
 
 import Model.ProductVariantModel;
 import beautymentor.in.MainActivity;
+import beautymentor.in.R;
 import util.DatabaseCartHandler;
 
 public class Module {
@@ -190,7 +192,7 @@ public class Module {
 
         }
 
-    public String VolleyErrorMessage(VolleyError error)
+    public static String VolleyErrorMessage(VolleyError error)
     {
         String str_error ="";
         if (error instanceof TimeoutError) {
@@ -212,6 +214,38 @@ public class Module {
         }
 
         return str_error;
+    }
+
+    public static void showVolleyError(Context ctx,VolleyError volleyError){
+        showToast(ctx,VolleyErrorMessage(volleyError));
+    }
+    public static void showToast(Context ctx,String str)
+    {
+        if(str==null || str.isEmpty() || str.equalsIgnoreCase(null)){
+
+        }else{
+         Toast.makeText(ctx,""+str,Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public static String getFirstImage(String img_array)
+    {
+        String img_name="";
+        try {
+            JSONArray array=new JSONArray(img_array);
+            img_name=array.get(0).toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return img_name;
+    }
+
+    public static boolean checkNull(String str){
+        if(str == null || str.isEmpty() || str.equalsIgnoreCase("null")){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     }

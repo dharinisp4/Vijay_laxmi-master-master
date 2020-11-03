@@ -5,23 +5,42 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
+import Adapter.ProductGstAdapter;
 import Config.BaseURL;
 import Config.SharedPref;
+import Model.DetailProductModel;
+import Model.GstModel;
+import Module.Module;
+import beautymentor.in.AppController;
 import beautymentor.in.MainActivity;
 import beautymentor.in.R;
 import util.ConnectivityReceiver;
+import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
 import util.Session_management;
 
+import static Module.Module.showVolleyError;
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -30,15 +49,17 @@ public class Delivery_payment_detail_fragment extends Fragment {
 
     private static String TAG = Delivery_payment_detail_fragment.class.getSimpleName();
 
-    private TextView tv_timeslot, tv_address;
+    List<GstModel> gstList;
+    private TextView tv_timeslot, tv_address,tvgst,tvwthgst;
+    RecyclerView rv_items;
     private LinearLayout btn_order;
-
+    List<DetailProductModel> pdList;
     private String getlocation_id = "";
     private String gettime = "";
     private String getdate = "";
     private String getuser_id = "";
     private String getstore_id = "";
-    Dialog loadingBar ;
+    Dialog loadingBar;
     TextView tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal,tv_total;
     TextView reciver_name ,mobile_no ,pincode,house_no,society ;
     private int deli_charges;
@@ -69,13 +90,18 @@ SharedPreferences preferences;
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+        pdList=new ArrayList<>();
+        gstList=new ArrayList<>();
         db_cart = new DatabaseCartHandler(getActivity());
         sessionManagement = new Session_management(getActivity());
+        rv_items=view.findViewById(R.id.rv_items);
+        rv_items.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rv_items.setNestedScrollingEnabled(false);
 
         //TextView tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal;
         tv_timeslot = (TextView) view.findViewById(R.id.textTimeSlot);
-        //tv_address = (TextView) view.findViewById(R.id.txtAddress);
+        tvwthgst = (TextView) view.findViewById(R.id.tvwthgst);
+        tvgst = (TextView) view.findViewById(R.id.tvgst);
         tvItems = (TextView) view.findViewById(R.id.tvItems);
         tvMrp = (TextView) view.findViewById(R.id.tvMrp);
        tvDiscount = (TextView) view.findViewById(R.id.tvDiscount);
@@ -146,7 +172,7 @@ SharedPreferences preferences;
         //        getResources().getString(R.string.total_amount) +
          //       db_cart.getTotalAmount() + " + " + deli_charges + " = " + total+ getResources().getString(R.string.currency));
 
-
+        getGstAndPrice();
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,6 +198,89 @@ SharedPreferences preferences;
         });
 
         return view;
+    }
+
+    private void getGstAndPrice() {
+        pdList.clear();
+        gstList.clear();
+        ArrayList<HashMap<String, String>> items = db_cart.getCartAll();
+        JSONArray passArray = new JSONArray();
+        //rewards = Double.parseDouble(db_cart.getColumnRewards());
+        if (items.size() > 0) {
+            for (int i = 0; i < items.size(); i++) {
+                DetailProductModel model=new DetailProductModel();
+                HashMap<String, String> map = items.get(i);
+                JSONObject jObjP = new JSONObject();
+                try {
+                    model.setProduct_id(map.get("product_id"));
+                    model.setCart_id(map.get("cart_id"));
+                    model.setProduct_name(map.get("product_name"));
+                    model.setQty(map.get("qty"));
+                    model.setUnit_value(map.get("unit_price"));
+                    model.setUnit(map.get("unit"));
+                    model.setPrice(map.get("price"));
+                    model.setMrp(map.get("mrp"));
+                    model.setAtr_img(map.get("attr_img"));
+                    model.setProduct_image(map.get("product_image"));
+                    String img=getSingleProductImage(map.get("product_image"),map.get("attr_img"));
+                    model.setImg_url(BaseURL.IMG_PRODUCT_URL+img);
+                    model.setGst("0");
+                    model.setAttr_id(map.get("attr_id"));
+                    jObjP.put("product_id", map.get("product_id"));
+                    jObjP.put("product_name", map.get("product_name") + map.get("attr_color"));
+                    jObjP.put("qty", map.get("qty"));
+                    jObjP.put("unit_value", map.get("unit_price"));
+                    jObjP.put("unit", map.get("unit"));
+                    jObjP.put("price", map.get("price"));
+                    jObjP.put("atr_img", map.get("attr_img"));
+                    jObjP.put("p_img", map.get("product_image"));
+                    jObjP.put("attr_id", map.get("attr_id"));
+                    passArray.put(jObjP);
+                    pdList.add(model);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+        loadingBar.show();
+        HashMap<String,String> params=new HashMap<>();
+        params.put("data",passArray.toString());
+        CustomVolleyJsonRequest jsonRequest=new CustomVolleyJsonRequest(Request.Method.POST,  BaseURL.GET_GSTS,params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+            loadingBar.dismiss();
+                Log.e(TAG, "onResponse: "+response.toString());
+            try{
+                if(response.getBoolean("responce")){
+                  JSONArray jsonArray=response.getJSONArray("data");
+                  for(int i=0; i<jsonArray.length();i++){
+                       String pId=jsonArray.getJSONObject(i).getString("product_id").toString();
+                        pdList.get(getCartIndex(pId)).setGst(chechNullString(jsonArray.getJSONObject(i).getString("tax")));
+                        gstList.add(new GstModel(String.valueOf(i),String.valueOf(getDoubleTax(pdList.get(i).getPrice(),pdList.get(i).getGst())),String.valueOf(getPriceWithoutGst(pdList.get(i).getPrice(),pdList.get(i).getGst()))));
+                      Log.e(TAG, "list_data: "+gstList.get(i).getGst() +" - "+gstList.get(i).getPricewithoutgst() );
+                  }
+                     tvgst.setText(getActivity().getResources().getString(R.string.currency)+String.valueOf(getTotalGst(gstList)));
+                     tvwthgst.setText(getActivity().getResources().getString(R.string.currency)+String.valueOf(getTotalPriceWithoutGst(gstList)));
+                    ProductGstAdapter adapter=new ProductGstAdapter(getActivity(),pdList);
+                  rv_items.setAdapter(adapter);
+                  adapter.notifyDataSetChanged();
+                }else{
+                    Module.showToast(getActivity(),""+response.getString("error"));
+                }
+            }catch (Exception ex){
+                ex.printStackTrace();
+            }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                showVolleyError(getActivity(),error);
+            }
+        });
+        AppController.getInstance().addToRequestQueue(jsonRequest);
     }
 
 //    private void attemptOrder() {
@@ -286,6 +395,60 @@ SharedPreferences preferences;
             return "0";
         //Toast.makeText(getActivity(),""+sum,Toast.LENGTH_LONG).show();
     }
+ private int getCartIndex(String pId){
+        int inx=0;
+        for(int i=0; i<pdList.size();i++){
+            if(pId.equals(pdList.get(i).getProduct_id())){
+                 inx=i;
+                 break;
+            }
+        }
+        return inx;
+ }
+ private String chechNullString(String str){
+        if(str==null || str.isEmpty() || str.equalsIgnoreCase("null")){
+            return "0";
+        }else{
+            return str;
+        }
+ }
 
+   private String getSingleProductImage(String pImgArr,String atrImg){
+        String img="";
+        if(Module.checkNull(atrImg)){
+           img=Module.getFirstImage(pImgArr);
+        }else{
+          img=atrImg;
+        }
+        return img;
+   }
+
+   private double getDoubleTax(String price,String gst){
+        double mPrice=Double.parseDouble(price);
+        double mGst=Double.parseDouble(gst);
+        double tGst=(mPrice*mGst)/100;
+        return tGst;
+   }
+   private double getPriceWithoutGst(String price,String gst){
+       double mPrice=Double.parseDouble(price);
+       double mGst=Double.parseDouble(gst);
+       double gg=getDoubleTax(price,gst);
+       return (mPrice-gg);
+   }
+
+   private double getTotalGst(List<GstModel> list){
+        double sum=0;
+        for(GstModel gst:list){
+            sum=sum+Double.parseDouble(gst.getGst().toString());
+        }
+        return sum;
+   }
+    private double getTotalPriceWithoutGst(List<GstModel> list){
+        double sum=0;
+        for(GstModel gst:list){
+            sum=sum+Double.parseDouble(gst.getPricewithoutgst().toString());
+        }
+        return sum;
+    }
 
 }

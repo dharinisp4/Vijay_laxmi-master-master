@@ -89,6 +89,7 @@ import static Config.BaseURL.YOUTUBE_API_KEY;
 
 public class Home_fragment extends Fragment {
     private static String TAG = Home_fragment.class.getSimpleName();
+    RelativeLayout rl_bottom;
     private SliderLayout imgSlider, banner_slider, featuredslider;
     private RecyclerView new_products_recycler, rv_top_selling, rv_headre_icons ,rv_brands_recycler ,rv_deal_of_day ;
     private List<Category_model> category_modelList = new ArrayList<>();
@@ -156,6 +157,7 @@ public class Home_fragment extends Fragment {
         loadingBar.setCanceledOnTouchOutside(false);
          module=new Module();
         tv_top_selling=view.findViewById(R.id.tv_top_selling);
+        rl_bottom=view.findViewById(R.id.rl_bottom);
         setHasOptionsMenu(true);
         session_management=new Session_management(getActivity());
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
@@ -1159,7 +1161,7 @@ public class Home_fragment extends Fragment {
                             new_products();
                             make_deal_od_the_day();
                             make_top_selling();
-
+                            rl_bottom.setVisibility(View.VISIBLE);
                             // makeGetBrandsRequest();
 
                         }

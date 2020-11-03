@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingBottom="160dp"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin">
@@ -295,6 +295,53 @@
                             </LinearLayout>
                         </LinearLayout>
                     </android.support.v7.widget.CardView>
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/card_products"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        card_view:cardElevation="@dimen/space_3"
+                        card_view:cardUseCompatPadding="true"
+                        card_view:cardCornerRadius="4dp"
+                        android:layout_marginTop="-10dp"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            >
+
+                            <TextView
+                                android:fontFamily="@font/cabin"
+                                android:textColor="#fff"
+                                android:id="@+id/textView10"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_rounded_button"
+                                android:padding="@dimen/space_4"
+                                android:textAlignment="center"
+                                android:text="All Items"
+                                android:textSize="@dimen/space_15"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="3dp"
+                                android:orientation="vertical">
+                                 <RelativeLayout
+                                     android:layout_width="match_parent"
+                                     android:layout_height="wrap_content">
+                                     <android.support.v7.widget.RecyclerView
+                                         android:id="@+id/rv_items"
+                                         android:layout_width="match_parent"
+                                         android:layout_height="wrap_content"
+                                         android:nestedScrollingEnabled="false"/>
+                                 </RelativeLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
 
 
                     <android.support.v7.widget.CardView
@@ -464,6 +511,69 @@
                                   android:layout_height="wrap_content"
                                   android:layout_margin="@dimen/space_2"
                                   >
+
+                                  <TextView
+                                      android:id="@+id/txtwthgst"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="match_parent"
+                                      android:padding="2dp"
+                                      android:text="Total Excluded GST :"
+                                      android:fontFamily="@font/cabin"
+                                      android:textColor="@android:color/black"
+                                      android:textSize="@dimen/space_14" />
+
+                                  <TextView
+                                      android:id="@+id/tvwthgst"
+                                      android:layout_toRightOf="@id/txtwthgst"
+                                      android:layout_width="wrap_content"
+                                      android:layout_alignParentRight="true"
+                                      android:padding="@dimen/space_2"
+                                      android:fontFamily="@font/cabin"
+                                      android:textAlignment="viewEnd"
+                                      android:layout_marginRight="20dp"
+                                      android:textSize="@dimen/space_14"
+                                      android:textColor="@android:color/black"
+                                      android:layout_height="wrap_content"
+                                      android:text="0"
+                                      />
+                              </RelativeLayout>
+                              <RelativeLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_margin="@dimen/space_2"
+                                  >
+
+                                  <TextView
+                                      android:id="@+id/txtgst"
+                                      android:layout_width="wrap_content"
+                                      android:layout_height="match_parent"
+                                      android:padding="2dp"
+                                      android:text="Total GST :"
+                                      android:fontFamily="@font/cabin"
+                                      android:textColor="@android:color/black"
+                                      android:textSize="@dimen/space_14" />
+
+                                  <TextView
+                                      android:id="@+id/tvgst"
+                                      android:layout_toRightOf="@id/txtgst"
+                                      android:layout_width="wrap_content"
+                                      android:layout_alignParentRight="true"
+                                      android:padding="@dimen/space_2"
+                                      android:fontFamily="@font/cabin"
+                                      android:textAlignment="viewEnd"
+                                      android:layout_marginRight="20dp"
+                                      android:textSize="@dimen/space_14"
+                                      android:textColor="@android:color/black"
+                                      android:layout_height="wrap_content"
+                                      android:text="0"
+                                      />
+                              </RelativeLayout>
+
+                              <RelativeLayout
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_margin="@dimen/space_2"
+                                  >
                                   <TextView
                                       android:id="@+id/txtsub"
                                       android:layout_width="wrap_content"
@@ -491,6 +601,8 @@
                                       android:text="0"
                                       />
                               </RelativeLayout>
+
+
 
 
 

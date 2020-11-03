@@ -75,10 +75,11 @@
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimary"></TextView>
                         <TextView
+                            android:id="@+id/tv_number"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="000000"
+                            android:text=""
                             android:textAlignment="center"
                             android:fontFamily="sans-serif"
                             android:textSize="18dp"
@@ -100,10 +101,11 @@
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimary"></TextView>
                         <TextView
+                            android:id="@+id/tv_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="xyz@gmail.com"
+                            android:text=""
                             android:textAlignment="center"
                             android:fontFamily="sans-serif"
                             android:textSize="18dp"
@@ -125,10 +127,11 @@
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimary"></TextView>
                         <TextView
+                            android:id="@+id/tv_address"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="address"
+                            android:text=""
                             android:textAlignment="center"
                             android:fontFamily="sans-serif"
                             android:textSize="@dimen/space_20"
@@ -150,10 +153,11 @@
                             android:textStyle="bold"
                             android:textColor="@color/colorPrimary"></TextView>
                         <TextView
+                            android:id="@+id/tv_web"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="5dp"
-                            android:text="www.xyz.com"
+                            android:text=""
                             android:textAlignment="center"
                             android:fontFamily="sans-serif"
                             android:textSize="@dimen/space_20"

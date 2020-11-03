@@ -152,5 +152,6 @@ public class BaseURL {
 
     public static String PRODUCT_DETAILS = BASE_URL + "index.php/api/get_products_details";
     public static String GET_UPLOAD = BASE_URL + "index.php/api/upload_images";
+    public static String GET_GSTS = BASE_URL + "index.php/api/total_products";
 
 }

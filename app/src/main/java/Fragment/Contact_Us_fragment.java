@@ -1,7 +1,11 @@
 package Fragment;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -23,21 +27,26 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import Config.BaseURL;
 import Model.Support_info_model;
 import Module.Module;
 import beautymentor.in.AppController;
 import beautymentor.in.MainActivity;
 import beautymentor.in.R;
+import util.ConnectivityReceiver;
+import util.CustomVolleyJsonRequest;
 
 public class Contact_Us_fragment extends Fragment {
 
     private static String TAG = Contact_Us_fragment.class.getSimpleName();
 
-    private TextView tv_info;
+    private TextView tv_info,tv_web,tv_number,tv_email,tv_address;
     Dialog loadingBar;
     Module module;
+    String website;
     public Contact_Us_fragment() {
         // Required empty public constructor
     }
@@ -59,6 +68,10 @@ public class Contact_Us_fragment extends Fragment {
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
         tv_info = (TextView) view.findViewById(R.id.tv_info);
+        tv_address = (TextView) view.findViewById(R.id.tv_address);
+        tv_web = (TextView) view.findViewById(R.id.tv_web);
+        tv_number = (TextView) view.findViewById(R.id.tv_number);
+        tv_email = (TextView) view.findViewById(R.id.tv_email);
     module=new Module();
 //        String geturl = getArguments().getString("url");
 //        //   String title = getArguments().getString("title");
@@ -66,56 +79,54 @@ public class Contact_Us_fragment extends Fragment {
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.contact));
 //
 //        // check internet connection
-//        if (ConnectivityReceiver.isConnected()) {
-//            makeGetInfoRequest(geturl);
-//        } else {
-//            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-//        }
+        if (ConnectivityReceiver.isConnected()) {
+            getAppSettingData();
+        } else {
+            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+        }
+
+        tv_web.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToWebsite(website);
+            }
+        });
 
         return view;
     }
 
-    /**
-     * Method to make json object request where json response starts wtih
-     */
-    private void makeGetInfoRequest(String url) {
+    public void getAppSettingData()
+    {
+        loadingBar.show();
+        String json_tag="json_app_tag";
+        HashMap<String,String> map=new HashMap<>();
 
-        // Tag used to cancel the request
-        String tag_json_obj = "json_info_req";
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url, null, new Response.Listener<JSONObject>() {
+        CustomVolleyJsonRequest request=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_VERSTION_DATA, map, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                loadingBar.dismiss();
+                try
+                {
+                    boolean sts=response.getBoolean("responce");
 
-                try {
-                    // Parsing json array response
-                    // loop through each json object
+                    if(sts)
+                    {
+                        JSONObject object=response.getJSONObject("data");
+                        tv_number.setText(Html.fromHtml(object.getString("contact_no")));
+                        tv_web.setText(Html.fromHtml(object.getString("website")));
+                        tv_address.setText(Html.fromHtml(object.getString("address")));
+                        tv_email.setText(Html.fromHtml(object.getString("email")));
+                        website=object.getString("website");
 
-                    boolean status = response.getBoolean("responce");
-                    if (status) {
-
-                        List<Support_info_model> support_info_modelList = new ArrayList<>();
-
-                        Gson gson = new Gson();
-                        Type listType = new TypeToken<List<Support_info_model>>() {
-                        }.getType();
-
-                        support_info_modelList = gson.fromJson(response.getString("data"), listType);
-
-                        String desc = support_info_modelList.get(0).getPg_descri();
-                        String title = support_info_modelList.get(0).getPg_title();
-
-                        tv_info.setText(Html.fromHtml(desc));
 
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getActivity(),
-                            "Error: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
+                    else
+                    {
+                        Toast.makeText(getActivity(),""+response.getString("error"),Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception ex)
+                {
+                    ex.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
@@ -125,14 +136,18 @@ public class Contact_Us_fragment extends Fragment {
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
-                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                    Toast.makeText(getActivity(),""+msg,Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+        AppController.getInstance().addToRequestQueue(request,json_tag);
     }
 
+    public void goToWebsite(String url){
+        Intent in = new Intent(Intent.ACTION_VIEW);
+        in.setData(Uri.parse(url));
+        getActivity().startActivity(in);
+    }
 }
 

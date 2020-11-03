@@ -360,7 +360,7 @@ public class Search_adapter extends RecyclerView.Adapter<Search_adapter.MyViewHo
         Glide.with(context)
                 .load(BaseURL.IMG_PRODUCT_URL + img_name)
                 .centerCrop()
-                .crossFade()
+//                .crossFade()
                 .into(iv_image);
 
         if (dbcart.isInCart(modelList.get(position).getProduct_id())) {
