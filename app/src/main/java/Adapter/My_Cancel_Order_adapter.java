@@ -115,6 +115,17 @@ public class My_Cancel_Order_adapter extends RecyclerView.Adapter<My_Cancel_Orde
         My_Cancel_order_model mList = modelList.get(position);
 
         holder.tv_orderno.setText("BM_000"+mList.getSale_id());
+
+        if (mList.getCancel_date()==null|| mList.getCancel_date().equalsIgnoreCase("null")) {
+            holder.tv_tracking_date.setText("");
+        }
+        else
+        {
+//            String s[] = stat_list.get(position).getUpdated_at().split(" ");
+            String d[] = mList.getCancel_date().split("-");
+
+            holder.tv_tracking_date.setText(d[2]+"-"+d[1]+"-"+d[0]);
+        }
         if (mList.getStatus().equals("0")) {
             holder.tv_status.setText(context.getResources().getString(R.string.pending));
             holder.relativetextstatus.setText(context.getResources().getString(R.string.pending));

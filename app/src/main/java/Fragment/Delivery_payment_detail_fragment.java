@@ -61,7 +61,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
     private String getuser_id = "";
     private String getstore_id = "" ,info_msg="";
     Dialog loadingBar;
-    TextView tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal,tv_total;
+    TextView tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal,tv_total,tv_note;
     TextView reciver_name ,mobile_no ,pincode,house_no,society ;
     private int deli_charges;
     Double total;
@@ -105,6 +105,7 @@ SharedPreferences preferences;
         tvgst = (TextView) view.findViewById(R.id.tvgst);
         tvItems = (TextView) view.findViewById(R.id.tvItems);
         tvMrp = (TextView) view.findViewById(R.id.tvMrp);
+        tv_note= (TextView) view.findViewById(R.id.txtNote);
        tvDiscount = (TextView) view.findViewById(R.id.tvDiscount);
        tvDelivary = (TextView) view.findViewById(R.id.tvDelivary);
         tvSubTotal = (TextView) view.findViewById(R.id.tvSubTotal);
@@ -476,6 +477,7 @@ SharedPreferences preferences;
                     if (sts) {
                         JSONObject object = response.getJSONObject("data");
                         info_msg= object.getString("data");
+                        tv_note.setText(info_msg);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

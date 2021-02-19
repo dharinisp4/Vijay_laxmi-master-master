@@ -23,7 +23,16 @@ public class My_Cancel_order_model {
     String receiver_mobile ;
     String confirm_date;
     String delivery_date;
+    String cancel_date;
     String out_date;
+
+    public String getCancel_date() {
+        return cancel_date;
+    }
+
+    public void setCancel_date(String cancel_date) {
+        this.cancel_date = cancel_date;
+    }
 
     public String getDelivery_date() {
         return delivery_date;
