@@ -5,7 +5,7 @@
     app:cardElevation="@dimen/space_10"
     android:id="@+id/rel_main"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-   <android.support.v7.widget.CardView
+   <androidx.cardview.widget.CardView
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
       android:layout_marginLeft="@dimen/space_2"
@@ -54,5 +54,5 @@
           android:id="@+id/tv_desc"/>
 
    </LinearLayout>
-   </android.support.v7.widget.CardView>
+   </androidx.cardview.widget.CardView>
 </RelativeLayout>

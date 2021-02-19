@@ -14,11 +14,11 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSmoothScroller;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
@@ -34,7 +34,6 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
@@ -45,8 +44,6 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.google.android.youtube.player.YouTubeInitializationResult;
-import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -82,9 +79,6 @@ import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.RecyclerTouchListener;
 import util.Session_management;
-
-import static Config.BaseURL.BASE_URL;
-import static Config.BaseURL.YOUTUBE_API_KEY;
 
 
 public class Home_fragment extends Fragment {
@@ -1156,6 +1150,7 @@ public class Home_fragment extends Fragment {
                             makeGetSliderRequest();
                             make_menu_items();
                             makeGetCategoryRequest();
+                            makeGetBrandsRequest();
                             makeGetBannerSliderRequest();
                             // makeGetFeaturedSlider();
                             new_products();

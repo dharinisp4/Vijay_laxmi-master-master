@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    <androidx.cardview.widget.CardView-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:elevation="@dimen/space_2"-->
+<!--        app:cardUseCompatPadding="true"-->
+<!--        android:layout_margin="@dimen/space_2"-->
+<!--        app:cardCornerRadius="@dimen/space_1"-->
+<!--        android:layout_height="wrap_content">-->
+     <RelativeLayout
+         android:layout_width="match_parent"
+         app:layout_constraintTop_toTopOf="parent"
+         android:background="@color/white"
+         android:layout_height="wrap_content">
+
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="@dimen/space_4"
+      android:weightSum="10"
+
+        android:orientation="horizontal">
+        <com.tcqq.timelineview.TimelineView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            app:timeline_marker_size="@dimen/space_10"
+            android:visibility="gone"
+            app:timeline_marker_in_center="true"
+            app:timeline_start_line_color="@color/dark_gray"
+            app:timeline_end_line_color="@color/dark_gray"
+            app:timeline_marker_color="@color/dark_gray"
+            android:id="@+id/order_timeline"/>
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+
+            android:weightSum="5"
+            android:orientation="vertical">
+            <View
+                android:id="@+id/view1"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_above="@+id/rel_icon"
+                android:background="@color/gray" />
+
+            <RelativeLayout
+                android:id="@+id/rel_icon"
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/common_google_signin_btn_text_light"
+                android:background="@drawable/marker">
+                <ImageView
+                    android:id="@+id/iv_order_status"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/marker"
+
+                    app:tint="@color/all"
+
+                    />
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/rel_icon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/space_2"
+                android:background="@color/gray" />
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+
+        <TextView
+            android:id="@+id/tv_order_status"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/pending"
+            android:textColor="#000"
+            android:paddingTop="@dimen/space_5"
+            android:paddingBottom="@dimen/space_5"
+            android:layout_gravity="center_vertical"
+            android:textSize="@dimen/space_12"
+          />
+            <TextView
+                android:id="@+id/tv_order_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/date_d"
+                android:textColor="#000"
+
+                android:textSize="@dimen/text_size_XXX_small" />
+
+<!--        <com.ecom.sagaronline.Fonts.LatoBLack-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text=""-->
+<!--            android:textColor="#000"-->
+<!--            android:textSize="@dimen/text_size_XX_small" />-->
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+     </RelativeLayout>
+<!--    </androidx.cardview.widget.CardView>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

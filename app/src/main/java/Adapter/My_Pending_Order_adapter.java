@@ -3,9 +3,9 @@ package Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +112,7 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
     public void onBindViewHolder(My_Pending_Order_adapter.MyViewHolder holder, int position) {
         My_Pending_order_model mList = modelList.get(position);
 
-        holder.tv_orderno.setText(mList.getSale_id());
+        holder.tv_orderno.setText("BM_000"+mList.getSale_id());
 
         if (mList.getStatus().equals("0")) {
             holder.lin_expected.setVisibility(View.GONE);
@@ -142,9 +142,9 @@ public class My_Pending_Order_adapter extends RecyclerView.Adapter<My_Pending_Or
             holder.relativetextstatus.setText(context.getResources().getString(R.string.outfordeliverd));
             holder.tv_status.setTextColor(context.getResources().getColor(R.color.green));
         }
-           else if (mList.getStatus().equals("4")) {
-holder.linearLayout.setVisibility(View.GONE);
-        }
+//           else if (mList.getStatus().equals("4")) {
+//holder.linearLayout.setVisibility(View.GONE);
+//        }
 
         if (mList.getPayment_method().equals("Store Pick Up")) {
             holder.tv_methid1.setText("Store Pick Up");

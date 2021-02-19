@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
@@ -235,8 +235,8 @@
                     <Fonts.LatoBLack
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Order \n Cancelled On:"
-                        android:textColor="@color/dark_gray"
+                        android:text="Order Cancelled On:"
+                        android:textColor="@color/black"
                         android:textSize="@dimen/text_size_small" />
 
                     <Fonts.LatoBLack
@@ -245,7 +245,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/space_8"
                         android:text="Date"
-                        android:layout_marginTop="@dimen/space_3"
                         android:textColor="#000"
                         android:textSize="@dimen/text_size_small" />
 
@@ -259,6 +258,7 @@
                     android:layout_marginRight="@dimen/space_10"
                     android:layout_marginTop="@dimen/space_14"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:background="@drawable/bg_rounded_button">
 
                     <Fonts.LatoBLack
@@ -282,6 +282,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginBottom="@dimen/space_4"
                 android:layout_weight=".7"
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:orientation="vertical">
 
@@ -628,11 +629,11 @@
     </LinearLayout>
         <ImageView
             android:src="@drawable/cancelled"
-            android:layout_width="match_parent"
-            android:layout_marginTop="40dp"
-            android:padding="@dimen/space_20"
-            android:layout_height="200dp"/>
+            android:layout_width="100dp"
+            android:layout_alignParentEnd="true"
+            android:rotation="15"
+            android:layout_height="40dp"/>
 
     </RelativeLayout>
 
-</android.support.v7.widget.CardView>
+</androidx.cardview.widget.CardView>

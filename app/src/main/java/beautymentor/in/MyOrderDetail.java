@@ -6,11 +6,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -32,15 +32,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import Adapter.My_order_detail_adapter;
+import Adapter.OrderStatusAdapter;
 import Config.BaseURL;
-import Fragment.My_order_detail_fragment;
 import Model.My_order_detail_model;
+import Model.OrderStatusModel;
 import Module.Module;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonArrayRequest;
@@ -48,20 +51,21 @@ import util.CustomVolleyJsonRequest;
 import util.Session_management;
 
 public class MyOrderDetail extends AppCompatActivity {
-    private static String TAG = My_order_detail_fragment.class.getSimpleName();
+    private static String TAG = MyOrderDetail.class.getSimpleName();
     Module module;
     Dialog dialog;
     EditText et_remark;
     Button btn_yes,btn_no;
     private TextView tv_date, tv_time, tv_total, tv_delivery_charge;
     private RelativeLayout btn_cancle;
-    private RecyclerView rv_detail_order;
+    private RecyclerView rv_detail_order,rv_order_status;
 Dialog loadingBar ;
-    private String sale_id;
+    private String sale_id, status;
     ImageView back_button;
      SharedPreferences preferences;
     private List<My_order_detail_model> my_order_detail_modelList = new ArrayList<>();
-
+    private List<OrderStatusModel> order_status_list = new ArrayList<>();
+    OrderStatusAdapter orderStatusAdapter;
     public MyOrderDetail() {
         // Required empty public constructor
     }
@@ -104,14 +108,16 @@ Dialog loadingBar ;
         tv_total = (TextView) findViewById(R.id.tv_order_Detail_total);
         btn_cancle = (RelativeLayout) findViewById(R.id.btn_order_detail_cancle);
         rv_detail_order = (RecyclerView) findViewById(R.id.rv_order_detail);
+        rv_order_status = (RecyclerView) findViewById(R.id.rv_order_status);
 
         rv_detail_order.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        rv_order_status.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         sale_id = getIntent().getStringExtra("sale_id");
         String total_rs = getIntent().getStringExtra("total");
         String date = getIntent().getStringExtra("date");
         String time = getIntent().getStringExtra("time");
-        String status = getIntent().getStringExtra("status");
+         status = getIntent().getStringExtra("status");
         String deli_charge = getIntent().getStringExtra("deli_charge");
 
         if (status.equals("0")) {
@@ -132,14 +138,22 @@ Dialog loadingBar ;
         }else {
             tv_time.setText(getResources().getString(R.string.time) + time);
 
+        }
+        if (deli_charge.equalsIgnoreCase("0"))
+        {
+            tv_delivery_charge.setText("FREE");
 
         }
+        else {
+            tv_delivery_charge.setText(getResources().getString(R.string.delivery_charge) + deli_charge);
+        }
 
-        tv_delivery_charge.setText(getResources().getString(R.string.delivery_charge) + deli_charge);
+
 
         // check internet connection
         if (ConnectivityReceiver.isConnected()) {
             makeGetOrderDetailRequest(sale_id);
+            makeOrderStatusHistry(sale_id);
         } else {
             Toast.makeText(MyOrderDetail.this, "Error Network Issues", Toast.LENGTH_SHORT).show();
             // ((MainActivity) getApplication()).onNetworkConnectionChanged(false);
@@ -311,7 +325,7 @@ Dialog loadingBar ;
                         Intent intent=new Intent(MyOrderDetail.this,MainActivity.class);
                         startActivity(intent);
                         finish();
-                        // ((MainActivity) getActivity()).onBackPressed();
+                        // ((MainActivity) MyOrderDetail.this).onBackPressed();
 
                     } else {
                         String error = response.getString("error");
@@ -337,6 +351,88 @@ Dialog loadingBar ;
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 
+
+    }
+    private void makeOrderStatusHistry(final String sale_id) {
+
+        loadingBar.show();
+        // Tag used to cancel the request
+        String tag_json_obj = "json_order_detail_req";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("sale_id", sale_id);
+
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.URL_ORDER_STATUS, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("order_status", response.toString());
+                loadingBar.dismiss();
+
+                try {
+                   if (response.getJSONArray("data").length()>0) {
+                       Gson gson = new Gson();
+                       Type listType = new TypeToken<List<OrderStatusModel>>() {
+                       }.getType();
+
+                       order_status_list = gson.fromJson(response.getJSONArray("data").toString(), listType);
+//                    order_status_list.add(new OrderStatusModel("7",sale_id,"7",new SimpleDateFormat("yyyy-MM-dd").format(new Date()),"","","",""))
+
+                       orderStatusAdapter = new OrderStatusAdapter((ArrayList<OrderStatusModel>) order_status_list, MyOrderDetail.this);
+                       rv_order_status.setAdapter(orderStatusAdapter);
+                       orderStatusAdapter.notifyDataSetChanged();
+
+                       switch (status) {
+                           case "0":
+                               order_status_list.get(0).setChecked(true);
+                               break;
+                           case "1":
+                               order_status_list.get(0).setChecked(true);
+                               order_status_list.get(1).setChecked(true);
+                               break;
+                           case "2":
+                               order_status_list.get(0).setChecked(true);
+                               order_status_list.get(1).setChecked(true);
+                               order_status_list.get(2).setChecked(true);
+                               break;
+                           case "4":
+                               order_status_list.get(0).setChecked(true);
+                               order_status_list.get(1).setChecked(true);
+                               order_status_list.get(2).setChecked(true);
+                               order_status_list.get(3).setChecked(true);
+                               break;
+                           case "3":
+                               order_status_list.remove(1);
+                               order_status_list.remove(2);
+                               order_status_list.remove(3);
+                               order_status_list.add(new OrderStatusModel(true, "4", sale_id, "4", "", "4", new SimpleDateFormat("yyyy-MM-dd").format(new Date()), ""));
+                               break;
+
+
+                       }
+                       orderStatusAdapter.notifyDataSetChanged();
+                   }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( MyOrderDetail.this,""+ msg,Toast.LENGTH_LONG ).show();
+                }
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 
     }
 }

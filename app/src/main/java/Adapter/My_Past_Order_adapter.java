@@ -2,9 +2,9 @@ package Adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,7 +105,7 @@ SharedPreferences preferences;
     public void onBindViewHolder(MyViewHolder holder, int position) {
         My_Past_order_model mList = modelList.get(position);
 
-        holder.tv_orderno.setText(mList.getSale_id());
+        holder.tv_orderno.setText("BM_000"+mList.getSale_id());
 
         if (mList.getStatus().equals("0")) {
             holder.tv_status.setText(context.getResources().getString(R.string.pending));

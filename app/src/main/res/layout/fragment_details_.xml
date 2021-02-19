@@ -99,12 +99,12 @@
             android:visibility="gone"
             >
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recylerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/gray"
-                ></android.support.v7.widget.RecyclerView>
+                ></androidx.recyclerview.widget.RecyclerView>
 
 
         </GridLayout>
@@ -145,7 +145,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp">
 
-                            <android.support.v7.widget.RecyclerView
+                            <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rv_weight"
                                 android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
@@ -162,7 +162,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="70dp">
 
-                            <android.support.v7.widget.RecyclerView
+                            <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/rv_color"
                                 android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
@@ -173,7 +173,7 @@
 
 
 
-                        <android.support.v7.widget.CardView
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/card_view1"
                             android:layout_below="@id/rel"
                             android:layout_width="match_parent"
@@ -397,7 +397,7 @@
 
 
 
-                        </android.support.v7.widget.CardView>
+                        </androidx.cardview.widget.CardView>
                         <TextView
 
                             android:layout_width="match_parent"
@@ -429,18 +429,18 @@
                             android:visibility="gone"
                             android:background="@drawable/spinner_back_layout"/>
 
-                        <android.support.v7.widget.CardView
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/card_varients"
                             android:layout_below="@id/txtSize"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:visibility="gone">
-                            <android.support.v7.widget.RecyclerView
+                            <androidx.recyclerview.widget.RecyclerView
                                 android:layout_width="match_parent"
                                 android:layout_height="120dp"
                                 android:layout_margin="5dp"
                                 android:id="@+id/varient_recycler"/>
-                        </android.support.v7.widget.CardView>
+                        </androidx.cardview.widget.CardView>
                         <View
                             android:id="@+id/linevarient"
                             android:layout_width="match_parent"
@@ -451,7 +451,7 @@
                             android:layout_marginLeft="@dimen/space_5"
                             android:layout_marginRight="@dimen/space_5"
                             android:background="@color/dark_gray" />
-                        <android.support.v7.widget.CardView
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/card_view3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -587,7 +587,7 @@
 
                             </RelativeLayout>
 
-                        </android.support.v7.widget.CardView>
+                        </androidx.cardview.widget.CardView>
 
                         <View
                             android:id="@+id/line6"
@@ -600,7 +600,7 @@
                             android:layout_marginRight="@dimen/space_5"/>
 
 
-                        <android.support.v7.widget.CardView
+                        <androidx.cardview.widget.CardView
                             android:id="@+id/card_view4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -641,7 +641,7 @@
 
                             </RelativeLayout>
 
-                        </android.support.v7.widget.CardView>
+                        </androidx.cardview.widget.CardView>
 
                         <RelativeLayout
                             android:id="@+id/rel_relative_product"
@@ -673,7 +673,7 @@
                                     android:layout_width="match_parent"
                                     android:src="@drawable/no_product"
                                     android:layout_height="wrap_content"/>
-                            <android.support.v7.widget.RecyclerView
+                            <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/top_selling_recycler"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"

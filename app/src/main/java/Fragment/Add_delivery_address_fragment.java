@@ -2,6 +2,7 @@ package Fragment;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -21,19 +23,28 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import Config.BaseURL;
+import Model.Socity_model;
 import Module.Module;
 import beautymentor.in.AppController;
 import beautymentor.in.MainActivity;
+import beautymentor.in.MyOrderDetail;
 import beautymentor.in.R;
 import util.ConnectivityReceiver;
+import util.CustomVolleyJsonArrayRequest;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
 
@@ -43,7 +54,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     private static String TAG = Add_delivery_address_fragment.class.getSimpleName();
 
     private EditText et_phone, et_name,  et_address;
-    private EditText et_pin;
+    private AutoCompleteTextView et_pin;
     Module module;
     private RelativeLayout btn_update;
     private TextView tv_phone, tv_name, tv_pin, tv_address, tv_socity, btn_socity;
@@ -55,8 +66,9 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
     Dialog loadingBar ;
     int add_type=0;
     private String getlocation_id;
-    private String[] pincodes ={"452001","452002","452003","452004","452005","452006","452007","452008","452009","452010","452011","452012","452013"
-    ,"452014","452015","452016","452017","452018","452019","452020"};
+    ArrayList<Socity_model>societyList;
+    ArrayList<String>pinList;
+
 
     public Add_delivery_address_fragment() {
         // Required empty public constructor
@@ -80,7 +92,8 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
-
+        societyList = new ArrayList<>();
+        pinList = new ArrayList<>();
         module=new Module();
         sessionManagement = new Session_management(getActivity());
         image_home=(ImageView)view.findViewById(R.id.image_home);
@@ -92,26 +105,23 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         tv_phone = (TextView) view.findViewById(R.id.tv_add_adres_phone);
         tv_name = (TextView) view.findViewById(R.id.tv_add_adres_name);
         tv_pin = (TextView) view.findViewById(R.id.tv_add_adres_pin);
-        et_pin = (EditText) view.findViewById(R.id.et_add_adres_pin);
+        et_pin = (AutoCompleteTextView) view.findViewById(R.id.et_add_adres_pin);
         et_address = (EditText) view.findViewById(R.id.et_add_adres_home);
         tv_address =(TextView)view.findViewById( R.id.tv_add );
         //tv_socity = (TextView) view.findViewById(R.id.tv_add_adres_socity);
         btn_update = (RelativeLayout) view.findViewById(R.id.btn_add_adres_edit);
       //  btn_socity = (TextView) view.findViewById(R.id.btn_add_adres_socity);
+        if (ConnectivityReceiver.isConnected()) {
+           makegetSocieties();
+        } else {
+            Toast.makeText(getActivity(), "Error Network Issues", Toast.LENGTH_SHORT).show();
+            // ((MainActivity) getApplication()).onNetworkConnectionChanged(false);
+        }
+
 
         String getsocity_name = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_NAME);
         //String getsocity_id = sessionManagement.getUserDetails().get(BaseURL.KEY_SOCITY_ID);
-        String getsocity_id = "1";
-//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line,pincodes);
-////        et_pin.setThreshold( 1 );
-//        et_pin.setAdapter( arrayAdapter );
-//        et_pin.setOnTouchListener( new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                et_pin.showDropDown();
-//                return false;
-//            }
-//        } );
+        final String getsocity_id = "1";
 
 
         Bundle args = getArguments();
@@ -171,6 +181,26 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 add_type=1;
             }
         });
+
+        et_pin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    getsocity = societyList.get(position).getSocity_id();
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+//        et_pin.setOnTouchListener( new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                et_pin.showDropDown();
+//                return false;
+//            }
+//        } );
        /* if (!TextUtils.isEmpty(getsocity_name)) {
 
             btn_socity.setText(getsocity_name);
@@ -304,28 +334,28 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
                 if (ConnectivityReceiver.isConnected()) {
                     if (isEdit) {
                         String pin=et_pin.getText().toString();
-//                       boolean ch_pin= checkPinCode(pincodes,pin);
-//                       if(ch_pin)
-//                       {
+                       boolean ch_pin= checkPinCode(pinList,pin);
+                       if(ch_pin)
+                       {
                            makeEditAddressRequest(getlocation_id, getpin,getsocity, getadd, getname, getphone,address_type);
-//                       }
-//                       else
-//                       {
-//                              Toast.makeText(getActivity(),"We don't deliver this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
-//                       }
+                       }
+                       else
+                       {
+                              Toast.makeText(getActivity(),"We don't deliver at this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
+                       }
 
                     } else {
 
                         String pin=et_pin.getText().toString();
-//                        boolean ch_pin= checkPinCode(pincodes,pin);
-//                        if(ch_pin)
-//                        {
-                            makeAddAddressRequest(user_id, getpin, getsocity,getadd, getname, getphone,address_type);
-//                        }
-//                        else
-//                        {
-//                            Toast.makeText(getActivity(),"We don't deliver this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
-//                        }
+                        boolean ch_pin= checkPinCode(pinList,pin);
+                        if(ch_pin)
+                        {
+                            makeAddAddressRequest(user_id,pin, getsocity,getadd, getname, getphone,address_type);
+                        }
+                        else
+                        {
+                            Toast.makeText(getActivity(),"We don't deliver at this pin code \n Please select any one in options.",Toast.LENGTH_LONG).show();
+                        }
 
 
                     }
@@ -349,10 +379,11 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         // Tag used to cancel the request
         String tag_json_obj = "json_add_address_req";
 
-        Map<String, String> params = new HashMap<String, String>();
+        final Map<String, String> params = new HashMap<String, String>();
         params.put("user_id", user_id);
         params.put("pincode", pincode);
         params.put("socity_id", "11");
+//        params.put("socity_id", socity_id);
         params.put("house_no", address);
         params.put("receiver_name", receiver_name);
         params.put("receiver_mobile", receiver_mobile);
@@ -363,7 +394,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                Log.d(TAG,"add_address"+params+"\n"+ response.toString());
 
                 try {
                     Boolean status = response.getBoolean("responce");
@@ -406,10 +437,11 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         // Tag used to cancel the request
         String tag_json_obj = "json_edit_address_req";
 
-        Map<String, String> params = new HashMap<String, String>();
+        final Map<String, String> params = new HashMap<String, String>();
         params.put("location_id", location_id);
         params.put("pincode", pincode);
         params.put("socity_id", "11");
+//        params.put("socity_id", socity_id);
         params.put("house_no", add);
         params.put("receiver_name", receiver_name);
         params.put("receiver_mobile", receiver_mobile);
@@ -420,7 +452,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                Log.d(TAG,"edit_address"+params+"\n"+ response.toString());
 
                 try {
                     Boolean status = response.getBoolean("responce");
@@ -454,7 +486,7 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
-    public boolean checkPinCode(String[] pincodes,String value)
+    public boolean checkPinCode(ArrayList<String> pincodes,String value)
     {
         boolean tr=false;
         for (String element : pincodes) {
@@ -468,6 +500,58 @@ public class Add_delivery_address_fragment extends Fragment implements View.OnCl
 
         }
       return tr;
+    }
+
+
+    void makegetSocieties()
+    {   loadingBar.show();
+        Map<String,String>map = new HashMap<>();
+        CustomVolleyJsonArrayRequest jsonObjReq = new CustomVolleyJsonArrayRequest(Request.Method.POST,
+                BaseURL.GET_SOCITY_URL,map, new Response.Listener<JSONArray>() {
+
+            @Override
+            public void onResponse(JSONArray response) {
+                Log.d(TAG,"societies"+ response.toString());
+
+                try {
+                        if (response.length()>0)
+                        {
+                                Gson gson = new Gson();
+                            Type listType = new TypeToken<List<Socity_model>>(){}.getType();
+                            societyList = gson.fromJson(response.toString(),listType);
+
+                            for (int i = 0 ; i <societyList.size();i++)
+                            {
+                                pinList.add(societyList.get(i).getS_pincode());
+                            }
+                            if (pinList.size()>0)
+                            {
+                                        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_dropdown_item_1line,pinList);
+                                          et_pin.setThreshold( 1 );
+                                           et_pin.setAdapter( arrayAdapter );
+
+
+                            }
+                        }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                loadingBar.dismiss();
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String msg = module.VolleyErrorMessage(error);
+                if (!(msg.isEmpty() || msg.equals(""))) {
+                    Toast.makeText(getActivity(), "" + msg, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
     }
 
 }

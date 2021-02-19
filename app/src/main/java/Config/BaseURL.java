@@ -52,9 +52,7 @@ public class BaseURL {
     public static final String CITY_ID = "CITY_ID";
     public static final String STORE_ID = "STORE_ID";
 
-    //https://www.vijaylaxmi.net/admin/index.php/api/get_products
-    //public static String BASE_URL = "https://www.vijaylaxmi.net/";
-  //  public static String BASE_URL = "https://www.vijaylaxmi.net/admin/";
+
     public static String BASE_URL = "https://beautymentor.in/admin/";
 
     public static String IMG_SLIDER_URL = BASE_URL + "uploads/sliders/";
@@ -153,5 +151,6 @@ public class BaseURL {
     public static String PRODUCT_DETAILS = BASE_URL + "index.php/api/get_products_details";
     public static String GET_UPLOAD = BASE_URL + "index.php/api/upload_images";
     public static String GET_GSTS = BASE_URL + "index.php/api/total_products";
+    public static String URL_ORDER_STATUS = BASE_URL + "index.php/api/order_status_history";
 
 }

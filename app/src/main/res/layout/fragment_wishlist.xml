@@ -40,7 +40,7 @@
             tools:layout_editor_absoluteX="10dp"
             tools:layout_editor_absoluteY="326dp" />
     </LinearLayout>
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
 
         android:layout_marginTop="@dimen/space_5"
         android:id="@+id/rv_wishlist"

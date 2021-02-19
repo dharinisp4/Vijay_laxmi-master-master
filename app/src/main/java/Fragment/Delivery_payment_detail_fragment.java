@@ -5,14 +5,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -58,7 +59,7 @@ public class Delivery_payment_detail_fragment extends Fragment {
     private String gettime = "";
     private String getdate = "";
     private String getuser_id = "";
-    private String getstore_id = "";
+    private String getstore_id = "" ,info_msg="";
     Dialog loadingBar;
     TextView tvItems,tvMrp,tvDiscount,tvDelivary,tvSubTotal,tv_total;
     TextView reciver_name ,mobile_no ,pincode,house_no,society ;
@@ -163,7 +164,14 @@ SharedPreferences preferences;
         double d=m-p;
         tvDiscount.setText("-"+getResources().getString(R.string.currency)+String.valueOf(d));
         double db = (m-d)+deli_charges ;
-    tvDelivary.setText(getResources().getString(R.string.currency)+deli_charges);
+        if (deli_charges==0)
+        {
+            tvDelivary.setText("FREE");
+            tvDelivary.setTextColor(getActivity().getResources().getColor(R.color.color_3));
+        }
+        else {
+            tvDelivary.setText(getResources().getString(R.string.currency) + deli_charges);
+        }
    //     tvDelivary.setText(getResources().getString(R.string.currency)+"50");
        tvSubTotal.setText(getResources().getString(R.string.currency)+db);
      //   tv_total.setText(getResources().getString(R.string.tv_cart_item) + db_cart.getCartCount() + "\n" +
@@ -173,6 +181,7 @@ SharedPreferences preferences;
          //       db_cart.getTotalAmount() + " + " + deli_charges + " = " + total+ getResources().getString(R.string.currency));
 
         getGstAndPrice();
+        getAppSettingData();
         btn_order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -451,4 +460,36 @@ SharedPreferences preferences;
         return sum;
     }
 
+
+    public void getAppSettingData() {
+        loadingBar.show();
+        String json_tag = "json_app_tag";
+        HashMap<String, String> map = new HashMap<>();
+
+        CustomVolleyJsonRequest request = new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_VERSTION_DATA, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                loadingBar.dismiss();
+                try {
+                    boolean sts = response.getBoolean("responce");
+
+                    if (sts) {
+                        JSONObject object = response.getJSONObject("data");
+                        info_msg= object.getString("data");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+//                Toast.makeText(getContext(),error.getMessage(),to)
+
+            }
+        });
+        AppController.getInstance().addToRequestQueue(request);
+    }
 }
