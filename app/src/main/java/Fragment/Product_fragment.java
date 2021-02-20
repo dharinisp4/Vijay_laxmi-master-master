@@ -101,7 +101,9 @@ public class Product_fragment extends Fragment {
        session_management=new Session_management(getActivity());
         user_id=session_management.getUserDetails().get(KEY_ID);
         rv_cat.setLayoutManager(new GridLayoutManager(getActivity() ,2));
+
         String getcat_id = getArguments().getString("cat_id");
+
         String id = getArguments().getString("id");
         String get_deal_id = getArguments().getString("cat_deal");
         String get_top_sale_id = getArguments().getString("cat_top_selling");
@@ -110,15 +112,17 @@ public class Product_fragment extends Fragment {
 
         // check internet connection
         if (ConnectivityReceiver.isConnected()) {
-            //Shop by Catogary
-           // Toast.makeText(getActivity(),"a"+getcat_id,Toast.LENGTH_LONG).show();
+
+            if (getArguments().containsKey("brand_id"))
+            {
+                brandProductRequest(getArguments().getString("brand_id"));
+            }
+            else
+            {
            makeGetCategoryRequest(getcat_id);
-         //   makeGetProductRequest(getcat_id);
-            //Deal Of The Day Products
            makedealIconProductRequest(get_deal_id);
-            //Top Sale Products
             maketopsaleProductRequest(get_top_sale_id);
-          makeGetSliderCategoryRequest(id);
+          makeGetSliderCategoryRequest(id);}
 
 
       //    Toast.makeText(getActivity(),""+product_modelList.size(),Toast.LENGTH_LONG).show();
@@ -290,6 +294,8 @@ public class Product_fragment extends Fragment {
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
+
+
     //Get Shop By Catogary Products
     private void makeGetProductRequest(final String cat_id) {
         loadingBar.show();
@@ -370,6 +376,100 @@ public class Product_fragment extends Fragment {
                         }
 
 
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                }
+            }
+        });
+        AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
+    }
+
+    private void brandProductRequest(final String cat_id) {
+        loadingBar.show();
+
+        String tag_json_obj = "json_product_req";
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("brand_id", cat_id);
+        CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
+                BaseURL.GET_BRAND_PRODUCTS, params, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("brand_products"+cat_id , response.toString());
+
+
+                try {
+                    if (response.has( "data" )) {
+
+                        gifImageView.setVisibility( View.GONE );
+                        rv_cat.setVisibility( View.VISIBLE );
+                    }
+                    else {
+                        loadingBar.dismiss();
+                        gifImageView.setVisibility( View.VISIBLE );
+                        rv_cat.setVisibility( View.GONE );
+                    }
+
+//                    Boolean status = response.getBoolean( "responce" );
+//
+//                    if (status == true ) {
+//                        Toast.makeText(getActivity(),""+response,Toast.LENGTH_LONG).show();
+                        product_modelList.clear();
+                        Gson gson = new Gson();
+                        Type listType = new TypeToken<List<Product_model>>() {
+                        }.getType();
+                        product_modelList = gson.fromJson( response.getString( "data" ), listType );
+                        loadingBar.dismiss();
+                        adapter_product = new Product_adapter( product_modelList, getActivity() );
+                        rv_cat.setAdapter( adapter_product );
+                        adapter_product.notifyDataSetChanged();
+
+                        gifImageView.setVisibility( View.GONE );
+                        rv_cat.setVisibility( View.VISIBLE );
+
+                       if (product_modelList.size() <= 0)
+                       {
+
+                                loadingBar.dismiss();
+                                adapter_product.notifyDataSetChanged();
+                                gifImageView.setVisibility( View.VISIBLE );
+                                rv_cat.setVisibility( View.GONE );
+                                Toast.makeText( getActivity(), getResources().getString( R.string.no_rcord_found ), Toast.LENGTH_SHORT ).show();
+                       }
+                            else
+                            {
+                                gifImageView.setVisibility( View.GONE);
+                                rv_cat.setVisibility( View.VISIBLE );
+
+                             }
+
+//                        }
+//
+//                    else
+//                    {
+//
+//                        loadingBar.dismiss();
+//                        gifImageView.setVisibility( View.VISIBLE );
+//                        rv_cat.setVisibility( View.GONE );
+//                    }
+
+                }catch (JSONException e){
+                            loadingBar.dismiss();
+                            //   e.printStackTrace();
+                            String ex = e.getMessage();
+
+                            //  Toast.makeText(getActivity(),""+ex,Toast.LENGTH_LONG).show();
+
+                        }
+
+            loadingBar.dismiss();
             }
         }, new Response.ErrorListener() {
 

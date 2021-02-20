@@ -73,6 +73,7 @@ public class BaseURL {
     public static String PUT_SUGGESTION_URL = BASE_URL + "index.php/api/put_suggestion";
     public static String GET_CATEGORY_URL = BASE_URL + "index.php/api/get_categories";
     public static String GET_ALL_CATEGORY_URL = BASE_URL + "index.php/api/get_all_categories";
+    public static String GET_BRANDS_URL = BASE_URL + "index.php/api/get_brands_list";
     public static String GET_SLIDER_CATEGORY_URL = BASE_URL + "index.php/api/get_sub_cat";
     public static String GET_CATEGORY_ICON_URL = BASE_URL + "index.php/api/icon";
     public static String COUPON_CODE = BASE_URL + "index.php/api/get_coupons";
@@ -138,6 +139,7 @@ public class BaseURL {
     public static String GENOTP_URL = BASE_URL + "index.php/api/generate_otp";
     public static String VERIFY_MOBILE_URL = BASE_URL + "index.php/api/verification_mobile";
     public static String GET_PRODUCT_DETAIL_URL = BASE_URL + "index.php/api/get_products_details";
+    public static String GET_BRAND_PRODUCTS = BASE_URL + "index.php/api/get_brand";
 
 
     // global topic to receive app wide push notifications

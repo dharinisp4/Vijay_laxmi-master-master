@@ -15,18 +15,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import Config.BaseURL;
-import Model.Category_model;
+import Model.BrandModel;
 import beautymentor.in.R;
 
 import static android.content.Context.MODE_PRIVATE;
 
 public class TopBrandsAdapter extends RecyclerView.Adapter<TopBrandsAdapter.Holder> {
-    private List<Category_model> modelList;
+    private List<BrandModel> modelList;
     private Context context;
     String language;
     SharedPreferences preferences;
 
-    public TopBrandsAdapter(List<Category_model> modelList, Context context) {
+    public TopBrandsAdapter(List<BrandModel> modelList, Context context) {
         this.modelList = modelList;
         this.context = context;
     }
@@ -44,10 +44,10 @@ public class TopBrandsAdapter extends RecyclerView.Adapter<TopBrandsAdapter.Hold
     @Override
     public void onBindViewHolder(Holder holder, int position) {
 
-        Category_model mList = modelList.get(position);
+        BrandModel mList = modelList.get(position);
 
         Glide.with(context)
-                .load( BaseURL.IMG_CATEGORY_URL + mList.getImage())
+                .load( BaseURL.IMG_CATEGORY_URL + mList.getBrand_image())
                 .placeholder(R.drawable.icon)
                 .crossFade()
                 .diskCacheStrategy( DiskCacheStrategy.ALL)

@@ -65,6 +65,7 @@ import Adapter.Home_Icon_Adapter;
 import Adapter.TopBrandsAdapter;
 import Adapter.Top_Selling_Adapter;
 import Config.BaseURL;
+import Model.BrandModel;
 import Model.Category_model;
 import Model.Deal_Of_Day_model;
 import Model.Home_Icon_model;
@@ -87,6 +88,7 @@ public class Home_fragment extends Fragment {
     private SliderLayout imgSlider, banner_slider, featuredslider;
     private RecyclerView new_products_recycler, rv_top_selling, rv_headre_icons ,rv_brands_recycler ,rv_deal_of_day ;
     private List<Category_model> category_modelList = new ArrayList<>();
+    private List<BrandModel> brand_modelList = new ArrayList<>();
     private Home_adapter adapter;
     Module module;
     int version_code=0;
@@ -369,10 +371,11 @@ public class Home_fragment extends Fragment {
         rv_brands_recycler.addOnItemTouchListener( new RecyclerTouchListener( getActivity(), rv_brands_recycler, new RecyclerTouchListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                getid = menu_models.get(position).getId();
+                getid = brand_modelList.get(position).getBrand_id();
                 Bundle args = new Bundle();
                 Fragment fm = new Product_fragment();
                 args.putString("cat_id", getid);
+                args.putString("brand_id", getid);
                 args.putString( "title" ,getcat_title );
                 // args.putString( "" );
                 // Toast.makeText(getActivity(),""+getid,Toast.LENGTH_LONG).show();
@@ -745,27 +748,27 @@ public class Home_fragment extends Fragment {
         String tag_json_obj = "json_category_req";
         isSubcat = false;
         Map<String, String> params = new HashMap<String, String>();
-        params.put("parent", "");
+        params.put("brand_id", "");
         isSubcat = true;
        /* if (parent_id != null && parent_id != "") {
         }*/
 
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
-                BaseURL.GET_CATEGORY_URL, params, new Response.Listener<JSONObject>() {
+                BaseURL.GET_BRANDS_URL, params, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.d(TAG, response.toString());
+                Log.d(TAG, "brands" +response.toString());
                 try {
                     if (response != null && response.length() > 0) {
                         Boolean status = response.getBoolean("responce");
                         if (status) {
                             loadingBar.dismiss();
                             Gson gson = new Gson();
-                            Type listType = new TypeToken<List<Category_model>>() {
+                            Type listType = new TypeToken<List<BrandModel>>() {
                             }.getType();
-                            category_modelList = gson.fromJson(response.getString("data"), listType);
-                             topBrandsAdapter= new TopBrandsAdapter(category_modelList,getActivity());
+                          brand_modelList = gson.fromJson(response.getString("data"), listType);
+                             topBrandsAdapter= new TopBrandsAdapter(brand_modelList,getActivity());
                                 rv_brands_recycler.setAdapter( topBrandsAdapter );
                             //   rv_items.setAdapter(adapter);
                             topBrandsAdapter.notifyDataSetChanged();
