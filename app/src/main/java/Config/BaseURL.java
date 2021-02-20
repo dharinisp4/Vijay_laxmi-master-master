@@ -137,6 +137,7 @@ public class BaseURL {
     public static String EDIT_ADDRESS_URL = BASE_URL + "index.php/api/edit_address";
     public static String GENOTP_URL = BASE_URL + "index.php/api/generate_otp";
     public static String VERIFY_MOBILE_URL = BASE_URL + "index.php/api/verification_mobile";
+    public static String GET_PRODUCT_DETAIL_URL = BASE_URL + "index.php/api/get_products_details";
 
 
     // global topic to receive app wide push notifications

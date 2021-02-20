@@ -196,6 +196,17 @@
                                     android:fontFamily="@font/cabin"
                                     android:text="Name"/>
                                 <TextView
+                                    android:id="@+id/details_product_hsn"
+                                   android:layout_below="@+id/details_product_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="16dp"
+                                    android:textColor="@color/black"
+                                    android:visibility="gone"
+                                    android:padding="5dp"
+                                    android:fontFamily="@font/cabin"
+                                    android:text="Name"/>
+                                <TextView
                                     android:id="@+id/details_product_price"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -206,14 +217,14 @@
 
                                     android:textColor="@color/black"
                                    android:fontFamily="@font/cabin"
-                                    android:layout_below="@id/details_product_name"
+                                    android:layout_below="@id/details_product_hsn"
                                     android:text="Name"
                                     />
                                 <TextView
                                     android:id="@+id/details_product_mrp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/details_product_name"
+                                    android:layout_below="@id/details_product_hsn"
                                     android:layout_marginLeft="3dp"
                                     android:textSize="14dp"
 
@@ -232,13 +243,13 @@
                                     android:background="@color/dark_gray"
                                     android:layout_width="@dimen/space_2"
                                     android:layout_marginTop="4dp"
-                                    android:layout_below="@id/details_product_name"
+                                    android:layout_below="@id/details_product_hsn"
                                     android:layout_height="25dp"/>
                                 <TextView
                                     android:id="@+id/details_product_per"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/details_product_name"
+                                    android:layout_below="@id/details_product_hsn"
                                     android:layout_marginLeft="3dp"
                                     android:textSize="16dp"
                                     android:fontFamily="@font/cabin"
@@ -256,7 +267,7 @@
                                     android:id="@+id/details_product_weight"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_below="@id/details_product_name"
+                                    android:layout_below="@id/details_product_hsn"
                                     android:layout_marginLeft="3dp"
                                     android:textSize="16dp"
                                     android:fontFamily="@font/cabin"

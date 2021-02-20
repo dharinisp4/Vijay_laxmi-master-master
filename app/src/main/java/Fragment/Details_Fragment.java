@@ -10,15 +10,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -67,11 +71,14 @@ import beautymentor.in.CustomSlider;
 import beautymentor.in.LoginActivity;
 import beautymentor.in.MainActivity;
 import beautymentor.in.R;
+import beautymentor.in.networkconnectivity.NoInternetConnection;
+import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
 import util.Session_management;
 import util.WishlistHandler;
 
+import static Config.BaseURL.GET_PRODUCT_DETAIL_URL;
 import static Config.BaseURL.KEY_ID;
 
 /**
@@ -101,7 +108,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
     Button btn_add_to_cart,btn_add;
     DatabaseCartHandler db_cart;
     WishlistHandler db_wish ;
-    TextView txtPer,txtTotal,txtName,txtPrice,txtMrp,txtDesc,details_product_weight;
+    TextView txtPer,txtTotal,txtName ,txtHsn,txtPrice,txtMrp,txtDesc,details_product_weight;
     public static ImageView wish_before ,wish_after,btn ;
     int status=0;
     String cat_id,product_id,product_images,details_product_name,details_product_desc,details_product_inStock,details_product_attribute;
@@ -179,7 +186,14 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         details_product_title=bundle.getString("title");
         stock=Integer.parseInt(details_product_stock);
 
-
+            if (ConnectivityReceiver.isConnected())
+            {
+                getProductDetail(product_id);
+            }
+            else
+            {
+                startActivity(new Intent(getActivity(), NoInternetConnection.class));
+            }
 
     btn_add=(Button)view.findViewById(R.id.btn_add);
         btn_add_to_cart=(Button)view.findViewById(R.id.btn_f_Add_to_cart);
@@ -194,6 +208,7 @@ public class Details_Fragment extends Fragment implements  RecyclerView.OnClickL
         image_list=new ArrayList<>();
 
         txtName=(TextView)view.findViewById(R.id.details_product_name);
+        txtHsn=(TextView)view.findViewById(R.id.details_product_hsn);
        txtDesc=(TextView) view.findViewById(R.id.details_product_description);
         txtPrice=(TextView)view.findViewById(R.id.details_product_price);
         txtMrp=(TextView)view.findViewById(R.id.details_product_mrp);
@@ -1476,6 +1491,52 @@ public boolean checkAttributeStatus(String atr)
             }
         }
         return inx;
+    }
+
+    public void getProductDetail(String productId)
+    {
+        loadingBar.show();
+        final HashMap<String,String> params = new HashMap<String,String>();
+        params.put("product_id",productId);
+
+        final CustomVolleyJsonRequest customVolleyJsonRequest = new CustomVolleyJsonRequest(Request.Method.POST, GET_PRODUCT_DETAIL_URL, params, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    Log.e("productDetail",params+response.toString());
+                    Boolean reps = response.getBoolean("responce");
+                    if (reps) {
+                        JSONArray jsonArray = response.getJSONArray("data");
+                        for (int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            if (object.get("hsn_number").equals("")|| object.get("hsn_number")==null) {
+                                txtHsn.setVisibility(View.GONE);
+                            }
+                            else
+                            {
+                                txtHsn.setText("HSN:"+object.getString("hsn_number"));
+                                txtHsn.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    loadingBar.dismiss();
+                    e.printStackTrace();
+                }
+
+                loadingBar.dismiss();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(),error.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        });
+        AppController.getInstance().addToRequestQueue(customVolleyJsonRequest);
     }
 }
 

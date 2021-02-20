@@ -11,13 +11,17 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentManager;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -25,6 +29,8 @@ import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -36,9 +42,11 @@ import beautymentor.in.AppController;
 import beautymentor.in.MainActivity;
 import beautymentor.in.R;
 import de.hdodenhof.circleimageview.CircleImageView;
+import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.Session_management;
 
+import static Config.BaseURL.GET_PRODUCT_DETAIL_URL;
 import static Config.BaseURL.KEY_CNT;
 import static android.app.Activity.RESULT_OK;
 
@@ -379,5 +387,7 @@ public class Edit_profile_fragment extends Fragment implements View.OnClickListe
         }
         return result;
     }
+
+
 
 }

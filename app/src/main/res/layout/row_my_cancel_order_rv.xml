@@ -34,12 +34,35 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="4">
+
+
+
+                <Fonts.LatoBLack
+                    android:id="@+id/tv_order_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/text_size_normal" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/space_5"
+                android:weightSum="4">
 
                 <Fonts.LatoBLack
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".4"
+                    android:layout_weight="1"
                     android:text="@string/order_id"
                     android:textColor="@color/dark_gray"
                     android:textSize="@dimen/text_size_small"
@@ -57,85 +80,11 @@
                     android:textStyle="bold" />
 
                 <Fonts.LatoBLack
-                    android:id="@+id/tv_order_status"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:paddingBottom="@dimen/space_8"
-                    android:textColor="@color/green"
-                    android:textSize="@dimen/text_size_normal" />
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Fonts.LatoBLack
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:text="@string/place_on"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="@dimen/text_size_small" />
-
-                <Fonts.LatoBLack
-                    android:id="@+id/tv_order_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".8"
-                    android:text="Date"
-                    android:textColor="#000"
-                    android:textSize="@dimen/text_size_small" />
-
-                <Fonts.LatoBLack
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".3"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/time_t"
-                    android:textColor="@color/dark_gray"
-                    android:textSize="@dimen/text_size_small" />
-
-                <Fonts.LatoBLack
-                    android:id="@+id/tv_order_time"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
-                    android:layout_weight="1"
-                    android:text="time"
-                    android:textSize="@dimen/text_size_small"
-                    android:textColor="#000" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Fonts.LatoBLack
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".2"
-                    android:text=""
-                    android:textColor="@color/dark_gray" />
-
-                <Fonts.LatoBLack
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".8"
-                    android:text=""
-                    android:textColor="#000" />
-
-                <Fonts.LatoBLack
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/space_9"
-                    android:layout_weight=".6"
-                    android:gravity="right"
                     android:text="@string/tt_t"
                     android:textColor="@color/dark_gray"
                     android:textSize="@dimen/text_size_small" />
@@ -151,33 +100,81 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="4">
+
                 <Fonts.LatoBLack
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/place_on"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/text_size_small" />
+
+                <Fonts.LatoBLack
+                    android:id="@+id/tv_order_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Date"
+                    android:textColor="#000"
+                    android:textSize="@dimen/text_size_small" />
+
+                <Fonts.LatoBLack
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+
+                    android:text="@string/time_t"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="@dimen/text_size_small" />
+
+                <Fonts.LatoBLack
+                    android:id="@+id/tv_order_time"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_weight="1"
+                    android:text="time"
+                    android:textSize="@dimen/text_size_small"
+                    android:textColor="#000" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4">
+                <Fonts.LatoBLack
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Mobile : "
                     android:textSize="11sp"
+                    android:layout_weight="1"
                     android:textColor="@color/dark_gray"/>
                 <Fonts.LatoBLack
                     android:id="@+id/email"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="something@gmail.com"
                     android:textSize="11sp"
+                    android:layout_weight="1"
                     android:textColor="@color/dark_black"/>
                 <Fonts.LatoBLack
-                    android:layout_marginLeft="25dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Delivering to : "
                     android:textSize="11sp"
+                    android:layout_weight="1"
                     android:textColor="@color/dark_gray"/>
                 <Fonts.LatoBLack
                     android:id="@+id/user_address"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="your address"
                     android:textSize="11sp"
+                    android:layout_weight="1"
                     android:textColor="@color/dark_black"/>
             </LinearLayout>
         </LinearLayout>
@@ -201,7 +198,7 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.2"
+                android:layout_weight="2"
                 android:gravity="top"
                 android:orientation="vertical">
 
@@ -229,7 +226,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_10"
                     android:layout_marginRight="@dimen/space_10"
-                    android:layout_marginTop="@dimen/space_14"
+
                     android:orientation="horizontal">
 
                     <Fonts.LatoBLack
@@ -344,7 +341,33 @@
             android:layout_height="1dp"
             android:layout_marginTop="@dimen/space_8"
             android:background="@color/gray" />
+<LinearLayout
+    android:id="@+id/lin_cancel"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/space_5"
 
+    android:layout_marginTop="@dimen/space_10"
+    android:orientation="vertical">
+    <Fonts.LatoBLack
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel Note:"
+        android:textColor="@color/black"
+    android:textStyle="bold"
+        android:textSize="14sp" />
+
+    <Fonts.LatoBLack
+        android:id="@+id/tv_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_5"
+        android:text="Date"
+        android:textColor="#000"
+        android:textSize="@dimen/text_size_small" />
+
+
+</LinearLayout>
 
         <LinearLayout
             android:visibility="gone"

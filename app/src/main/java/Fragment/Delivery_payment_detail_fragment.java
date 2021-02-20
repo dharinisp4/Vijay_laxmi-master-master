@@ -471,12 +471,13 @@ SharedPreferences preferences;
             @Override
             public void onResponse(JSONObject response) {
                 loadingBar.dismiss();
+                Log.e("getIndexData",response.toString());
                 try {
                     boolean sts = response.getBoolean("responce");
 
                     if (sts) {
                         JSONObject object = response.getJSONObject("data");
-                        info_msg= object.getString("data");
+                        info_msg= object.getString("delivery_text");
                         tv_note.setText(info_msg);
                     }
                 } catch (Exception e) {

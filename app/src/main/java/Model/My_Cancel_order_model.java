@@ -3,28 +3,111 @@ package Model;
 
 public class My_Cancel_order_model {
 
-    String sale_id;
-    String user_id;
-    String on_date;
-    String delivery_time_from;
-    String delivery_time_to;
-    String status;
-    String note;
-    String is_paid;
-    String total_amount;
-    String total_kg;
-    String total_items;
-    String socity_id;
-    String delivery_address;
-    String location_id;
-    String delivery_charge;
-    String payment_method;
-    String receiver_name;
-    String receiver_mobile ;
-    String confirm_date;
-    String delivery_date;
-    String cancel_date;
-    String out_date;
+    String sale_id,user_id,product_id,on_date,delivery_time_from,delivery_time_to,status,note,is_paid,total_amount,total_rewards,total_kg,total_items,socity_id,delivery_address,location_id,delivery_charge,new_store_id,assign_to,payment_method,txn_id,confirm_date,out_date,cancel_date,delivery_date,receiver_name,receiver_mobile;
+
+    public void setSale_id(String sale_id) {
+        this.sale_id = sale_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
+
+    public String getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
+    public void setOn_date(String on_date) {
+        this.on_date = on_date;
+    }
+
+    public void setDelivery_time_from(String delivery_time_from) {
+        this.delivery_time_from = delivery_time_from;
+    }
+
+    public void setDelivery_time_to(String delivery_time_to) {
+        this.delivery_time_to = delivery_time_to;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public void setIs_paid(String is_paid) {
+        this.is_paid = is_paid;
+    }
+
+    public void setTotal_amount(String total_amount) {
+        this.total_amount = total_amount;
+    }
+
+    public String getTotal_rewards() {
+        return total_rewards;
+    }
+
+    public void setTotal_rewards(String total_rewards) {
+        this.total_rewards = total_rewards;
+    }
+
+    public void setTotal_kg(String total_kg) {
+        this.total_kg = total_kg;
+    }
+
+    public void setTotal_items(String total_items) {
+        this.total_items = total_items;
+    }
+
+    public void setSocity_id(String socity_id) {
+        this.socity_id = socity_id;
+    }
+
+    public void setDelivery_address(String delivery_address) {
+        this.delivery_address = delivery_address;
+    }
+
+    public void setLocation_id(String location_id) {
+        this.location_id = location_id;
+    }
+
+    public void setDelivery_charge(String delivery_charge) {
+        this.delivery_charge = delivery_charge;
+    }
+
+    public String getNew_store_id() {
+        return new_store_id;
+    }
+
+    public void setNew_store_id(String new_store_id) {
+        this.new_store_id = new_store_id;
+    }
+
+    public String getAssign_to() {
+        return assign_to;
+    }
+
+    public void setAssign_to(String assign_to) {
+        this.assign_to = assign_to;
+    }
+
+    public void setPayment_method(String payment_method) {
+        this.payment_method = payment_method;
+    }
+
+    public String getTxn_id() {
+        return txn_id;
+    }
+
+    public void setTxn_id(String txn_id) {
+        this.txn_id = txn_id;
+    }
 
     public String getCancel_date() {
         return cancel_date;
