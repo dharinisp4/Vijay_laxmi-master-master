@@ -56,6 +56,7 @@ public class My_cancel_order_fragment extends Fragment {
     Module module;
 
     ImageView no_orders ;
+    String user_id ="";
     public My_cancel_order_fragment() {
     }
 
@@ -93,9 +94,17 @@ public class My_cancel_order_fragment extends Fragment {
         rv_mycancel.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Session_management sessionManagement = new Session_management(getActivity());
-        String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
+         user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
 
         // check internet connection
+
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         if (ConnectivityReceiver.isConnected())
 
         {
@@ -105,10 +114,7 @@ public class My_cancel_order_fragment extends Fragment {
         {
             ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
         }
-
-        return view;
     }
-
 
     private void makeGetOrderRequest(String userid) {
         String tag_json_obj = "json_socity_req";

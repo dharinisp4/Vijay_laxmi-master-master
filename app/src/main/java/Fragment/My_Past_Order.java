@@ -51,6 +51,7 @@ public class My_Past_Order extends Fragment {
     private List<My_Past_order_model> my_order_modelList = new ArrayList<>();
     TabHost tHost;
     ImageView no_orders ;
+    String user_id ="";
 
     public My_Past_Order() {
         // Required empty public constructor
@@ -99,18 +100,10 @@ public class My_Past_Order extends Fragment {
         rv_myorder.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         Session_management sessionManagement = new Session_management(getActivity());
-        String user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
+         user_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
 
         // check internet connection
-        if (ConnectivityReceiver.isConnected())
 
-        {
-            makeGetOrderRequest(user_id);
-        } else
-
-        {
-            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
-        }
 
         // recyclerview item click listener
         rv_myorder.addOnItemTouchListener(new
@@ -147,6 +140,19 @@ public class My_Past_Order extends Fragment {
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (ConnectivityReceiver.isConnected())
+
+        {
+            makeGetOrderRequest(user_id);
+        } else
+
+        {
+            ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+        }
+    }
 
     /**
      * Method to make json array request where json response starts wtih
