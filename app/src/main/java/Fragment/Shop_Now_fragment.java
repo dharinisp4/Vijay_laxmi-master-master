@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -62,6 +63,7 @@ public class Shop_Now_fragment extends Fragment {
     Module module;
     private TopBrandsAdapter topBrandsAdapter;
     String type ="";
+    TextView tv_title;
 
     public Shop_Now_fragment() {
 
@@ -84,9 +86,18 @@ public class Shop_Now_fragment extends Fragment {
         setHasOptionsMenu(true);
        module=new Module();
         no_product=(ImageView)view.findViewById(R.id.no_product);
+       tv_title=(TextView) view.findViewById(R.id.firebase);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.shop_now));
 
         type = getArguments().getString("type");
+        if (type.equalsIgnoreCase("category"))
+        {
+            tv_title.setText("Shop By Category");
+        }
+        else
+        {
+            tv_title.setText("Shop By Brands");
+        }
 
 
         rv_items = (RecyclerView) view.findViewById(R.id.rv_home);
@@ -103,8 +114,7 @@ public class Shop_Now_fragment extends Fragment {
         rv_items.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), rv_items, new RecyclerTouchListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                getid = category_modelList.get(position).getId();
-                getcat_title = category_modelList.get(position).getTitle();
+
                 Bundle args = new Bundle();
                 Fragment fm = new Product_fragment();
 
@@ -112,7 +122,8 @@ public class Shop_Now_fragment extends Fragment {
                 args.putString("brand_id",brand_modelList.get(position).getBrand_id());
                 args.putString("cat_title",brand_modelList.get(position).getBrand_name());}
                 else
-                {
+                {  getid = category_modelList.get(position).getId();
+                    getcat_title = category_modelList.get(position).getTitle();
                     args.putString("cat_id", getid);
                     args.putString("cat_title", getcat_title);
                 }
@@ -263,50 +274,6 @@ public class Shop_Now_fragment extends Fragment {
         // Adding request to request queue
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
 
-    }
-
-   /* public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
-
-        private int spanCount;
-        private int spacing;
-        private boolean includeEdge;
-
-        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
-            this.spanCount = spanCount;
-            this.spacing = spacing;
-            this.includeEdge = includeEdge;
-        }
-
-        //Defining retrofit api service
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = parent.getChildAdapterPosition(view); // item position
-            int column = position % spanCount; // item column
-
-            if (includeEdge) {
-                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
-                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
-
-                if (position < spanCount) { // top edge
-                    outRect.top = spacing;
-                }
-                outRect.bottom = spacing; // item bottom
-            } else {
-                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
-                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
-                if (position >= spanCount) {
-                    outRect.top = spacing; // item top
-                }
-            }
-        }
-    }*/
-
-    // Converting dp to pixel
-
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
 

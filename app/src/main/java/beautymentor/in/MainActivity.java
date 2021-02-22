@@ -700,7 +700,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fm = new Shop_Now_fragment();
 
         }
-        else if (id == R.id.nav_shop_now) {
+        else if (id == R.id.nav_shop_brands) {
             args.putString("type","brand");
             fm = new Shop_Now_fragment();
 

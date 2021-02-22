@@ -280,6 +280,7 @@ public class Product_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
@@ -381,6 +382,7 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
@@ -475,6 +477,7 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
@@ -545,6 +548,7 @@ public class Product_fragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
@@ -592,12 +596,14 @@ public class Product_fragment extends Fragment {
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    loadingBar.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
@@ -649,6 +655,7 @@ public class Product_fragment extends Fragment {
 
             @Override
             public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
