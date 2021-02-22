@@ -27,6 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/space_2"
                 android:layout_marginLeft="@dimen/space_2"
+                android:descendantFocusability="blocksDescendants"
                 android:gravity="center_horizontal"
                 >
 
@@ -35,7 +36,7 @@
                     android:id="@+id/collapsing_recycler"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    android:nestedScrollingEnabled="false"
                     android:layout_gravity="center_horizontal"
                     >
 
@@ -238,8 +239,7 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:background="@color/all"
-                android:scrollbars="none"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:nestedScrollingEnabled="false"/>
 
 
 
@@ -267,6 +267,7 @@
                         android:background="@color/all"
                         android:scrollbars="none"
                         android:layout_marginBottom="20dp"
+                        android:nestedScrollingEnabled="false"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
@@ -284,6 +285,7 @@
                                                 android:layout_marginLeft="@dimen/space_5"
                                                 android:layout_marginTop="@dimen/space_5"
                                                 android:layout_marginRight="@dimen/space_5"
+
                                                 android:layout_marginBottom="@dimen/space_5">
 
                                             </com.daimajia.slider.library.SliderLayout>
@@ -334,12 +336,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_5"
                     android:layout_marginBottom="@dimen/space_5"
+                    android:nestedScrollingEnabled="false"
                    >
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_margin="@dimen/space_5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:nestedScrollingEnabled="false"
                     android:id="@+id/topbrands" />
                 </RelativeLayout>
 

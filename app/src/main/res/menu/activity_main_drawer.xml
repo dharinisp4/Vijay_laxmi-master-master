@@ -14,7 +14,15 @@
         <item
             android:id="@+id/nav_shop_now"
             android:icon="@drawable/ic_nav_home"
-            android:title="@string/nav_home" />
+            android:title="Shop by Category" />
+    </group>
+    <group
+        android:id="@+id/group_shop_brands"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_shop_brands"
+            android:icon="@drawable/ic_nav_home"
+            android:title="Shop by Brands" />
     </group>
     <group
         android:id="@+id/group_video"

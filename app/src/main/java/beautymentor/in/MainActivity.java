@@ -696,7 +696,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Fragment fm = null;
         Bundle args = new Bundle();
         if (id == R.id.nav_shop_now) {
+            args.putString("type","category");
             fm = new Shop_Now_fragment();
+
+        }
+        else if (id == R.id.nav_shop_now) {
+            args.putString("type","brand");
+            fm = new Shop_Now_fragment();
+
         } else if (id == R.id.nav_my_profile) {
 
             if (sessionManagement.isLoggedIn()) {
@@ -770,6 +777,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }*/
 
         if (fm != null) {
+            fm.setArguments(args);
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                     .addToBackStack(null).commit();
@@ -905,85 +913,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // register reciver
 
     }
-   /* private void prepareMenuData() {
 
-        MenuModel menuModel = new MenuModel("", true, false, "https://www.journaldev.com/9333/android-webview-example-tutorial"); //Menu of Android Tutorial. No sub menus
-        headerList.add(menuModel);
-
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
-        }
-
-        menuModel = new MenuModel("Java Tutorials", true, true, ""); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        List<MenuModel> childModelsList = new ArrayList<>();
-        MenuModel childModel = new MenuModel("Core Java Tutorial", false, false, "https://www.journaldev.com/7153/core-java-tutorial");
-        childModelsList.add(childModel);
-
-        childModel = new MenuModel("Java FileInputStream", false, false, "https://www.journaldev.com/19187/java-fileinputstream");
-        childModelsList.add(childModel);
-
-        childModel = new MenuModel("Java FileReader", false, false, "https://www.journaldev.com/19115/java-filereader");
-        childModelsList.add(childModel);
-
-
-        if (menuModel.hasChildren) {
-            Log.d("API123","here");
-            childList.put(menuModel, childModelsList);
-        }
-
-        childModelsList = new ArrayList<>();
-        menuModel = new MenuModel("Python Tutorials", true, true, ""); //Menu of Python Tutorials
-        headerList.add(menuModel);
-        childModel = new MenuModel("Python AST – Abstract Syntax Tree", false, false, "");
-        childModelsList.add(childModel);
-
-        childModel = new MenuModel("Python Fractions", false, false, "");
-        childModelsList.add(childModel);
-
-        if (menuModel.hasChildren) {
-            childList.put(menuModel, childModelsList);
-        }
-    }*/
-
-   /* private void populateExpandableList() {
-
-        expandableListAdapter = new ExpandableListAdapter( this, headerList, childList );
-        expandableListView.setAdapter( expandableListAdapter );
-
-        expandableListView.setOnGroupClickListener( new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-
-                if (headerList.get( groupPosition ).isGroup) {
-                    if (!headerList.get( groupPosition ).hasChildren) {
-                        WebView webView = findViewById( R.id.webView );
-                        webView.loadUrl( headerList.get( groupPosition ).url );
-                        onBackPressed();
-                    }
-                }
-
-                return false;
-            }
-        } );
-
-        expandableListView.setOnChildClickListener( new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
-                if (childList.get( headerList.get( groupPosition ) ) != null) {
-                    MenuModel model = childList.get( headerList.get( groupPosition ) ).get( childPosition );
-                    if (model.url.length() > 0) {
-                        WebView webView = findViewById( R.id.webView );
-                        webView.loadUrl( model.url );
-                        onBackPressed();
-                    }
-                }
-
-                return false;
-            }
-        } );
-        }*/
     }
 
 
