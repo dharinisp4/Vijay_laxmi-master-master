@@ -99,7 +99,7 @@
             android:layout_height="match_parent"
             android:text="@string/pending"
             android:textColor="#000"
-            android:paddingTop="@dimen/space_5"
+            android:paddingTop="@dimen/space_2"
             android:paddingBottom="@dimen/space_5"
             android:layout_gravity="center_vertical"
             android:textSize="@dimen/space_12"

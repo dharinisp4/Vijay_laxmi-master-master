@@ -59,7 +59,7 @@ public  class OrderStatusAdapter extends RecyclerView.Adapter<OrderStatusAdapter
                 name = "Order Cancelled";
                 break;
                 case "4" :
-               if( stat_list.get(position).getTracking_status().equalsIgnoreCase("4"))
+               if( stat_list.get(position).getTracking_status().equalsIgnoreCase("1"))
                 {
                     name = "Order Delivered";
                 }
@@ -81,7 +81,6 @@ public  class OrderStatusAdapter extends RecyclerView.Adapter<OrderStatusAdapter
 
             holder.tv_date.setText(d[2]+"-"+d[1]+"-"+d[0]);
         }
-        Log.e("stat","pos-----"+position+"-----"+stat_list.get(position).isChecked()+stat_list.get(position).getUpdated_at());
         if (stat_list.get(position).isChecked())
         {
             holder.iv_order_status.setImageTintList(ColorStateList.valueOf(activity.getResources().getColor(R.color.color_1)));

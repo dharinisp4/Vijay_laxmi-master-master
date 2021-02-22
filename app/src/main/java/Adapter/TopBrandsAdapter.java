@@ -47,7 +47,7 @@ public class TopBrandsAdapter extends RecyclerView.Adapter<TopBrandsAdapter.Hold
         BrandModel mList = modelList.get(position);
 
         Glide.with(context)
-                .load( BaseURL.IMG_CATEGORY_URL + mList.getBrand_image())
+                .load( BaseURL.IMG_BRANDS_URL + mList.getBrand_image())
                 .placeholder(R.drawable.icon)
                 .crossFade()
                 .diskCacheStrategy( DiskCacheStrategy.ALL)

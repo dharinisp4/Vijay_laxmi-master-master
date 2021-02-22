@@ -57,6 +57,7 @@ public class BaseURL {
 
     public static String IMG_SLIDER_URL = BASE_URL + "uploads/sliders/";
     public static String IMG_CATEGORY_URL = BASE_URL + "uploads/category/";
+    public static String IMG_BRANDS_URL = BASE_URL + "uploads/brands/";
     public static String IMG_PRODUCT_URL = BASE_URL + "uploads/products/";
     public static String IMG_VIDEOS_URL = BASE_URL + "uploads/videos/";
     public static String GET_VERSTION_DATA = BASE_URL + "index.php/api/getVersionData";
