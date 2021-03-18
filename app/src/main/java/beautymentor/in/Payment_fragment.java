@@ -1,4 +1,4 @@
-package Fragment;
+package beautymentor.in;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -10,12 +10,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -29,13 +25,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.payumoney.core.PayUmoneySdkInitializer;
 import com.payumoney.core.entity.TransactionResponse;
 import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
@@ -53,13 +45,7 @@ import java.util.Map;
 import Config.BaseURL;
 import Config.SharedPref;
 import Module.Module;
-import beautymentor.in.AppController;
-import beautymentor.in.MainActivity;
-import beautymentor.in.networkconnectivity.NetworkConnection;
-import beautymentor.in.networkconnectivity.NetworkError;
 
-import beautymentor.in.R;
-import beautymentor.in.payment.PayUMoneyActivity;
 import beautymentor.in.payment.ServiceWrapper;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,10 +54,8 @@ import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
 import util.Session_management;
 
-import static Config.BaseURL.GET_VERSTION_DATA;
 import static Config.BaseURL.KEY_MOBILE;
 import static Config.BaseURL.KEY_NAME;
-import static android.app.Activity.RESULT_OK;
 import static com.android.volley.VolleyLog.TAG;
 
 
@@ -114,6 +98,7 @@ public class Payment_fragment extends AppCompatActivity {
     String  txnid ="", amount ="", phone ="",
             prodname ="", firstname ="", email ="",
             merchantId ="", merchantkey="";
+//    merchantId ="6367063", merchantkey="5bMBTT5D";
     public Payment_fragment() {
 
     }
@@ -280,7 +265,7 @@ public class Payment_fragment extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_wallet_tag);
     }
 
-    private void attemptOrder() {
+    private void attemptOrder(String mode ,String t_id) {
         ArrayList<HashMap<String, String>> items = db_cart.getCartAll();
         //rewards = Double.parseDouble(db_cart.getColumnRewards());
         rewards = Double.parseDouble("0");
@@ -326,7 +311,7 @@ public class Payment_fragment extends AppCompatActivity {
 //Toast.makeText(ctx, "from:" + gettime + "\ndate:" + getdate +
 //        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id + getstore_id + "\ndata:" + passArray.toString(),Toast.LENGTH_LONG).show();
 
-    makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, total_amount, passArray);
+    makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, total_amount,t_id,mode, passArray);
 
 
             }
@@ -334,7 +319,7 @@ public class Payment_fragment extends AppCompatActivity {
     }
 
     private void makeAddOrderRequest(String date, String gettime, String userid, String
-            location,String tot_amount, JSONArray passArray) {
+            location,String tot_amount, String transaction_id,String method,JSONArray passArray) {
 
         loadingBar.show();
         String tag_json_obj = "json_add_order_req";
@@ -343,9 +328,9 @@ public class Payment_fragment extends AppCompatActivity {
         params.put("time", gettime);
         params.put("user_id", userid);
         params.put("location", location);
-     //   params.put("store_id", store_id);
+        params.put("transaction_id", transaction_id);
         params.put("total_ammount",tot_amount);
-        params.put("payment_method", getvalue);
+        params.put("payment_method", method);
         params.put("data", passArray.toString());
        // Toast.makeText(ctx,""+passArray,Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
@@ -359,17 +344,17 @@ public class Payment_fragment extends AppCompatActivity {
                     if (status) {
                         String msg = response.getString("data");
                        // String msg_arb=response.getString("data_arb");
-                        db_cart.clearCart();
-                        updateData();
-                        loadingBar.dismiss();
-                        Bundle args = new Bundle();
-                        Fragment fm = new Thanks_fragment();
-                        args.putString("msg", msg);
-                       // args.putString("msgarb",msg_arb);
-                        fm.setArguments(args);
-                        FragmentManager fragmentManager = getFragmentManager();
-                        fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                                .addToBackStack(null).commit();
+//                        db_cart.clearCart();
+//                        updateData();
+//                        loadingBar.dismiss();
+//                        Bundle args = new Bundle();
+//                        Fragment fm = new Thanks_fragment();
+//                        args.putString("msg", msg);
+//                       // args.putString("msgarb",msg_arb);
+//                        fm.setArguments(args);
+//                        FragmentManager fragmentManager = getFragmentManager();
+//                        fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+//                                .addToBackStack(null).commit();
 
                   //      Toast.makeText(ctx,"success",Toast.LENGTH_LONG).show();
                     }
@@ -434,6 +419,10 @@ public class Payment_fragment extends AppCompatActivity {
     }
 
     private void checked() {
+        Date d = new Date();
+        SimpleDateFormat d_f = new SimpleDateFormat("ddMMyyyyHHmmss");
+        String dd = d_f.format(d);
+        Log.e("trns_id",dd.toString());
         if (checkBox_Wallet.isChecked()) {
 
            // Toast.makeText(ctx,"checkBox_Wallet",Toast.LENGTH_LONG).show();
@@ -461,12 +450,12 @@ public class Payment_fragment extends AppCompatActivity {
 
         }
        else if (rb_pay.isChecked()) {
-       getAppSettingData();
+       getAppSettingData(dd);
         }
         else if (rb_Cod.isChecked()) {
 
             //Toast.makeText(ctx,"rb_Cod",Toast.LENGTH_LONG).show();
-           attemptOrder();
+           attemptOrder(getvalue,dd);
         }
         else {
             Toast.makeText(ctx, "Please Select One", Toast.LENGTH_SHORT).show();
@@ -512,38 +501,7 @@ public class Payment_fragment extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.e("StartPaymentActivity", "request code " + requestCode + " resultcode " + resultCode);
-        if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
-            TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE);
-
-            if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
-
-                if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
-
-                    Log.e("taransactionsdsadasd", "" + transactionResponse.getTransactionDetails().toString());
-
-                    //Success Transaction
-                } else {
-                    //Failure Transaction
-                    Toast.makeText(ctx, "Transaction Failed. Try again later", Toast.LENGTH_LONG).show();
-
-                }
-
-                // Response from Payumoney
-                String payuResponse = transactionResponse.getPayuResponse();
-
-                // Response from SURl and FURL
-                String merchantResponse = transactionResponse.getTransactionDetails();
-                Log.e(TAG, "tran " + payuResponse + "---" + merchantResponse);
-
-            }
-        }
-    }
-
-    public void getAppSettingData()
+    public void getAppSettingData(final String dd)
     {
         loadingBar.show();
         String json_tag="json_app_tag";
@@ -562,18 +520,15 @@ public class Payment_fragment extends AppCompatActivity {
                         JSONObject object=response.getJSONObject("data");
                         merchantId=object.getString("merchant_id");
                         merchantkey=object.getString("merchant_key");
-                        Date d = new Date();
-                        SimpleDateFormat d_f = new SimpleDateFormat("ddMMyyyyHHmmss");
-                        String dd = d_f.format(d);
-                        Log.e("trns_id",dd.toString());
+
                         txnid =dd;
-                        amount ="10";
-                        phone ="8081031624";
+                        amount =total_amount;
+                        phone =sessionManagement.getUserDetails().get(KEY_MOBILE);
                                 prodname =getResources().getString(R.string.app_name);
-                                firstname ="anas";
+                                firstname =sessionManagement.getUserDetails().get(KEY_NAME);
                                 email ="beautymentor19@gmail.com";
-//                   startpay();
-                       startActivity(new Intent(ctx, PayUMoneyActivity.class));
+                   startpay();
+//                       startActivity(new Intent(ctx, PayUMoneyActivity.class));
 
                     }
                     else
@@ -601,6 +556,7 @@ public class Payment_fragment extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(request,json_tag);
     }
     private void startpay() {
+        Log.e(TAG, "startpay: "+amount+"\n"+txnid+"\n"+phone+"\n"+prodname+"\n"+firstname+"\n"+email );
         builder.setAmount(amount)                          // Payment amount
                 .setTxnId(txnid)                     // Transaction ID
                 .setPhone(phone)                   // User Phone number
@@ -649,9 +605,8 @@ public class Payment_fragment extends AppCompatActivity {
                 } else {
                     // mPaymentParams.setMerchantHash(merchantHash);
                     paymentParam.setMerchantHash(merchantHash);
-                    // Invoke the following function to open the checkout page.
-                    // PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, StartPaymentActivity.this,-1, true);
-                    PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, ctx, R.style.AppTheme, false);
+
+                    PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, ctx, R.style.AppTheme2, false);
                 }
             }
 
@@ -661,5 +616,37 @@ public class Payment_fragment extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Result Code is -1 send from Payumoney activity
+        Log.e("StartPaymentActivity", "request code " + requestCode + " resultcode " + resultCode);
+        if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
+            TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE);
+
+            if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
+
+                if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
+
+                    Log.e("taransactionsdsadasd", "" + transactionResponse.getTransactionDetails().toString());
+                    attemptOrder(getvalue, txnid);
+                } else {
+                    //Failure Transaction
+                    module.showToast(ctx, "Transaction Failed. Try again later");
+
+                }
+
+                // Response from Payumoney
+                String payuResponse = transactionResponse.getPayuResponse();
+
+                // Response from SURl and FURL
+                String merchantResponse = transactionResponse.getTransactionDetails();
+                Log.e(TAG, "tran " + payuResponse + "---" + merchantResponse);
+            }
+        }
     }
 }

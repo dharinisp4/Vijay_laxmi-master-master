@@ -10,8 +10,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.RelativeLayout;
 
-import Fragment.Payment_fragment;
-
 public class OrderFail extends AppCompatActivity {
     RelativeLayout oredr_fail;
     private Payment_fragment mItemsFragment;

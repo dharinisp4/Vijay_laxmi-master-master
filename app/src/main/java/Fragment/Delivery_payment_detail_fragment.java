@@ -2,7 +2,6 @@ package Fragment;
 
 import android.app.Dialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -36,6 +34,7 @@ import Model.GstModel;
 import Module.Module;
 import beautymentor.in.AppController;
 import beautymentor.in.MainActivity;
+import beautymentor.in.Payment_fragment;
 import beautymentor.in.R;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
@@ -191,7 +190,7 @@ SharedPreferences preferences;
                 //getTotMRp();
                 if (ConnectivityReceiver.isConnected()) {
 //                    Fragment fm = new Payment_fragment();
-                    Intent i = new Intent(getActivity(),Payment_fragment.class);
+                    Intent i = new Intent(getActivity(), Payment_fragment.class);
 //                    Bundle args = new Bundle();
                     i.putExtra("total", String.valueOf(total));
                     i.putExtra("getdate", getdate);
