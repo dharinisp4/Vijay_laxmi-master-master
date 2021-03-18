@@ -248,8 +248,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_12"
-                            android:layout_marginTop="@dimen/space_6"
+
+                            android:layout_margin="@dimen/space_6"
                             android:text="@string/pickup"
                             android:textColor="@color/pink"
                             android:fontFamily="@font/cabin"
@@ -283,7 +283,7 @@
                             android:layout_marginRight="@dimen/space_4"
                             android:text="@string/pay_now"
                             android:textSize="@dimen/text_size_small"
-                            android:visibility="gone"/>
+                         />
 
 
                         <View

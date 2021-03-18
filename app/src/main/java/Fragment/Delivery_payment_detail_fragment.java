@@ -3,6 +3,7 @@ package Fragment;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -189,18 +190,20 @@ SharedPreferences preferences;
 
                 //getTotMRp();
                 if (ConnectivityReceiver.isConnected()) {
-                    Fragment fm = new Payment_fragment();
-                    Bundle args = new Bundle();
-                    args.putString("total", String.valueOf(total));
-                    args.putString("getdate", getdate);
-                    args.putString("gettime", gettime);
-                    args.putString("getlocationid", getlocation_id);
-                    args.putString("getstoreid", getstore_id);
-                    fm.setArguments(args);
-                    FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                            .addToBackStack(null).commit();
+//                    Fragment fm = new Payment_fragment();
+                    Intent i = new Intent(getActivity(),Payment_fragment.class);
+//                    Bundle args = new Bundle();
+                    i.putExtra("total", String.valueOf(total));
+                    i.putExtra("getdate", getdate);
+                    i.putExtra("gettime", gettime);
+                    i.putExtra("getlocationid", getlocation_id);
+                    i.putExtra("getstoreid", getstore_id);
+//                    fm.setArguments(args);
+//                    FragmentManager fragmentManager = getFragmentManager();
+//                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+//                            .addToBackStack(null).commit();
                     SharedPref.putString(getActivity(),BaseURL.TOTAL_AMOUNT, String.valueOf(total));
+                    startActivity(i);
                 } else {
                     ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
                 }

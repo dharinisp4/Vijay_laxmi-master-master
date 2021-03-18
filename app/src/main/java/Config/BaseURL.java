@@ -54,6 +54,11 @@ public class BaseURL {
 
 
     public static String BASE_URL = "https://beautymentor.in/admin/";
+    public static final String SERVER_main_folder = "https://beautymentor.in/payu/";
+    public static final long API_CONNECTION_TIMEOUT = 1201;
+    public static final long API_READ_TIMEOUT = 901;
+
+    public static final String USER_AGENT = "NI-AAPP";
 
     public static String IMG_SLIDER_URL = BASE_URL + "uploads/sliders/";
     public static String IMG_CATEGORY_URL = BASE_URL + "uploads/category/";

@@ -1,5 +1,6 @@
 package Fragment;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,6 +26,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,6 +36,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.payumoney.core.PayUmoneySdkInitializer;
+import com.payumoney.core.entity.TransactionResponse;
+import com.payumoney.sdkui.ui.utils.PayUmoneyFlowManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,15 +59,23 @@ import beautymentor.in.networkconnectivity.NetworkConnection;
 import beautymentor.in.networkconnectivity.NetworkError;
 
 import beautymentor.in.R;
+import beautymentor.in.payment.PayUMoneyActivity;
+import beautymentor.in.payment.ServiceWrapper;
+import retrofit2.Call;
+import retrofit2.Callback;
 import util.ConnectivityReceiver;
 import util.CustomVolleyJsonRequest;
 import util.DatabaseCartHandler;
 import util.Session_management;
 
+import static Config.BaseURL.GET_VERSTION_DATA;
+import static Config.BaseURL.KEY_MOBILE;
+import static Config.BaseURL.KEY_NAME;
+import static android.app.Activity.RESULT_OK;
 import static com.android.volley.VolleyLog.TAG;
 
 
-public class Payment_fragment extends Fragment {
+public class Payment_fragment extends AppCompatActivity {
     //RelativeLayout confirm;
     Module module;
     Button confirm;
@@ -68,13 +84,13 @@ public class Payment_fragment extends Fragment {
     TextView payble_ammount, my_wallet_ammount, used_wallet_ammount, used_coupon_ammount, order_ammount;
     private String getlocation_id = "";
     private String getstore_id = "";
-
+    Activity ctx = Payment_fragment.this;
     private double wamt=0;
     private String gettime = "";
     private String getdate = "";
     private String getuser_id = "";
     private Double rewards;
-    RadioButton rb_Store, rb_Cod, rb_card, rb_Netbanking, rb_paytm;
+    RadioButton rb_Cod,rb_pay;
     CheckBox checkBox_Wallet;
     CheckBox checkBox_coupon;
     EditText et_Coupon;
@@ -90,35 +106,36 @@ public class Payment_fragment extends Fragment {
     String getwallet;
     LinearLayout Promo_code_layout, Coupon_and_wallet;
     RelativeLayout Apply_Coupon_Code, Relative_used_wallet, Relative_used_coupon;
+    //payments
+    PayUmoneySdkInitializer.PaymentParam.Builder builder = new PayUmoneySdkInitializer.PaymentParam.Builder();
+    //declare paymentParam object
+    PayUmoneySdkInitializer.PaymentParam paymentParam = null;
 
+    String  txnid ="", amount ="", phone ="",
+            prodname ="", firstname ="", email ="",
+            merchantId ="", merchantkey="";
     public Payment_fragment() {
 
     }
 
-    public static Payment_fragment newInstance(String param1, String param2) {
-        Payment_fragment fragment = new Payment_fragment();
-        Bundle args = new Bundle();
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_payment_method);
+//    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//        final View view = inflater.inflate(R.layout.activity_payment_method, container, false);
+//        ((MainActivity) ctx).setTitle(getResources().getString(R.string.payment));
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.activity_payment_method, container, false);
-        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.payment));
-
-        loadingBar=new Dialog(getActivity(),android.R.style.Theme_Translucent_NoTitleBar);
+        loadingBar=new Dialog(ctx,android.R.style.Theme_Translucent_NoTitleBar);
         loadingBar.setContentView( R.layout.progressbar );
         loadingBar.setCanceledOnTouchOutside(false);
 
-        Prefrence_TotalAmmount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
+        Prefrence_TotalAmmount = SharedPref.getString(ctx, BaseURL.TOTAL_AMOUNT);
         module=new Module();
-        radioGroup = (RadioGroup) view.findViewById(R.id.radio_group);
+        radioGroup = (RadioGroup)findViewById(R.id.radio_group);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 
             @Override
@@ -129,179 +146,83 @@ public class Payment_fragment extends Fragment {
         });
 
 
-        Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "Font/Bold.ttf");
-        checkBox_Wallet = (CheckBox) view.findViewById(R.id.use_wallet);
+        Typeface font = Typeface.createFromAsset(ctx.getAssets(), "Font/Bold.ttf");
+        checkBox_Wallet = (CheckBox)findViewById(R.id.use_wallet);
         checkBox_Wallet.setTypeface(font);
-//        rb_Store = (RadioButton) view.findViewById(R.id.use_store_pickup);
-//        rb_Store.setTypeface(font);
-        rb_Cod = (RadioButton) view.findViewById(R.id.use_COD);
+
+        rb_Cod = (RadioButton)findViewById(R.id.use_COD);
         rb_Cod.setTypeface(font);
-        rb_card = (RadioButton) view.findViewById(R.id.use_card);
-        rb_card.setTypeface(font);
-        rb_Netbanking = (RadioButton) view.findViewById(R.id.use_netbanking);
-        rb_Netbanking.setTypeface(font);
-        rb_paytm = (RadioButton) view.findViewById(R.id.use_wallet_ammount);
-        rb_paytm.setTypeface(font);
-        checkBox_coupon = (CheckBox) view.findViewById(R.id.use_coupon);
+        rb_pay = (RadioButton)findViewById(R.id.pay_now);
+        rb_pay.setTypeface(font);
+        checkBox_coupon = (CheckBox)findViewById(R.id.use_coupon);
         checkBox_coupon.setTypeface(font);
-        et_Coupon = (EditText) view.findViewById(R.id.et_coupon_code);
-        Promo_code_layout = (LinearLayout) view.findViewById(R.id.prommocode_layout);
-        Apply_Coupon_Code = (RelativeLayout) view.findViewById(R.id.apply_coupoun_code);
-      /*  Apply_Coupon_Code.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Coupon_code();
-
-            }
-        });*/
-
-        sessionManagement = new Session_management(getActivity());
+        et_Coupon = (EditText)findViewById(R.id.et_coupon_code);
+        Promo_code_layout = (LinearLayout)findViewById(R.id.prommocode_layout);
+        Apply_Coupon_Code = (RelativeLayout)findViewById(R.id.apply_coupoun_code);
+        sessionManagement = new Session_management(ctx);
 
 
-        Coupon_and_wallet = (LinearLayout) view.findViewById(R.id.coupon_and_wallet);
-        Relative_used_wallet = (RelativeLayout) view.findViewById(R.id.relative_used_wallet);
-        Relative_used_coupon = (RelativeLayout) view.findViewById(R.id.relative_used_coupon);
+        Coupon_and_wallet = (LinearLayout)findViewById(R.id.coupon_and_wallet);
+        Relative_used_wallet = (RelativeLayout)findViewById(R.id.relative_used_wallet);
+        Relative_used_coupon = (RelativeLayout)findViewById(R.id.relative_used_coupon);
 
         //Show  Wallet
-        getwallet = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
-        my_wallet_ammount = (TextView) view.findViewById(R.id.user_wallet);
-       // my_wallet_ammount.setText(getwallet+getActivity().getString(R.string.currency));
-        db_cart = new DatabaseCartHandler(getActivity());
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(new View.OnKeyListener()
-
-        {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    Fragment fm = new Home_fragment();
-                    FragmentManager fragmentManager = getFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
-                            .addToBackStack(null).commit();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-
-        total_amount = getArguments().getString("total");
-        order_total_amount = getArguments().getString("total");
-        getdate = getArguments().getString("getdate");
-        gettime = getArguments().getString("gettime");
-        getlocation_id = getArguments().getString("getlocationid");
-        getstore_id = getArguments().getString("getstoreid");
-        payble_ammount = (TextView) view.findViewById(R.id.payable_ammount);
-        order_ammount = (TextView) view.findViewById(R.id.order_ammount);
-      //  used_wallet_ammount = (TextView) view.findViewById(R.id.used_wallet_ammount);
-       // used_coupon_ammount = (TextView) view.findViewById(R.id.used_coupon_ammount);
-        payble_ammount.setText(total_amount+getActivity().getString(R.string.currency));
-        order_ammount.setText(order_total_amount+getActivity().getString(R.string.currency));
-
-
-//        checkBox_Wallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        getwallet = SharedPref.getString(ctx, BaseURL.KEY_WALLET_Ammount);
+        my_wallet_ammount = (TextView)findViewById(R.id.user_wallet);
+       // my_wallet_ammount.setText(getwallet+ctx.getString(R.string.currency));
+        db_cart = new DatabaseCartHandler(ctx);
+//        view.setFocusableInTouchMode(true);
+//        view.requestFocus();
+//        view.setOnKeyListener(new View.OnKeyListener()
+//
+//        {
 //            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-//                if (isChecked) {
-//                   // Use_Wallet_Ammont();
-//
-//                    //getWalletAmount("18");
-//
-//                   // Coupon_and_wallet.setVisibility(View.VISIBLE);
-//                   // Relative_used_wallet.setVisibility(View.VISIBLE);
-//                  /*  if (rb_card.isChecked() || rb_Netbanking.isChecked() || rb_paytm.isChecked()) {
-//                        rb_card.setChecked(false);
-//                        rb_Netbanking.setChecked(false);
-//                        rb_paytm.setChecked(false);
-//                    }
-//                } else {
-//                    if (payble_ammount != null) {
-//                        rb_Cod.setText(getResources().getString(R.string.cash));
-//                        rb_card.setClickable(true);
-//                        rb_card.setTextColor(getResources().getColor(R.color.dark_black));
-//                        rb_Netbanking.setClickable(true);
-//                        rb_Netbanking.setTextColor(getResources().getColor(R.color.dark_black));
-//                        rb_paytm.setClickable(true);
-//                        rb_paytm.setTextColor(getResources().getColor(R.color.dark_black));
-//
-//                        checkBox_coupon.setClickable(true);
-//                        checkBox_coupon.setTextColor(getResources().getColor(R.color.dark_black));
-//                    }*/
-//                    final String Ammount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
-//                    final String WAmmount = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
-//                    my_wallet_ammount.setText(WAmmount+getActivity().getResources().getString(R.string.currency));
-//                    payble_ammount.setText(Ammount+getResources().getString(R.string.currency));
-////                    used_wallet_ammount.setText("");
-//                    Relative_used_wallet.setVisibility(View.GONE);
-//                    if (checkBox_coupon.isChecked()) {
-//                        final String ammount = SharedPref.getString(getActivity(), BaseURL.COUPON_TOTAL_AMOUNT);
-//                        payble_ammount.setText(ammount+getResources().getString(R.string.currency));
-//                    }
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
+//                    Fragment fm = new Home_fragment();
+//                    FragmentManager fragmentManager = getFragmentManager();
+//                    fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
+//                            .addToBackStack(null).commit();
+//                    return true;
 //                }
+//                return false;
 //            }
 //        });
-       /* checkBox_coupon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
 
-        {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Promo_code_layout.setVisibility(View.VISIBLE);
-                    Coupon_and_wallet.setVisibility(View.VISIBLE);
-                    Relative_used_coupon.setVisibility(View.VISIBLE);
-                    if (rb_Store.isChecked() || rb_Cod.isChecked() || rb_card.isChecked() || rb_Netbanking.isChecked() || rb_paytm.isChecked()) {
-                        rb_Store.setChecked(false);
-                        rb_Cod.setChecked(false);
-                        rb_card.setChecked(false);
-                        rb_Netbanking.setChecked(false);
-                        rb_paytm.setChecked(false);
-                    }
-                } else {
-                    et_Coupon.setText("");
-                    Relative_used_coupon.setVisibility(View.GONE);
-                    Promo_code_layout.setVisibility(View.GONE);
-                }
-            }
-        });
-*/
 
-        //confirm = (RelativeLayout) view.findViewById(R.id.confirm_order);
-        confirm = (Button) view.findViewById(R.id.confirm_order);
+        total_amount = getIntent().getStringExtra("total");
+        order_total_amount = getIntent().getStringExtra("total");
+        getdate = getIntent().getStringExtra("getdate");
+        gettime = getIntent().getStringExtra("gettime");
+        getlocation_id = getIntent().getStringExtra("getlocationid");
+        getstore_id = getIntent().getStringExtra("getstoreid");
+        payble_ammount = (TextView)findViewById(R.id.payable_ammount);
+        order_ammount = (TextView)findViewById(R.id.order_ammount);
+      //  used_wallet_ammount = (TextView)findViewById(R.id.used_wallet_ammount);
+       // used_coupon_ammount = (TextView)findViewById(R.id.used_coupon_ammount);
+        payble_ammount.setText(total_amount+ctx.getString(R.string.currency));
+        order_ammount.setText(order_total_amount+ctx.getString(R.string.currency));
+
+        confirm = (Button)findViewById(R.id.confirm_order);
         confirm.setOnClickListener(new View.OnClickListener()
 
         {
             @Override
             public void onClick(View v) {
-               // Toast.makeText( getActivity(),"amount" +total_amount,Toast.LENGTH_LONG ).show();
+               // Toast.makeText( ctx,"amount" +total_amount,Toast.LENGTH_LONG ).show();
 
                 if (ConnectivityReceiver.isConnected()) {
-
-                   // confirm.setEnabled(false);
-                  //  Toast.makeText(getActivity(),"p"+total_amount+"\n o"+order_total_amount,Toast.LENGTH_LONG).show();
-//                    if (checkBox_Wallet.isChecked()){
-//                        getuser_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
-//
-//                        Usewalletfororder(getuser_id,Used_Wallet_amount);
-//                        checked();
-//
-//                    }
-//                    else {
-//                        checked();
-//
-//                    }
-//
 
                     checked();
 
                 } else {
                     confirm.setEnabled(true);
 
-                    ((MainActivity) getActivity()).onNetworkConnectionChanged(false);
+                    ((MainActivity) ctx).onNetworkConnectionChanged(false);
                 }
             }
         });
-        return view;
+//        return view;
     }
 
 
@@ -310,7 +231,7 @@ public class Payment_fragment extends Fragment {
         super.onStart();
 
         getuser_id = sessionManagement.getUserDetails().get(BaseURL.KEY_ID);
-       // Toast.makeText(getActivity(),""+getuser_id,Toast.LENGTH_LONG).show();
+       // Toast.makeText(ctx,""+getuser_id,Toast.LENGTH_LONG).show();
         getWalletAmount(getuser_id);
 
 
@@ -327,7 +248,7 @@ public class Payment_fragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try
                 {
-                    //Toast.makeText(getActivity(),"Something went wrong"+response,Toast.LENGTH_LONG).show();
+                    //Toast.makeText(ctx,"Something went wrong"+response,Toast.LENGTH_LONG).show();
                     String status=response.getString("status");
                     if(status.equals("success"))
                     {
@@ -337,14 +258,14 @@ public class Payment_fragment extends Fragment {
                     {
                         wamt=Double.parseDouble(response.getString("data"));
                     }
-                    my_wallet_ammount.setText(getActivity().getString(R.string.currency)+" "+wamt);
+                    my_wallet_ammount.setText(ctx.getString(R.string.currency)+" "+wamt);
                 }
                 catch (Exception ex)
                 {
-                   // Toast.makeText(getActivity(),"Something went wrong"+ex.getMessage(),Toast.LENGTH_LONG).show();
+                   // Toast.makeText(ctx,"Something went wrong"+ex.getMessage(),Toast.LENGTH_LONG).show();
                 }
 
-               // Toast.makeText(getActivity(),"Response :"+response,Toast.LENGTH_LONG).show();
+               // Toast.makeText(ctx,"Response :"+response,Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -352,7 +273,7 @@ public class Payment_fragment extends Fragment {
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
-                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                    Toast.makeText( ctx,""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });
@@ -402,7 +323,7 @@ public class Payment_fragment extends Fragment {
                // getdate="2019-7-23";
                 Log.e(TAG, "from:" +"03:00 PM - 03:30 PM" + "\ndate:" + "2019-7-23" +
                         "\n" + "\nuser_id:" + getuser_id + "\n l" + getlocation_id + getstore_id + "\ndata:" + passArray.toString());
-//Toast.makeText(getActivity(), "from:" + gettime + "\ndate:" + getdate +
+//Toast.makeText(ctx, "from:" + gettime + "\ndate:" + getdate +
 //        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id + getstore_id + "\ndata:" + passArray.toString(),Toast.LENGTH_LONG).show();
 
     makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, total_amount, passArray);
@@ -426,7 +347,7 @@ public class Payment_fragment extends Fragment {
         params.put("total_ammount",tot_amount);
         params.put("payment_method", getvalue);
         params.put("data", passArray.toString());
-       // Toast.makeText(getActivity(),""+passArray,Toast.LENGTH_LONG).show();
+       // Toast.makeText(ctx,""+passArray,Toast.LENGTH_LONG).show();
         CustomVolleyJsonRequest jsonObjReq = new CustomVolleyJsonRequest(Request.Method.POST,
                 BaseURL.ADD_ORDER_URL, params, new Response.Listener<JSONObject>() {
             @Override
@@ -450,13 +371,13 @@ public class Payment_fragment extends Fragment {
                         fragmentManager.beginTransaction().replace(R.id.contentPanel, fm)
                                 .addToBackStack(null).commit();
 
-                  //      Toast.makeText(getActivity(),"success",Toast.LENGTH_LONG).show();
+                  //      Toast.makeText(ctx,"success",Toast.LENGTH_LONG).show();
                     }
                     else
 
                     {
                         loadingBar.dismiss();
-                        Toast.makeText(getActivity(),"Something went wrong",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ctx,"Something went wrong",Toast.LENGTH_LONG).show();
                     }
 
                 } catch (JSONException e) {
@@ -471,7 +392,7 @@ public class Payment_fragment extends Fragment {
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
-                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                    Toast.makeText( ctx,""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });
@@ -491,7 +412,7 @@ public class Payment_fragment extends Fragment {
                 Log.d(TAG, response.toString());
 
                 try {
-                    Toast.makeText(getActivity(),""+response,Toast.LENGTH_LONG).show();
+                    Toast.makeText(ctx,""+response,Toast.LENGTH_LONG).show();
                  //   String status = response.getString("responce");
 
                 } catch (Exception e) {
@@ -505,177 +426,17 @@ public class Payment_fragment extends Fragment {
                 String msg=module.VolleyErrorMessage(error);
                 if(!(msg.isEmpty() || msg.equals("")))
                 {
-                    Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
+                    Toast.makeText( ctx,""+ msg,Toast.LENGTH_LONG ).show();
                 }
             }
         });
         AppController.getInstance().addToRequestQueue(jsonObjReq, tag_json_obj);
     }
 
-    private void Use_Wallet_Ammont() {
-        final String Wallet_Ammount = SharedPref.getString(getActivity(), BaseURL.KEY_WALLET_Ammount);
-        final String Coupon_Ammount = SharedPref.getString(getActivity(), BaseURL.COUPON_TOTAL_AMOUNT);
-        final String Ammount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
-        if (NetworkConnection.connectionChecking(getActivity())) {
-            RequestQueue rq = Volley.newRequestQueue(getActivity());
-            StringRequest postReq = new StringRequest(Request.Method.POST, BaseURL.BASE_URL+"index.php/api/wallet_on_checkout",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.i("eclipse", "Response=" + response);
-                            try {
-                                JSONObject object = new JSONObject(response);
-                                JSONArray Jarray = object.getJSONArray("final_amount");
-                                for (int i = 0; i < Jarray.length(); i++) {
-                                    JSONObject json_data = Jarray.getJSONObject(i);
-                                    Wallet_amount = json_data.getString("wallet");
-//                                     Used_Wallet_amount = json_data.getString("used_wallet");
-                                    total_amount = json_data.getString("total");
-
-
-                                  /*  if (total_amount.equals(Wallet_amount)) {
-                                        rb_Cod.setText("Home Delivery");
-                                        getvalue = rb_Cod.getText().toString();
-                                        rb_card.setClickable(false);
-                                        rb_card.setTextColor(getResources().getColor(R.color.gray));
-                                        rb_Netbanking.setClickable(false);
-                                        rb_Netbanking.setTextColor(getResources().getColor(R.color.gray));
-                                        rb_paytm.setClickable(false);
-                                        rb_paytm.setTextColor(getResources().getColor(R.color.gray));
-                                        checkBox_coupon.setClickable(false);
-                                        checkBox_coupon.setTextColor(getResources().getColor(R.color.gray));
-                                    } else {
-                                        if (total_amount != null) {
-                                            rb_Cod.setText("Cash On Delivery");
-                                            rb_card.setClickable(true);
-                                            rb_card.setTextColor(getResources().getColor(R.color.dark_black));
-                                            rb_Netbanking.setClickable(true);
-                                            rb_Netbanking.setTextColor(getResources().getColor(R.color.dark_black));
-                                            rb_paytm.setClickable(true);
-                                            rb_paytm.setTextColor(getResources().getColor(R.color.dark_black));
-                                            checkBox_coupon.setClickable(true);
-                                            checkBox_coupon.setTextColor(getResources().getColor(R.color.dark_black));
-                                        }
-                                    }*/
-                                    payble_ammount.setText(total_amount+getResources().getString(R.string.currency));
-                                   // used_wallet_ammount.setText("(" + getResources().getString(R.string.currency) + Used_Wallet_amount + ")");
-                                    SharedPref.putString(getActivity(), BaseURL.WALLET_TOTAL_AMOUNT, total_amount);
-                                    my_wallet_ammount.setText(Wallet_amount+getResources().getString(R.string.currency));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    String msg=module.VolleyErrorMessage(error);
-                    if(!(msg.isEmpty() || msg.equals("")))
-                    {
-                        Toast.makeText( getActivity(),""+ msg,Toast.LENGTH_LONG ).show();
-                    }
-                }
-            }) {
-
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    if (checkBox_Wallet.isChecked()){
-                        params.put("wallet_amount", Wallet_Ammount);
-                    }else {
-                        params.put("total_amount", Ammount);
-
-                    }
-
-                   /* if (checkBox_coupon.isChecked()) {
-                        params.put("total_amount", Coupon_Ammount);
-                    } else {
-                        params.put("total_amount", Ammount);
-
-                    }*/
-                    return params;
-                }
-            };
-            rq.add(postReq);
-        } else {
-            Intent intent = new Intent(getActivity(), NetworkError.class);
-            startActivity(intent);
-        }
-    }
-
-   /* private void Coupon_code() {
-        final String Ammount = SharedPref.getString(getActivity(), BaseURL.TOTAL_AMOUNT);
-        final String Wallet_Ammount = SharedPref.getString(getActivity(), BaseURL.WALLET_TOTAL_AMOUNT);
-        final String Coupon_code = et_Coupon.getText().toString();
-        if (NetworkConnection.connectionChecking(getActivity())) {
-            RequestQueue rq = Volley.newRequestQueue(getActivity());
-            StringRequest postReq = new StringRequest(Request.Method.POST, BaseURL.COUPON_CODE,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Log.i("eclipse", "Response=" + response);
-                            try {
-                                JSONObject obj = new JSONObject(response);
-                                total_amount = obj.getString("Total_amount");
-                                String Used_coupon_amount = obj.getString("coupon_value");
-                                if (obj.optString("responce").equals("true")) {
-                                    payble_ammount.setText(total_amount+getResources().getString(R.string.currency));
-                                    SharedPref.putString(getActivity(), BaseURL.COUPON_TOTAL_AMOUNT, total_amount);
-                                    Toast.makeText(getActivity(), obj.getString("msg"), Toast.LENGTH_SHORT).show();
-                                    used_coupon_ammount.setText("(" + getActivity().getResources().getString(R.string.currency) + Used_coupon_amount + ")");
-                                    Promo_code_layout.setVisibility(View.GONE);
-
-                                } else {
-                                    Toast.makeText(getActivity(), obj.getString("msg"), Toast.LENGTH_SHORT).show();
-                                    et_Coupon.setText("");
-                                    used_coupon_ammount.setText("");
-                                    payble_ammount.setText(total_amount+getResources().getString(R.string.currency));
-                                    Promo_code_layout.setVisibility(View.GONE);
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.println("Error [" + error + "]");
-                }
-            }) {
-
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("coupon_code", Coupon_code);
-                    if (checkBox_Wallet.isChecked()) {
-                        params.put("payable_amount", Wallet_Ammount);
-                    } else {
-                        params.put("payable_amount", Ammount);
-                    }
-                    return params;
-                }
-            };
-            rq.add(postReq);
-        } else {
-            Toast.makeText(getActivity(), "Somthing Went Wrong", Toast.LENGTH_SHORT).show();
-        }
-
-    }*/
-
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        getActivity().registerReceiver( mCart, new IntentFilter( "Grocery_cart" ) );
-//    }
-
     private void checked() {
         if (checkBox_Wallet.isChecked()) {
 
-           // Toast.makeText(getActivity(),"checkBox_Wallet",Toast.LENGTH_LONG).show();
+           // Toast.makeText(ctx,"checkBox_Wallet",Toast.LENGTH_LONG).show();
             double t=Double.parseDouble(total_amount);
 
             if(wamt>0)
@@ -693,79 +454,23 @@ public class Payment_fragment extends Fragment {
             }
             else
             {
-             Toast.makeText(getActivity(),"You don't have enough wallet amount.\n Please select another option",Toast.LENGTH_LONG).show();
+             Toast.makeText(ctx,"You don't have enough wallet amount.\n Please select another option",Toast.LENGTH_LONG).show();
             }
 
 
 
         }
-//       else if (rb_Store.isChecked()) {
-//           // Toast.makeText(getActivity(),"rb_Store",Toast.LENGTH_LONG).show();
-//            attemptOrder();
-//        }
+       else if (rb_pay.isChecked()) {
+       getAppSettingData();
+        }
         else if (rb_Cod.isChecked()) {
 
-            //Toast.makeText(getActivity(),"rb_Cod",Toast.LENGTH_LONG).show();
+            //Toast.makeText(ctx,"rb_Cod",Toast.LENGTH_LONG).show();
            attemptOrder();
         }
         else {
-            Toast.makeText(getActivity(), "Please Select One", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ctx, "Please Select One", Toast.LENGTH_SHORT).show();
         }
-       /* if (rb_card.isChecked()) {
-            Intent myIntent = new Intent(getActivity(), ReserPasswordActivity.class);
-            if (checkBox_Wallet.isChecked()) {
-                myIntent.putExtra("total", total_amount);
-            } else {
-                myIntent.putExtra("total", Prefrence_TotalAmmount);
-                myIntent.putExtra("getdate", getdate);
-                myIntent.putExtra("gettime", gettime);
-                myIntent.putExtra("getlocationid", getlocation_id);
-                myIntent.putExtra("getstoreid", getstore_id);
-                myIntent.putExtra("getpaymentmethod", getvalue);
-            }
-            getActivity().startActivity(myIntent);
-        }*/
-       /* if (rb_Netbanking.isChecked()) {
-            Intent myIntent1 = new Intent(getActivity(), ReserPasswordActivity.class);
-            if (checkBox_Wallet.isChecked()) {
-                myIntent1.putExtra("total", total_amount);
-
-            } else {
-                myIntent1.putExtra("total", Prefrence_TotalAmmount);
-                myIntent1.putExtra("getdate", getdate);
-                myIntent1.putExtra("gettime", gettime);
-                myIntent1.putExtra("getlocationid", getlocation_id);
-                myIntent1.putExtra("getstoreid", getstore_id);
-                myIntent1.putExtra("getpaymentmethod", getvalue);
-            }
-            getActivity().startActivity(myIntent1);
-        }*/
-              /* if (rb_paytm.isChecked()) {
-            Intent myIntent1 = new Intent(getActivity(), Paytm.class);
-            if (checkBox_Wallet.isChecked()) {
-                myIntent1.putExtra("total", total_amount);
-
-            } else {
-                myIntent1.putExtra("total", Prefrence_TotalAmmount);
-                myIntent1.putExtra("getdate", getdate);
-                myIntent1.putExtra("gettime", gettime);
-                myIntent1.putExtra("getlocationid", getlocation_id);
-                myIntent1.putExtra("getstoreid", getstore_id);
-                myIntent1.putExtra("getpaymentmethod", getvalue);
-            }
-            getActivity().startActivity(myIntent1);
-
-        }*/
-       /* if (checkBox_coupon.isChecked()) {
-            if (rb_Store.isChecked() || rb_Cod.isChecked()) {
-                attemptOrder();
-            } else {
-                Toast.makeText(getActivity(), "Select Store Or Cod", Toast.LENGTH_SHORT).show();
-            }
-
-
-        }*/
-
 
 
     }
@@ -774,7 +479,7 @@ public class Payment_fragment extends Fragment {
     public void onPause() {
         super.onPause();
         // unregister reciver
-        getActivity().unregisterReceiver(mCart);
+        ctx.unregisterReceiver(mCart);
     }
 
     @Override
@@ -782,7 +487,7 @@ public class Payment_fragment extends Fragment {
         super.onResume();
 
         // register reciver
-        getActivity().registerReceiver(mCart, new IntentFilter("Grocery_cart"));
+        ctx.registerReceiver(mCart, new IntentFilter("Grocery_cart"));
     }
 
 
@@ -802,9 +507,159 @@ public class Payment_fragment extends Fragment {
 
     private void updateData() {
 
-        ((MainActivity) getActivity()).setCartCounter("" + db_cart.getCartCount());
+        ((MainActivity) ctx).setCartCounter("" + db_cart.getCartCount());
 
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.e("StartPaymentActivity", "request code " + requestCode + " resultcode " + resultCode);
+        if (requestCode == PayUmoneyFlowManager.REQUEST_CODE_PAYMENT && resultCode == RESULT_OK && data != null) {
+            TransactionResponse transactionResponse = data.getParcelableExtra(PayUmoneyFlowManager.INTENT_EXTRA_TRANSACTION_RESPONSE);
+
+            if (transactionResponse != null && transactionResponse.getPayuResponse() != null) {
+
+                if (transactionResponse.getTransactionStatus().equals(TransactionResponse.TransactionStatus.SUCCESSFUL)) {
+
+                    Log.e("taransactionsdsadasd", "" + transactionResponse.getTransactionDetails().toString());
+
+                    //Success Transaction
+                } else {
+                    //Failure Transaction
+                    Toast.makeText(ctx, "Transaction Failed. Try again later", Toast.LENGTH_LONG).show();
+
+                }
+
+                // Response from Payumoney
+                String payuResponse = transactionResponse.getPayuResponse();
+
+                // Response from SURl and FURL
+                String merchantResponse = transactionResponse.getTransactionDetails();
+                Log.e(TAG, "tran " + payuResponse + "---" + merchantResponse);
+
+            }
+        }
+    }
+
+    public void getAppSettingData()
+    {
+        loadingBar.show();
+        String json_tag="json_app_tag";
+        HashMap<String,String> map=new HashMap<>();
+
+        CustomVolleyJsonRequest request=new CustomVolleyJsonRequest(Request.Method.POST, BaseURL.GET_VERSTION_DATA, map, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try
+                {
+                    boolean sts=response.getBoolean("responce");
+
+                    if(sts)
+                    {
+                        JSONObject object=response.getJSONObject("data");
+                        merchantId=object.getString("merchant_id");
+                        merchantkey=object.getString("merchant_key");
+                        Date d = new Date();
+                        SimpleDateFormat d_f = new SimpleDateFormat("ddMMyyyyHHmmss");
+                        String dd = d_f.format(d);
+                        Log.e("trns_id",dd.toString());
+                        txnid =dd;
+                        amount ="10";
+                        phone ="8081031624";
+                                prodname =getResources().getString(R.string.app_name);
+                                firstname ="anas";
+                                email ="beautymentor19@gmail.com";
+//                   startpay();
+                       startActivity(new Intent(ctx, PayUMoneyActivity.class));
+
+                    }
+                    else
+                    {
+                        Toast.makeText(ctx,""+response.getString("error"),Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+                loadingBar.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                loadingBar.dismiss();
+                String msg=module.VolleyErrorMessage(error);
+                if(!(msg.isEmpty() || msg.equals("")))
+                {
+                    Toast.makeText(ctx,""+msg,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        AppController.getInstance().addToRequestQueue(request,json_tag);
+    }
+    private void startpay() {
+        builder.setAmount(amount)                          // Payment amount
+                .setTxnId(txnid)                     // Transaction ID
+                .setPhone(phone)                   // User Phone number
+                .setProductName(prodname)                   // Product Name or description
+                .setFirstName(firstname)                              // User First name
+                .setEmail(email)              // User Email ID
+                .setsUrl("https://www.payumoney.com/mobileapp/payumoney/success.php")     // Success URL (surl)
+                .setfUrl("https://www.payumoney.com/mobileapp/payumoney/failure.php")     //Failure URL (furl)
+                .setUdf1("")
+                .setUdf2("")
+                .setUdf3("")
+                .setUdf4("")
+                .setUdf5("")
+                .setUdf6("")
+                .setUdf7("")
+                .setUdf8("")
+                .setUdf9("")
+                .setUdf10("")
+                .setIsDebug(false)                              // Integration environment - true (Debug)/ false(Production)
+                .setKey(merchantkey)                        // Merchant key
+                .setMerchantId(merchantId);
+        try {
+            paymentParam = builder.build();
+            // generateHashFromServer(paymentParam );
+            getHashkey();
+
+        } catch (Exception e) {
+            Log.e(TAG, " error s "+e.toString());
+        }
+
+    }
+
+    public void getHashkey(){
+        ServiceWrapper service = new ServiceWrapper(null);
+        Call<String> call = service.newHashCall(merchantkey, txnid, amount, prodname,
+                firstname, email);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                Log.e(TAG, "hash res "+response.body());
+                String merchantHash= response.body();
+                if (merchantHash.isEmpty() || merchantHash.equals("")) {
+                    Toast.makeText(ctx, "Could not generate hash", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "hash empty");
+                } else {
+                    // mPaymentParams.setMerchantHash(merchantHash);
+                    paymentParam.setMerchantHash(merchantHash);
+                    // Invoke the following function to open the checkout page.
+                    // PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, StartPaymentActivity.this,-1, true);
+                    PayUmoneyFlowManager.startPayUMoneyFlow(paymentParam, ctx, R.style.AppTheme, false);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e(TAG, "hash error "+ t.toString());
+            }
+        });
+
+    }
 }

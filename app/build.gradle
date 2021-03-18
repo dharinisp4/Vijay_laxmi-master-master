@@ -90,6 +90,11 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.10'
     implementation 'com.google.android.gms:play-services-appindexing:9.8.0'
     implementation files('libs/httpmime-4.2.5-sources.jar')
+    implementation 'com.payumoney.core:payumoney-sdk:7.4.4'
+    implementation 'com.payumoney.sdkui:plug-n-play:1.6.0'
+    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
 
 }
 // ADD THIS AT THE BOTTOM
