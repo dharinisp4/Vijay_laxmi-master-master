@@ -1,0 +1,148 @@
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_19-02-2021_12_20_[Default_Changelist]/shelved.patch
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_19-02-2021_12_20_[Default_Changelist]/shelved.patch	(revision 1964de33f5ad36e4ac76f66e1b519aca0f118af1)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_19-02-2021_12_20_[Default_Changelist]/shelved.patch	(revision 1964de33f5ad36e4ac76f66e1b519aca0f118af1)
+@@ -1,128 +0,0 @@
+-Index: .idea/compiler.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- .idea/compiler.xml	(date 1608803213473)
+-+++ .idea/compiler.xml	(date 1608803213473)
+-@@ -0,0 +1,6 @@
+-+<?xml version="1.0" encoding="UTF-8"?>
+-+<project version="4">
+-+  <component name="CompilerConfiguration">
+-+    <bytecodeTargetLevel target="1.8" />
+-+  </component>
+-+</project>
+-\ No newline at end of file
+-Index: .idea/gradle.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"delegatedBuild\" value=\"false\" />\r\n        <option name=\"testRunner\" value=\"PLATFORM\" />\r\n        <option name=\"disableWrapperSourceDistributionNotification\" value=\"true\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/FORTSDKv1.5\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n        <option name=\"resolveModulePerSourceSet\" value=\"false\" />\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- .idea/gradle.xml	(revision 0b976bfb1499562a32931987debaece3a42aedab)
+-+++ .idea/gradle.xml	(date 1608803080536)
+-@@ -17,6 +17,7 @@
+-           </set>
+-         </option>
+-         <option name="resolveModulePerSourceSet" value="false" />
+-+        <option name="useQualifiedModuleNames" value="true" />
+-       </GradleProjectSettings>
+-     </option>
+-   </component>
+-Index: .idea/misc.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_1_7\" project-jdk-name=\"1.8\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- .idea/misc.xml	(revision 0b976bfb1499562a32931987debaece3a42aedab)
+-+++ .idea/misc.xml	(date 1608803213379)
+-@@ -1,6 +1,6 @@
+- <?xml version="1.0" encoding="UTF-8"?>
+- <project version="4">
+--  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+-+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+-     <output url="file://$PROJECT_DIR$/build/classes" />
+-   </component>
+-   <component name="ProjectType">
+-Index: .idea/jarRepositories.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- .idea/jarRepositories.xml	(date 1598257827273)
+-+++ .idea/jarRepositories.xml	(date 1598257827273)
+-@@ -0,0 +1,45 @@
+-+<?xml version="1.0" encoding="UTF-8"?>
+-+<project version="4">
+-+  <component name="RemoteRepositoriesConfiguration">
+-+    <remote-repository>
+-+      <option name="id" value="central" />
+-+      <option name="name" value="Maven Central repository" />
+-+      <option name="url" value="https://repo1.maven.org/maven2" />
+-+    </remote-repository>
+-+    <remote-repository>
+-+      <option name="id" value="jboss.community" />
+-+      <option name="name" value="JBoss Community repository" />
+-+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+-+    </remote-repository>
+-+    <remote-repository>
+-+      <option name="id" value="maven" />
+-+      <option name="name" value="maven" />
+-+      <option name="url" value="https://maven.google.com" />
+-+    </remote-repository>
+-+    <remote-repository>
+-+      <option name="id" value="BintrayJCenter" />
+-+      <option name="name" value="BintrayJCenter" />
+-+      <option name="url" value="https://jcenter.bintray.com/" />
+-+    </remote-repository>
+-+    <remote-repository>
+-+      <option name="id" value="Google" />
+-+      <option name="name" value="Google" />
+-+      <option name="url" value="https://dl.google.com/dl/android/maven2/" />
+-+    </remote-repository>
+-+    <remote-repository>
+-+      <option name="id" value="maven2" />
+-+      <option name="name" value="maven2" />
+-+      <option name="url" value="https://jitpack.io" />
+-+    </remote-repository>
+-+    <remote-repository>
+-+      <option name="id" value="MavenRepo" />
+-+      <option name="name" value="MavenRepo" />
+-+      <option name="url" value="https://repo.maven.apache.org/maven2/" />
+-+    </remote-repository>
+-+    <remote-repository>
+-+      <option name="id" value="maven3" />
+-+      <option name="name" value="maven3" />
+-+      <option name="url" value="https://s3-ap-southeast-1.amazonaws.com/godel-release/godel/" />
+-+    </remote-repository>
+-+  </component>
+-+</project>
+-\ No newline at end of file
+-Index: .idea/modules.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ProjectModuleManager\">\r\n    <modules>\r\n      <module fileurl=\"file://$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml\" filepath=\"$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml\" group=\"Vijay_laxmi-master-master/FORTSDKv1.5\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/Vijay_laxmi-master-master.iml\" filepath=\"$PROJECT_DIR$/Vijay_laxmi-master-master.iml\" group=\"Vijay_laxmi-master-master\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/FORTSDKv1.5/Vijay_laxmi-master-master-FORTSDKv1.5.iml\" filepath=\"$PROJECT_DIR$/FORTSDKv1.5/Vijay_laxmi-master-master-FORTSDKv1.5.iml\" group=\"Vijay_laxmi-master-master/FORTSDKv1.5\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/app/Vijay_laxmi-master-master-app.iml\" filepath=\"$PROJECT_DIR$/app/Vijay_laxmi-master-master-app.iml\" group=\"Vijay_laxmi-master-master/app\" />\r\n      <module fileurl=\"file://$PROJECT_DIR$/app/app.iml\" filepath=\"$PROJECT_DIR$/app/app.iml\" group=\"Vijay_laxmi-master-master/app\" />\r\n    </modules>\r\n  </component>\r\n</project>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+---- .idea/modules.xml	(revision 0b976bfb1499562a32931987debaece3a42aedab)
+-+++ .idea/modules.xml	(date 1608807174867)
+-@@ -2,11 +2,9 @@
+- <project version="4">
+-   <component name="ProjectModuleManager">
+-     <modules>
+--      <module fileurl="file://$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml" filepath="$PROJECT_DIR$/FORTSDKv1.5/FORTSDKv1.5.iml" group="Vijay_laxmi-master-master/FORTSDKv1.5" />
+--      <module fileurl="file://$PROJECT_DIR$/Vijay_laxmi-master-master.iml" filepath="$PROJECT_DIR$/Vijay_laxmi-master-master.iml" group="Vijay_laxmi-master-master" />
+--      <module fileurl="file://$PROJECT_DIR$/FORTSDKv1.5/Vijay_laxmi-master-master-FORTSDKv1.5.iml" filepath="$PROJECT_DIR$/FORTSDKv1.5/Vijay_laxmi-master-master-FORTSDKv1.5.iml" group="Vijay_laxmi-master-master/FORTSDKv1.5" />
+--      <module fileurl="file://$PROJECT_DIR$/app/Vijay_laxmi-master-master-app.iml" filepath="$PROJECT_DIR$/app/Vijay_laxmi-master-master-app.iml" group="Vijay_laxmi-master-master/app" />
+--      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Vijay_laxmi-master-master/app" />
+-+      <module fileurl="file://$PROJECT_DIR$/Vijay_laxmi-master-master.iml" filepath="$PROJECT_DIR$/Vijay_laxmi-master-master.iml" />
+-+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/FORTSDKv1.5/Vijay_laxmi-master-master.FORTSDKv1.5.iml" filepath="$PROJECT_DIR$/.idea/modules/FORTSDKv1.5/Vijay_laxmi-master-master.FORTSDKv1.5.iml" />
+-+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Vijay_laxmi-master-master.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Vijay_laxmi-master-master.app.iml" />
+-     </modules>
+-   </component>
+- </project>
+-\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Update_at_19-02-2021_12_20__Default_Changelist_.xml
+===================================================================
+--- .idea/shelf/Uncommitted_changes_before_Update_at_19-02-2021_12_20__Default_Changelist_.xml	(revision 1964de33f5ad36e4ac76f66e1b519aca0f118af1)
++++ .idea/shelf/Uncommitted_changes_before_Update_at_19-02-2021_12_20__Default_Changelist_.xml	(revision 1964de33f5ad36e4ac76f66e1b519aca0f118af1)
+@@ -1,9 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Update_at_19-02-2021_12_20_[Default_Changelist]" date="1613717471005" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19-02-2021_12_20_[Default_Changelist]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Update at 19-02-2021 12:20 [Default Changelist]" />
+-  <binary>
+-    <option name="BEFORE_PATH" value=".idea/caches/build_file_checksums.ser" />
+-    <option name="AFTER_PATH" value=".idea/caches/build_file_checksums.ser" />
+-    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_19-02-2021_12_20_[Default_Changelist]/build_file_checksums.ser" />
+-  </binary>
+-</changelist>
+\ No newline at end of file

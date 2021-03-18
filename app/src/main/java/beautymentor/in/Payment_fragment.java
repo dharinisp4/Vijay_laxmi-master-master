@@ -265,7 +265,7 @@ public class Payment_fragment extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(customVolleyJsonRequest,json_wallet_tag);
     }
 
-    private void attemptOrder(String mode ,String t_id) {
+    private void attemptOrder(String mode ,String t_id,String id_paid) {
         ArrayList<HashMap<String, String>> items = db_cart.getCartAll();
         //rewards = Double.parseDouble(db_cart.getColumnRewards());
         rewards = Double.parseDouble("0");
@@ -311,7 +311,7 @@ public class Payment_fragment extends AppCompatActivity {
 //Toast.makeText(ctx, "from:" + gettime + "\ndate:" + getdate +
 //        "\n" + "\nuser_id:" + getuser_id + "\n" + getlocation_id + getstore_id + "\ndata:" + passArray.toString(),Toast.LENGTH_LONG).show();
 
-    makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, total_amount,t_id,mode, passArray);
+    makeAddOrderRequest(getdate, gettime, getuser_id, getlocation_id, total_amount,t_id,mode,is_paid, passArray);
 
 
             }
@@ -319,7 +319,7 @@ public class Payment_fragment extends AppCompatActivity {
     }
 
     private void makeAddOrderRequest(String date, String gettime, String userid, String
-            location,String tot_amount, String transaction_id,String method,JSONArray passArray) {
+            location,String tot_amount, String transaction_id,String method,String is_paid,JSONArray passArray) {
 
         loadingBar.show();
         String tag_json_obj = "json_add_order_req";
@@ -327,8 +327,9 @@ public class Payment_fragment extends AppCompatActivity {
         params.put("date", date);
         params.put("time", gettime);
         params.put("user_id", userid);
+        params.put("is_paid",is_paid);
         params.put("location", location);
-        params.put("transaction_id", transaction_id);
+        params.put("txn_id", transaction_id);
         params.put("total_ammount",tot_amount);
         params.put("payment_method", method);
         params.put("data", passArray.toString());
